@@ -8,9 +8,11 @@ dao\ActivateDao.class
 dao\ImageDao.class
 dao\MailDao.class
 dao\RegistrationDao.class
+servlets\ListcatServlet.class
 servlets\DbConnect.class
 servlets\RegistrationServlet.class
 objects\ListCat.class
+dao\ListcatDao.class
 servlets\LogoutServlet.class
 objects\Product.class
 servlets\ActivateServlet.class
