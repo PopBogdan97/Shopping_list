@@ -6,6 +6,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +14,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mail.Mailer;
+import mail.ResetPasswordMailer;
 
 /**
  *
  * @author Emiliano
  */
-@WebServlet(name = "ReSendServlet", urlPatterns = {"/ReSendServlet"})
-public class ReSendServlet extends HttpServlet {
+@WebServlet(name = "RequestResetServlet", urlPatterns = {"/RequestResetServlet"})
+public class RequestResetServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,17 +35,17 @@ public class ReSendServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        if(Mailer.sendMail(request.getParameter("email"))){
-            request.setAttribute("error", "Mail sent!");
+        if(ResetPasswordMailer.sendMail(request.getParameter("email"))){
+            try (PrintWriter out = response.getWriter()) {
+            out.print("Check your mail!");
+        }
         }
         else{
-            request.setAttribute("error", "Mail not sent!");
+            try (PrintWriter out = response.getWriter()) {
+            out.print("Email not found!");
+        }            
         }
-        
-        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
-        rd.forward(request,response);
 
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

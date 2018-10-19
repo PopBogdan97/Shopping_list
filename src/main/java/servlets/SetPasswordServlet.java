@@ -5,21 +5,22 @@
  */
 package servlets;
 
+import dao.SetPasswordDao;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mail.Mailer;
 
 /**
  *
  * @author Emiliano
  */
-@WebServlet(name = "ReSendServlet", urlPatterns = {"/ReSendServlet"})
-public class ReSendServlet extends HttpServlet {
+@WebServlet(name = "SetPasswordServlet", urlPatterns = {"/SetPasswordServlet"})
+public class SetPasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,20 +31,24 @@ public class ReSendServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processPOSTRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        if(Mailer.sendMail(request.getParameter("email"))){
-            request.setAttribute("error", "Mail sent!");
-        }
-        else{
-            request.setAttribute("error", "Mail not sent!");
-        }
-        
-        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
-        rd.forward(request,response);
-
-        
+            PrintWriter out = response.getWriter();  
+          
+    String email=request.getParameter("email");  
+    String cod=request.getParameter("cod");  
+    String password=request.getParameter("password");  
+          
+    if(SetPasswordDao.set(email, cod, password)){
+        RequestDispatcher rd=request.getRequestDispatcher("index.jsp");  
+        rd.forward(request,response);  
+    }  
+    else{ 
+        out.append("Error!");
+    }  
+          
+    out.close();  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,7 +63,6 @@ public class ReSendServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
@@ -72,7 +76,7 @@ public class ReSendServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processPOSTRequest(request, response);
     }
 
     /**

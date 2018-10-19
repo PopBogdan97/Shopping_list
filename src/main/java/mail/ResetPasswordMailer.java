@@ -9,10 +9,8 @@ import dao.MailDao;
 import dao.MailExistsDao;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -26,9 +24,8 @@ import javax.mail.internet.MimeMessage;
  *
  * @author Emiliano
  */
-public class Mailer {
-
-    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+public class ResetPasswordMailer {
+        private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 public static String randomAlphaNumeric(int count) {
 
@@ -47,13 +44,14 @@ return builder.toString();
 }
     public static boolean sendMail(String email) throws IOException {
         
-        boolean status=false;
+                boolean status=false;
         
         if(MailExistsDao.exits(email)){
             
             status=true;
-            
+        
     String cod=randomAlphaNumeric(8);
+    
     
     if(MailDao.setcod(email, cod)){
     
@@ -88,8 +86,8 @@ return builder.toString();
         try {
             msg.setFrom(new InternetAddress(username));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
-            msg.setSubject("Shopping List Registration");
-            msg.setText("Click the link to activate the account: "+"http://localhost:8080/ShoppingList/ActivateServlet?email="+email+"&cod="+cod);
+            msg.setSubject("Shopping List Password Reset");
+            msg.setText("Click the link to reset your password: "+"http://localhost:8080/ShoppingList/ResetServlet?email="+email+"&cod="+cod);
             msg.setSentDate(new Date());
             Transport.send(msg);
         } catch (MessagingException me) {
@@ -97,9 +95,7 @@ return builder.toString();
             me.printStackTrace(System.err);
         }
     }
-    
-        }
-        
+    }
         return status;
     }
 }
