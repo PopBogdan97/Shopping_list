@@ -35,7 +35,7 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
                             <img src="img/user.png" alt="" width="40" height="40">
-                            <a class="btn btn-outline-primary" href="#">Accedi</a>
+                            <a class="btn btn-outline-primary" href="login_registration.jsp">Accedi</a>
                         </li>
                     </ul>
                 </div>
