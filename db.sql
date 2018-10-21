@@ -36,6 +36,7 @@ CREATE TABLE `cat_lista` (
 
 LOCK TABLES `cat_lista` WRITE;
 /*!40000 ALTER TABLE `cat_lista` DISABLE KEYS */;
+INSERT INTO `cat_lista` VALUES ('Alimentari','Cibi e bevande','alimentari.jpg'),('Ferramenta','Utensili, materiali, ecc.','ferramenta.jpg');
 /*!40000 ALTER TABLE `cat_lista` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +134,7 @@ CREATE TABLE `utente` (
   `Tipologia` varchar(50) DEFAULT NULL,
   `Cod` varchar(50) DEFAULT NULL,
   `Valid` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`Email`,`Password`)
+  PRIMARY KEY (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -143,13 +144,9 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('emiliantolo@gmail.com','*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19','emiliantolo','C:\\Users\\Emiliano\\Documents\\NetBeansProjects\\web_programming_2018\\build\\web\\\\images\\Screenshot (54).png','normal','POIEXF4Y',1);
+INSERT INTO `utente` VALUES ('emiliantolo@gmail.com','*A0F874BC7F54EE086FCE60A37CE7887D8B31086B','emiliantolo','C:\\Users\\Emiliano\\Documents\\NetBeansProjects\\web_programming_2018\\build\\web\\\\images\\Screenshot (54).png','normal','8IGK2G23',1),('mark_mena97@hotmail.it','*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19','markmena97',NULL,'normal','5QI3U28I',0),('mark_mena@hotmail.it','*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19','markmena',NULL,'normal','IXJFGDCN',0),('vasile.pop@tolottigay.com','*FF676ADDE3E862558F90F1F1F93F43498DC8AC19','bogdan',NULL,'normal','N77V6AND',0);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'progetto'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -160,4 +157,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-06  1:04:46
+-- Dump completed on 2018-10-21 19:04:57

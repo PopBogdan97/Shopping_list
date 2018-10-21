@@ -41,12 +41,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <input type="text" disabled="true" name="nome">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+                  <form action="ImageUploadServlet" method="post" enctype="multipart/form-data">
+                                <label>Image</label>
+                                <input type="file" name="file" />
+    <input type="submit" />
+</form>
           <select class="prodcat form-control" style="width:500px" name="prodcat"></select>
       </div>
       <div class="modal-footer">
@@ -78,6 +82,7 @@
                     },
    language: {
        noResults: function(){
+
 return "<a  data-toggle='modal' data-target='#catlistModal' href='javascript:void();' onClick='setvalue()'>Aggiungi</a>";
        }
    },
@@ -105,7 +110,7 @@ return "<a  data-toggle='modal' data-target='#catlistModal' href='javascript:voi
                         }
     });
     
-    function setvalue(){$('.nome').val($('.str').data("select2").dropdown.$search.val());}
+    function setvalue(){$('.modal-title').text('Edita categoria di lista: '+$(".str").data("select2").dropdown.$search.val());}
 
 
 
