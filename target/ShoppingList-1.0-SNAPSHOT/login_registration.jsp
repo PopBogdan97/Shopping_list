@@ -194,30 +194,30 @@
                 <script type="text/javascript" src="js/zxcvbn-bootstrap-strength-meter.js"></script>
                 <script type="text/javascript">
 
-                                                                                                            $(document).ready(function ()
-                                                                                                            {
-                                                                                                                $("#StrengthProgressBar").zxcvbnProgressBar({passwordInput: "#passwordRegistration"});
-                                                                                                           
- $("#reset_link").click(function(){$("#result").text("");});
+                    $(document).ready(function ()
+                    {
+                        $("#StrengthProgressBar").zxcvbnProgressBar({passwordInput: "#passwordRegistration"});
 
-  $("#reset_btn").click(function(){
-    var email = $("#emailrecover").val();
-    $.ajax({
-      type: "POST",
-      url: "RequestResetServlet",
-      data: "email=" + email,
-      dataType: "html",
-      success: function(msg)
-      {
-        $("#result").html(msg);
-      },
-      error: function()
-      {
-        alert("Chiamata fallita, si prega di riprovare...");
-      }
-    });
-  });
-});
+                    $("#reset_link").click(function(){$("#result").text("");});
+
+                      $("#reset_btn").click(function(){
+                        var email = $("#emailrecover").val();
+                        $.ajax({
+                          type: "POST",
+                          url: "RequestResetServlet",
+                          data: "email=" + email,
+                          dataType: "html",
+                          success: function(msg)
+                          {
+                            $("#result").html(msg);
+                          },
+                          error: function()
+                          {
+                            alert("Chiamata fallita, si prega di riprovare...");
+                          }
+                        });
+                      });
+                    });
 
                 </script>
 

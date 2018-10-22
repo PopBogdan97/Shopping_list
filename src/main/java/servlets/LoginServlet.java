@@ -38,8 +38,8 @@ public class LoginServlet extends HttpServlet {
         
             PrintWriter out = response.getWriter();  
           
-    String email=request.getParameter("email");  
-    String password=request.getParameter("password");  
+    String email=request.getParameter("username");
+    String password=request.getParameter("passwordLogin");
           
     String result=LoginDao.authenticate(email, password);
     
@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("email", email);
             request.setAttribute("error", "Account not verified!");
         }
-        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
+        RequestDispatcher rd=request.getRequestDispatcher("login_registration.jsp");
         rd.forward(request,response);
     }  
           
