@@ -5,6 +5,7 @@ mail\Mailer.class
 dao\SetPasswordDao.class
 mail\Mailer$1.class
 dao\MailDao.class
+servlets\NewCatListServlet.class
 servlets\SetPasswordServlet.class
 objects\ListCat.class
 dao\ListcatDao.class
@@ -22,7 +23,9 @@ dao\RegistrationDao.class
 servlets\ListcatServlet.class
 servlets\DbConnect.class
 servlets\RegistrationServlet.class
+servlets\ProdcatServlet.class
 servlets\LogoutServlet.class
+dao\ProdcatDao.class
 objects\Product.class
 dao\LoginDao.class
 servlets\ResetServlet.class

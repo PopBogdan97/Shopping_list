@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import dao.ListcatDao;
+import dao.ProdcatDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +19,8 @@ import org.json.simple.JSONArray;
  *
  * @author Emiliano
  */
-@WebServlet(name = "ListcatServlet", urlPatterns = {"/ListcatServlet"})
-public class ListcatServlet extends HttpServlet {
+@WebServlet(name = "ProdcatServlet", urlPatterns = {"/ProdcatServlet"})
+public class ProdcatServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,7 +35,7 @@ public class ListcatServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         String str=!request.getParameterMap().containsKey("q") ? "": request.getParameter("q");
-        JSONArray array=ListcatDao.getList(str);
+        JSONArray array=ProdcatDao.getList(str);
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.print(array);

@@ -21,7 +21,6 @@ public class ListcatDao {
     public static JSONArray getList(String str) {
         JSONArray array = new JSONArray();
 
-        System.out.println("pveihrtut");
         try {
             Connection conn = DbConnect.getConnection();
             
@@ -48,5 +47,51 @@ public class ListcatDao {
         }
         return array;
     }
+
+        public static boolean initialize(String nome, String descrizione, String immagine) {
+               boolean status=false;  
+    try{  
+        
+        Connection conn=DbConnect.getConnection();
+        
+        PreparedStatement ps=conn.prepareStatement(  
+"INSERT INTO cat_lista (Nome, Descrizione, Immagine) VALUES (?, ?, ?)");  
+ps.setString(1,nome);  
+ps.setString(2,descrizione);
+ps.setString(3,immagine);
+
+status=ps.executeUpdate()>0;
+
+    conn.close();
+              
+    }catch(Exception e){System.out.println(e);}  
+    return status;  
+    }
+        
+
+        public static boolean setProdCat(String listcat, String[] prodcat) {
+               boolean status=true;  
+    try{  
+        
+        Connection conn=DbConnect.getConnection();
+  
+for(String p:prodcat){        
+        PreparedStatement ps=conn.prepareStatement(  
+"INSERT INTO rel_cat (Nomecatlista, Nomecatprodotto) VALUES (?, ?)");  
+ps.setString(1,listcat);   
+ps.setString(2,p); 
+
+status=status && (ps.executeUpdate()>0);
+
+}
+
+
+    conn.close();
+              
+    }catch(Exception e){System.out.println(e);}  
+    return status;  
+    }        
+        
+        
 
 }

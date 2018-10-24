@@ -4,8 +4,10 @@ C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\mail\Ma
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ResetDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\objects\ProductCat.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\SetPasswordDao.java
+C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\NewCatListServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ActivateServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\RequestResetServlet.java
+C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ProdcatServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\objects\ListCat.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\RegistrationDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\SetPasswordServlet.java
@@ -20,6 +22,7 @@ C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlet
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ResetServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ImageUploadServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\MailExistsDao.java
+C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ProdcatDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\LogoutServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ActivateDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\LoginServlet.java
