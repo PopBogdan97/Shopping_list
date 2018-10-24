@@ -36,10 +36,10 @@ public class RegistrationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
                     PrintWriter out = response.getWriter();  
-          
+    
+    String nominativo=request.getParameter("nominativo");
     String email=request.getParameter("email");  
-    String password=request.getParameter("password"); 
-    String nominativo=request.getParameter("nominativo"); 
+    String password=request.getParameter("passwordRegistration"); 
    
           
     if(RegistrationDao.register(email, password, nominativo)){  
@@ -48,7 +48,7 @@ public class RegistrationServlet extends HttpServlet {
 
     }  
     else{  
-        RequestDispatcher rd=request.getRequestDispatcher("register.jsp");  
+        RequestDispatcher rd=request.getRequestDispatcher("login_registration.jsp");
         rd.include(request,response);  
         out.print("Error!");
     }  

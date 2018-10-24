@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\RegistrationServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ListcatDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\mail\Mailer.java
@@ -28,3 +29,32 @@ C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\Act
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\LoginServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ListcatServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\mail\ResetPasswordMailer.java
+=======
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\mail\Mailer.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\ActivateDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\ListcatServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\LoginServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\objects\ProductList.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\ResetServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\RegistrationServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\Upload.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\ResetDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\RequestResetServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\ImageUploadServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\LoginDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\mail\ResetPasswordMailer.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\LogoutServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\ReSendServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\ActivateServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\ListcatDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\SetPasswordServlet.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\SetPasswordDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\objects\ProductCat.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\MailExistsDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\objects\ListCat.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\ImageDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\DbConnect.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\MailDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\objects\Product.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\RegistrationDao.java
+>>>>>>> 31569984d7048a0fb4a925432cb439b957e49c29
