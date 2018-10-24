@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<jsp:useBean id="sum" class="objects.ProdCatBean" scope="page" />
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,6 +25,8 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     </head>
 
     <body class="bg-success">
@@ -51,13 +56,16 @@
                         </div>
                         <br>
                         <ul class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-info" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <li class="d-flex justify-content-between align-items-center">
-                                    Categoria 1
-                                    <span class="badge badge-primary badge-pill">2</span>
-                                </li>
-                            </a>
-                            <br>
+                            <c:forEach var = "i" begin = "1" end = "5">
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-info" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <li class="d-flex justify-content-between align-items-center">
+                                        Categoria <c:out value = "${i}"/><p>
+                                        <span class="badge badge-primary badge-pill">2</span>
+                                    </li>
+                                </a>
+                                <br>
+                            </c:forEach>
+                            <!--<br>
                             <a href="#" class="list-group-item list-group-item-action list-group-item-info" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <li class="d-flex justify-content-between align-items-center">
                                     Categoria 2
@@ -70,7 +78,7 @@
                                     Categoria 3
                                     <span class="badge badge-primary badge-pill">2</span>
                                 </li>
-                            </a>
+                            </a>-->
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>
@@ -104,11 +112,25 @@
                 </div>
             </div>
         </div>
-        <footer class="py-4 bg-light">
+        <div>
+            <c:forEach var="shoppingList" items="${shoppingLists}">
+                ${shoppingList.nome}
+            </c:forEach>
+        </div>
+        <!--<footer class="py-4 bg-light">
             <div class="container">
                 <p class="m-0 text-center text-dark">Copyright © Shopping List 2018</p>
             </div>
-        </footer>
+        </footer>-->
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: 'GetCatProdServlet',
+                    type: 'get',
+                    dataType: 'json'
+                });
+            });
+        </script>  
     </body>
 </html>
 
