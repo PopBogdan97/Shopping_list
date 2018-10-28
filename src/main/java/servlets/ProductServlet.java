@@ -5,30 +5,22 @@
  */
 package servlets;
 
-import dao.ImageDao;
-import java.io.File;
+import dao.ProductDao;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.file.Paths;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import org.json.simple.JSONArray;
 
-@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
-                 maxFileSize=1024*1024*10,      // 10MB
-                 maxRequestSize=1024*1024*50)   // 50MB
 /**
  *
  * @author Emiliano
  */
-@WebServlet(name = "ImageUploadServlet", urlPatterns = {"/ImageUploadServlet"})
-public class ImageUploadServlet extends HttpServlet {
+@WebServlet(name = "ProductServlet", urlPatterns = {"/ProductServlet"})
+public class ProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +31,17 @@ public class ImageUploadServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
+    protected void processGETRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+                response.setContentType("application/json");
+        String str=!request.getParameterMap().containsKey("q") ? "": request.getParameter("q");
+        JSONArray array=ProductDao.getList(str);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.print(array);
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -52,6 +54,7 @@ public class ImageUploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processGETRequest(request, response);
     }
 
     /**
@@ -65,28 +68,6 @@ public class ImageUploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String email=request.getParameter("email");
-        
-            Part part=request.getPart("file");
-            
-            String fileName=email+"."+((part.getName()).split(".")[1]);
-       
-            UploadImage.upload(part, fileName);
-
-
-    if(ImageDao.setimage(email, fileName)){  
-        request.setAttribute("email", email);
-        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
-        rd.forward(request,response);  
-    }  
-    else{ 
-        request.setAttribute("error", "Image not set!");
-        RequestDispatcher rd=request.getRequestDispatcher("setimage.jsp");
-        rd.forward(request,response);  
-
-    }  
-    
     }
 
     /**

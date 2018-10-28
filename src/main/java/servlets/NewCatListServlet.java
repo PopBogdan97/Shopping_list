@@ -8,9 +8,12 @@ package servlets;
 import dao.ListcatDao;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Properties;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -39,9 +42,8 @@ public class NewCatListServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     */
-            private static final String IMG_DIR = "images";
-
+     */ 
+ 
     protected void processPOSTRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -50,21 +52,21 @@ public class NewCatListServlet extends HttpServlet {
         String descrizione=request.getParameter("descrizione");
         String[] prodcat=request.getParameterValues("arr");
         
-        String appPath = request.getServletContext().getRealPath("");
+        String fileName="";
         
-        String path = appPath + File.separator + IMG_DIR;
-        
-        File dir = new File(path);
-        if (!dir.exists()) {
-            dir.mkdir();
+        if(Boolean.parseBoolean(request.getParameter("ok"))){
+
+            
+            Part part=request.getPart("file");
+            
+            System.out.println((Paths.get(part.getSubmittedFileName()).getFileName().toString()));
+            
+            fileName=nome+"."+(((Paths.get(part.getSubmittedFileName()).getFileName().toString()).split("\\."))[1]);
+                   
+                   System.out.println(fileName);
+
+            UploadImage.upload(part, fileName);
         }
-        
-Part filePart = request.getPart("file"); // Retrieves <input type="file"
-String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE
-
-String newpath=path + File.separator + fileName;
-
-filePart.write(newpath);
 
 
     if(ListcatDao.initialize(nome, descrizione, fileName)){  

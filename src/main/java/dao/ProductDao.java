@@ -16,7 +16,7 @@ import servlets.DbConnect;
  *
  * @author Emiliano
  */
-public class ProdcatDao {
+public class ProductDao {
         public static JSONArray getList(String str) {
         JSONArray array = new JSONArray();
         
@@ -24,7 +24,7 @@ public class ProdcatDao {
             Connection conn = DbConnect.getConnection();
             
             PreparedStatement ps = conn.prepareStatement(
-"SELECT * FROM Cat_prodotto WHERE Nome LIKE '%"+str+"%' LIMIT 5");
+"SELECT * FROM Prodotto WHERE Nome LIKE '%"+str+"%' LIMIT 5");
             ResultSet rs = ps.executeQuery();
 
             int i=0;
@@ -46,17 +46,18 @@ public class ProdcatDao {
         return array;
     }
         
-                public static boolean initialize(String nome, String descrizione, String immagine) {
+                public static boolean initialize(String nome, String descrizione, String immagine, String cat) {
                boolean status=false;  
     try{  
         
         Connection conn=DbConnect.getConnection();
         
         PreparedStatement ps=conn.prepareStatement(  
-"INSERT INTO Cat_prodotto (Nome, Descrizione, Logo) VALUES (?, ?, ?)");  
+"INSERT INTO Prodotto (Nome, NomeCat, Note, Fotografia) VALUES (?, ?, ?, ?)");  
 ps.setString(1,nome);  
-ps.setString(2,descrizione);
-ps.setString(3,immagine);
+ps.setString(2,cat);
+ps.setString(3,descrizione);
+ps.setString(4,immagine);
 
 status=ps.executeUpdate()>0;
 
@@ -64,5 +65,5 @@ status=ps.executeUpdate()>0;
               
     }catch(Exception e){System.out.println(e);}  
     return status;  
-    }
+    }    
 }

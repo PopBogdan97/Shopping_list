@@ -25,7 +25,7 @@ public class ListcatDao {
             Connection conn = DbConnect.getConnection();
             
             PreparedStatement ps = conn.prepareStatement(
-"SELECT * FROM cat_lista WHERE Nome LIKE '%"+str+"%' LIMIT 5");
+"SELECT * FROM Cat_lista WHERE Nome LIKE '%"+str+"%' LIMIT 5");
 
             ResultSet rs = ps.executeQuery();
 
@@ -55,7 +55,7 @@ public class ListcatDao {
         Connection conn=DbConnect.getConnection();
         
         PreparedStatement ps=conn.prepareStatement(  
-"INSERT INTO cat_lista (Nome, Descrizione, Immagine) VALUES (?, ?, ?)");  
+"INSERT INTO Cat_lista (Nome, Descrizione, Immagine) VALUES (?, ?, ?)");  
 ps.setString(1,nome);  
 ps.setString(2,descrizione);
 ps.setString(3,immagine);
@@ -77,7 +77,7 @@ status=ps.executeUpdate()>0;
   
 for(String p:prodcat){        
         PreparedStatement ps=conn.prepareStatement(  
-"INSERT INTO rel_cat (Nomecatlista, Nomecatprodotto) VALUES (?, ?)");  
+"INSERT INTO Rel_cat (Nomecatlista, Nomecatprodotto) VALUES (?, ?)");  
 ps.setString(1,listcat);   
 ps.setString(2,p); 
 

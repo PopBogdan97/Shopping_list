@@ -5,13 +5,13 @@
  */
 package servlets;
 
-import dao.ImageDao;
+import dao.ProductDao;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
-import javax.servlet.RequestDispatcher;
+import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +27,10 @@ import javax.servlet.http.Part;
  *
  * @author Emiliano
  */
-@WebServlet(name = "ImageUploadServlet", urlPatterns = {"/ImageUploadServlet"})
-public class ImageUploadServlet extends HttpServlet {
+@WebServlet(name = "NewProductServlet", urlPatterns = {"/NewProductServlet"})
+public class NewProductServlet extends HttpServlet {
+
+                    private static final String IMG_DIR = "images";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +41,34 @@ public class ImageUploadServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
+    protected void processPOSTRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String nome=request.getParameter("nome");
+        String descrizione=request.getParameter("descrizione");
+        String prodcat=request.getParameter("catprod");
+        
+        String fileName="";
+
+        if(Boolean.parseBoolean(request.getParameter("ok"))){
+            
+            Part part=request.getPart("file");
+            
+            System.out.println((Paths.get(part.getSubmittedFileName()).getFileName().toString()));
+            
+            fileName=nome+"."+(((Paths.get(part.getSubmittedFileName()).getFileName().toString()).split("\\."))[1]);
+                   
+                   System.out.println(fileName);
+
+            UploadImage.upload(part, fileName);
+        }
+
+
+    if(ProductDao.initialize(nome, descrizione, fileName, prodcat)){  
+        System.out.println("ok");
+    }  
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -65,28 +94,7 @@ public class ImageUploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String email=request.getParameter("email");
-        
-            Part part=request.getPart("file");
-            
-            String fileName=email+"."+((part.getName()).split(".")[1]);
-       
-            UploadImage.upload(part, fileName);
-
-
-    if(ImageDao.setimage(email, fileName)){  
-        request.setAttribute("email", email);
-        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
-        rd.forward(request,response);  
-    }  
-    else{ 
-        request.setAttribute("error", "Image not set!");
-        RequestDispatcher rd=request.getRequestDispatcher("setimage.jsp");
-        rd.forward(request,response);  
-
-    }  
-    
+        processPOSTRequest(request, response);
     }
 
     /**
