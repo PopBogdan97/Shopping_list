@@ -1,7 +1,6 @@
 dao\ProductDao.class
 dao\MailExistsDao.class
 dao\ResetDao.class
-objects\ProductList.class
 mail\Mailer.class
 dao\SetPasswordDao.class
 mail\Mailer$1.class
@@ -9,14 +8,12 @@ dao\MailDao.class
 servlets\NewCatProdServlet.class
 servlets\NewCatListServlet.class
 servlets\SetPasswordServlet.class
-objects\ListCat.class
 dao\ListcatDao.class
 servlets\ActivateServlet.class
 servlets\ImageUploadServlet.class
 servlets\RequestResetServlet.class
 mail\ResetPasswordMailer.class
 servlets\LoginServlet.class
-objects\ProductCat.class
 servlets\Upload.class
 mail\ResetPasswordMailer$1.class
 dao\ActivateDao.class
@@ -31,7 +28,6 @@ servlets\UploadImage.class
 servlets\ProdcatServlet.class
 servlets\LogoutServlet.class
 dao\ProdcatDao.class
-objects\Product.class
 dao\LoginDao.class
 servlets\ResetServlet.class
 servlets\ReSendServlet.class

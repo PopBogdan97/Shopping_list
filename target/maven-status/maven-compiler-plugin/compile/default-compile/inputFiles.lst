@@ -1,8 +1,8 @@
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\RegistrationServlet.java
+C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\GetCatProdServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ListcatDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\mail\Mailer.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ResetDao.java
-C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\objects\ProductCat.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\SetPasswordDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\NewCatListServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ProductDao.java
@@ -10,11 +10,9 @@ C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlet
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ActivateServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\RequestResetServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ProdcatServlet.java
-C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\objects\ListCat.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\RegistrationDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\SetPasswordServlet.java
-C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\objects\ProductList.java
-C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\objects\Product.java
+C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\entities\ShoppingList.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\NewProductServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ImageDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\LoginDao.java

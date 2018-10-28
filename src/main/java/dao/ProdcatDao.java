@@ -5,9 +5,13 @@
  */
 package dao;
 
+import entities.ShoppingList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import servlets.DbConnect;
@@ -46,6 +50,7 @@ public class ProdcatDao {
         return array;
     }
         
+        
                 public static boolean initialize(String nome, String descrizione, String immagine) {
                boolean status=false;  
     try{  
@@ -64,5 +69,25 @@ status=ps.executeUpdate()>0;
               
     }catch(Exception e){System.out.println(e);}  
     return status;  
+                }
+    
+    public static List getProd(){
+        List shoppingLists = new ArrayList<>();
+        try{
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Cat_prodotto");
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    ShoppingList shoppingList = new ShoppingList();
+                    shoppingList.setNome(rs.getString("Nome"));
+                    shoppingList.setDescrizione(rs.getString("Descrizione"));
+
+                    shoppingLists.add(shoppingList);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return shoppingLists;
     }
 }
