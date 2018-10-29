@@ -23,7 +23,7 @@ import org.json.simple.JSONArray;
  * @author Marco
  */
 
-@WebServlet(name = "ProdcatServlet", urlPatterns = {"/GetCatProdServlet"})
+@WebServlet(name = "GetCatProdServlet", urlPatterns = {"/GetCatProdServlet"})
 public class GetCatProdServlet extends HttpServlet {
 
     /**

@@ -24,8 +24,7 @@ public class ListcatDao {
         try {
             Connection conn = DbConnect.getConnection();
             
-            PreparedStatement ps = conn.prepareStatement(
-"SELECT * FROM Cat_lista WHERE Nome LIKE '%"+str+"%' LIMIT 5");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome LIKE '%"+str+"%' LIMIT 5");
 
             ResultSet rs = ps.executeQuery();
 
@@ -48,50 +47,43 @@ public class ListcatDao {
         return array;
     }
 
-        public static boolean initialize(String nome, String descrizione, String immagine) {
-               boolean status=false;  
-    try{  
-        
-        Connection conn=DbConnect.getConnection();
-        
-        PreparedStatement ps=conn.prepareStatement(  
-"INSERT INTO Cat_lista (Nome, Descrizione, Immagine) VALUES (?, ?, ?)");  
-ps.setString(1,nome);  
-ps.setString(2,descrizione);
-ps.setString(3,immagine);
+    public static boolean initialize(String nome, String descrizione, String immagine) {
+        boolean status=false;  
+        try{  
 
-status=ps.executeUpdate()>0;
+            Connection conn=DbConnect.getConnection();
 
-    conn.close();
-              
-    }catch(Exception e){System.out.println(e);}  
-    return status;  
+            PreparedStatement ps=conn.prepareStatement("INSERT INTO Cat_lista (Nome, Descrizione, Immagine) VALUES (?, ?, ?)");  
+            ps.setString(1,nome);  
+            ps.setString(2,descrizione);
+            ps.setString(3,immagine);
+
+            status=ps.executeUpdate()>0;
+
+        conn.close();
+
+        }catch(Exception e){
+            System.out.println(e);
+        }  
+        return status;  
     }
         
 
-        public static boolean setProdCat(String listcat, String[] prodcat) {
-               boolean status=true;  
-    try{  
+    public static boolean setProdCat(String listcat, String[] prodcat) {
+        boolean status=true;  
+        try{  
         
         Connection conn=DbConnect.getConnection();
   
-for(String p:prodcat){        
-        PreparedStatement ps=conn.prepareStatement(  
-"INSERT INTO Rel_cat (Nomecatlista, Nomecatprodotto) VALUES (?, ?)");  
-ps.setString(1,listcat);   
-ps.setString(2,p); 
-
-status=status && (ps.executeUpdate()>0);
-
-}
-
-
-    conn.close();
+        for(String p:prodcat){        
+            PreparedStatement ps=conn.prepareStatement("INSERT INTO Rel_cat (Nomecatlista, Nomecatprodotto) VALUES (?, ?)");  
+            ps.setString(1,listcat);   
+            ps.setString(2,p); 
+            status=status && (ps.executeUpdate()>0);
+        }
+        conn.close();
               
     }catch(Exception e){System.out.println(e);}  
-    return status;  
+        return status;  
     }        
-        
-        
-
 }

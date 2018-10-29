@@ -21,14 +21,13 @@ import servlets.DbConnect;
  * @author Emiliano
  */
 public class ProdcatDao {
-        public static JSONArray getList(String str) {
+    public static JSONArray getList(String str) {
         JSONArray array = new JSONArray();
         
         try {
             Connection conn = DbConnect.getConnection();
             
-            PreparedStatement ps = conn.prepareStatement(
-"SELECT * FROM Cat_prodotto WHERE Nome LIKE '%"+str+"%' LIMIT 5");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome LIKE '%"+str+"%' LIMIT 5");
             ResultSet rs = ps.executeQuery();
 
             int i=0;
@@ -51,25 +50,25 @@ public class ProdcatDao {
     }
         
         
-                public static boolean initialize(String nome, String descrizione, String immagine) {
-               boolean status=false;  
-    try{  
+    public static boolean initialize(String nome, String descrizione, String immagine) {
+        boolean status=false;  
+        try{  
         
-        Connection conn=DbConnect.getConnection();
-        
-        PreparedStatement ps=conn.prepareStatement(  
-"INSERT INTO Cat_prodotto (Nome, Descrizione, Logo) VALUES (?, ?, ?)");  
-ps.setString(1,nome);  
-ps.setString(2,descrizione);
-ps.setString(3,immagine);
+            Connection conn=DbConnect.getConnection();
+            PreparedStatement ps=conn.prepareStatement("INSERT INTO Cat_prodotto (Nome, Descrizione, Logo) VALUES (?, ?, ?)");  
+            ps.setString(1,nome);  
+            ps.setString(2,descrizione);
+            ps.setString(3,immagine);
+            
+            status=ps.executeUpdate()>0;
 
-status=ps.executeUpdate()>0;
-
-    conn.close();
+            conn.close();
               
-    }catch(Exception e){System.out.println(e);}  
-    return status;  
-                }
+        }catch(Exception e){
+            System.out.println(e);
+        }  
+        return status;  
+    }
     
     public static List getProd(){
         List shoppingLists = new ArrayList<>();
