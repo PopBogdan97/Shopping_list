@@ -55,11 +55,11 @@
                         </div>
                         <br>
                         <ul class="list-group">
-                            <c:forEach var = "i" begin = "1" end = "5">
+                            <c:forEach var="shoppingList" items="${shoppingLists}">
                                 <a href="#" class="list-group-item list-group-item-action list-group-item-info" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <li class="d-flex justify-content-between align-items-center">
-                                        Categoria <c:out value = "${i}"/><p>
-                                        <span class="badge badge-primary badge-pill">2</span>
+                                        ${shoppingList.nome}
+                                        <span class="badge badge-primary badge-pill">${shoppingList.counter}</span>
                                     </li>
                                 </a>
                                 <br>
@@ -111,17 +111,12 @@
                 </div>
             </div>
         </div>
-        <div>
-            <c:forEach var="shoppingList" items="${shoppingLists}">
-                ${shoppingList.nome}
-            </c:forEach>
-        </div>
         <!--<footer class="py-4 bg-light">
             <div class="container">
                 <p class="m-0 text-center text-dark">Copyright © Shopping List 2018</p>
             </div>
         </footer>-->
-        <script>
+        <!--<script>
             $(document).ready(function() {
                 $.ajax({
                     url: 'GetCatProdServlet',
@@ -129,7 +124,7 @@
                     dataType: 'json'
                 });
             });
-        </script>  
+        </script>--> 
     </body>
 </html>
 
