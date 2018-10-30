@@ -31,15 +31,16 @@
 
             <h2>Categorie di lista</h2>
 
-            <select class="str-catlist form-control" style="width:500px" name="str-catlist"></select>
-
+            <select class="str-catlist form-control" style="width:500px" name="str-catlist"><option></option></select>
+            <button id="delete-catlist" style="display:none;">Elimina</button>
         </div>
 
                 <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
 
             <h2>Categorie di prodotto</h2>
 
-            <select class="str-catprod form-control" style="width:500px" name="str-catprod"></select>
+            <select class="str-catprod form-control" style="width:500px" name="str-catprod"><option></option></select>
+            <button id="delete-catprod" style="display:none;">Elimina</button>
 
         </div>
         
@@ -47,7 +48,8 @@
 
             <h2>Prodotti</h2>
 
-            <select class="str-product form-control" style="width:500px" name="str-product"></select>
+            <select class="str-product form-control" style="width:500px" name="str-product"><option></option></select>
+            <button id="delete-product" style="display:none;">Elimina</button>
 
         </div>
 

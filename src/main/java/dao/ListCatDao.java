@@ -8,15 +8,15 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import servlets.DbConnect;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import servlets.DbConnect;
 
 /**
  *
  * @author Emiliano
  */
-public class ProductDao {
+public class ListCatDao {
 
     public static JSONArray getList(String str) {
         JSONArray array = new JSONArray();
@@ -24,17 +24,16 @@ public class ProductDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement(
-                    "SELECT * FROM Prodotto WHERE Nome LIKE '%" + str + "%' LIMIT 5");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome LIKE '%" + str + "%' LIMIT 5");
+
             ResultSet rs = ps.executeQuery();
 
             int i = 0;
             while (rs.next()) {
                 String nome = rs.getString("Nome");
-                String nomecat = rs.getString("NomeCat");
                 JSONObject object = new JSONObject();
                 object.put("id", i + "");
-                object.put("text", nome+"-"+nomecat);
+                object.put("text", nome);
                 array.add(object);
                 i++;
             }
@@ -48,18 +47,16 @@ public class ProductDao {
         return array;
     }
 
-    public static boolean initialize(String nome, String descrizione, String immagine, String cat) {
+    public static boolean initialize(String nome, String descrizione, String immagine) {
         boolean status = false;
         try {
 
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO Prodotto (Nome, NomeCat, Note, Fotografia) VALUES (?, ?, ?, ?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Cat_lista (Nome, Descrizione, Immagine) VALUES (?, ?, ?)");
             ps.setString(1, nome);
-            ps.setString(2, cat);
-            ps.setString(3, descrizione);
-            ps.setString(4, immagine);
+            ps.setString(2, descrizione);
+            ps.setString(3, immagine);
 
             status = ps.executeUpdate() > 0;
 
@@ -71,16 +68,35 @@ public class ProductDao {
         return status;
     }
 
-    public static boolean delete(String nome, String cat) {
+    public static boolean setProdCat(String listcat, String[] prodcat) {
+        boolean status = true;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            for (String p : prodcat) {
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO Rel_cat (Nomecatlista, Nomecatprodotto) VALUES (?, ?)");
+                ps.setString(1, listcat);
+                ps.setString(2, p);
+                status = status && (ps.executeUpdate() > 0);
+            }
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean delete(String nome) {
         boolean status = false;
         try {
 
             Connection conn = DbConnect.getConnection();
 
             PreparedStatement ps = conn.prepareStatement(
-                    "DELETE FROM Prodotto WHERE Nome=? AND NomeCat=?");
+                    "DELETE FROM Cat_lista WHERE Nome=?");
             ps.setString(1, nome);
-            ps.setString(2, cat);
 
             status = ps.executeUpdate() > 0;
 

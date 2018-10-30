@@ -20,7 +20,7 @@ import servlets.DbConnect;
  *
  * @author Emiliano
  */
-public class ProdcatDao {
+public class ProdCatDao {
     public static JSONArray getList(String str) {
         JSONArray array = new JSONArray();
         
@@ -88,5 +88,25 @@ public class ProdcatDao {
             System.out.println(ex);
         }
         return shoppingLists;
+    }
+    
+        public static boolean delete(String nome) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM Cat_prodotto WHERE Nome=?");
+            ps.setString(1, nome);
+
+            status = ps.executeUpdate() > 0;
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
     }
 }

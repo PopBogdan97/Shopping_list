@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import dao.ProdcatDao;
+import dao.ProdCatDao;
 import entities.ShoppingList;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,7 +38,7 @@ public class GetCatProdServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
-        List<ShoppingList> shoppingLists = ProdcatDao.getProd();
+        List<ShoppingList> shoppingLists = ProdCatDao.getProd();
         request.setAttribute("shoppingLists", shoppingLists);
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request,response);

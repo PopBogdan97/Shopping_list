@@ -8,13 +8,19 @@ package servlets;
 import dao.ProductDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import org.json.simple.JSONArray;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 /**
  *
  * @author Emiliano
@@ -33,12 +39,50 @@ public class ProductServlet extends HttpServlet {
      */
     protected void processGETRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                response.setContentType("application/json");
-        String str=!request.getParameterMap().containsKey("q") ? "": request.getParameter("q");
-        JSONArray array=ProductDao.getList(str);
+        response.setContentType("application/json");
+        String str = !request.getParameterMap().containsKey("q") ? "" : request.getParameter("q");
+        JSONArray array = ProductDao.getList(str);
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.print(array);
+        }
+    }
+
+    protected void processNEWRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String nome = request.getParameter("nome");
+        String descrizione = request.getParameter("descrizione");
+        String prodcat = request.getParameter("catprod");
+
+        String fileName = "";
+
+        if (Boolean.parseBoolean(request.getParameter("ok"))) {
+
+            Part part = request.getPart("file");
+
+            System.out.println((Paths.get(part.getSubmittedFileName()).getFileName().toString()));
+
+            fileName = nome + "." + (((Paths.get(part.getSubmittedFileName()).getFileName().toString()).split("\\."))[1]);
+
+            System.out.println(fileName);
+
+            UploadImage.upload(part, fileName);
+        }
+
+        if (ProductDao.initialize(nome, descrizione, fileName, prodcat)) {
+            System.out.println("ok");
+        }
+    }
+
+    protected void processDELETERequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String nome = request.getParameter("nome");
+        String prodcat = request.getParameter("catprod");
+
+        if (ProductDao.delete(nome, prodcat)) {
+            System.out.println("ok");
         }
     }
 
@@ -68,6 +112,16 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if (action.equals("new")) {
+            processNEWRequest(request, response);
+        } else if (action.equals("delete")) {
+            processDELETERequest(request, response);
+
+        }
+
     }
 
     /**
