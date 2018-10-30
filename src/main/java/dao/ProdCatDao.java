@@ -80,7 +80,15 @@ public class ProdCatDao {
                     ShoppingList shoppingList = new ShoppingList();
                     shoppingList.setNome(rs.getString("Nome"));
                     shoppingList.setDescrizione(rs.getString("Descrizione"));
-
+                    
+                    PreparedStatement stm1 = conn.prepareStatement("SELECT count(*) as cnt FROM Prodotto where NomeCat=?");
+                    stm1.setString(1,rs.getString("Nome"));  
+                    try(ResultSet rs1 = stm1.executeQuery()){
+                        rs1.next();
+                        shoppingList.setCounter(rs1.getString("cnt"));
+                    } catch (Exception ex) {
+                        System.out.println(ex);
+                    }
                     shoppingLists.add(shoppingList);
                 }
             }

@@ -9,9 +9,11 @@ package entities;
  *
  * @author Marco
  */
+
 public class ShoppingList {
     private String nome;
     private String descrizione;
+    private String counter;
 
     public String getNome() {
         return nome;
@@ -20,6 +22,10 @@ public class ShoppingList {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    public void setCounter(String counter) {
+        this.counter = counter;
+    }
 
     public String getDescrizione() {
         return descrizione;
@@ -27,5 +33,9 @@ public class ShoppingList {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    public String getCounter() {
+        return counter;
     }
 }
