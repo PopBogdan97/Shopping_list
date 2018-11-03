@@ -70,9 +70,9 @@ public class ImageUploadServlet extends HttpServlet {
         
             Part part=request.getPart("file");
             
-            String fileName=email+"."+((part.getName()).split(".")[1]);
+            String fileName=email+".png";
        
-            UploadImage.upload(part, fileName);
+            UploadImage.upload(part, fileName, "users");
 
 
     if(ImageDao.setimage(email, fileName)){  

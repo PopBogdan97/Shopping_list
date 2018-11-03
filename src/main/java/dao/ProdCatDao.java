@@ -117,4 +117,88 @@ public class ProdCatDao {
         }
         return status;
     }
+        
+                public static JSONObject getData(String nome) {
+        JSONObject object = new JSONObject();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome=?");
+            ps.setString(1, nome);
+
+            ResultSet rs = ps.executeQuery();
+
+                if(rs.next()){
+                    object.put("Descrizione", rs.getString("Descrizione"));
+                }
+                
+            conn.close();
+
+            System.out.println(object);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return object;
+    }
+        
+                public static String getImage(String nome) {
+
+                    String file="";
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome=?");
+            ps.setString(1, nome);
+
+            ResultSet rs = ps.executeQuery();
+
+            
+                if(rs.next()){
+                    file=rs.getString("Logo");
+                }
+
+            conn.close();
+
+            System.out.println(file);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return file;
+    }
+                
+                    public static boolean modify(String nome, String descrizione, String immagine, boolean mod) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+            
+            if(mod){
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=?, Logo=? WHERE Nome=?");
+            ps.setString(1, descrizione);
+            ps.setString(2, immagine);
+            ps.setString(3, nome);
+
+            status = ps.executeUpdate() > 0;
+            }
+            else{
+            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=? WHERE Nome=?");
+            ps.setString(1, descrizione);
+            ps.setString(2, nome);
+
+            status = ps.executeUpdate() > 0;
+            }                
+            
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 }

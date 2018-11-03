@@ -5,7 +5,7 @@
  */
 package filters;
 
-import dao.ProdcatDao;
+import dao.ProdCatDao;
 import entities.ShoppingList;
 import java.io.IOException;
 import java.util.List;
@@ -47,7 +47,7 @@ public class ShoppingListFilter implements Filter {
             log("ShoppingListsFilter:DoBeforeProcessing");
         }
 
-        ProdcatDao shoppingListDao = null;
+        ProdCatDao shoppingListDao = null;
         
         try {
             request.setAttribute("shoppingListDao", shoppingListDao);
