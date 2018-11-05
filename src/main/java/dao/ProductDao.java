@@ -91,4 +91,92 @@ public class ProductDao {
         }
         return status;
     }
+    
+            public static JSONObject getData(String nome, String nomecat) {
+        JSONObject object = new JSONObject();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Prodotto WHERE Nome=? AND NomeCat=?");
+            ps.setString(1, nome);
+            ps.setString(2, nomecat);
+
+            ResultSet rs = ps.executeQuery();
+
+                if(rs.next()){
+                    object.put("Descrizione", rs.getString("Note"));
+                }
+                
+            conn.close();
+
+            System.out.println(object);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return object;
+    }
+        
+                public static String getImage(String nome, String nomecat) {
+
+                    String file="";
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Prodotto WHERE Nome=? AND NomeCat=?");
+            ps.setString(1, nome);
+            ps.setString(2, nomecat);
+
+            ResultSet rs = ps.executeQuery();
+
+            
+                if(rs.next()){
+                    file=rs.getString("Fotografia");
+                }
+
+            conn.close();
+
+            System.out.println(file);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return file;
+    }
+                
+                    public static boolean modify(String nome, String nomecat, String descrizione, String immagine, boolean mod) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+            
+            if(mod){
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE Prodotto SET Note=?, Fotografia=? WHERE Nome=? AND NomeCat=?");
+            ps.setString(1, descrizione);
+            ps.setString(2, immagine);
+            ps.setString(3, nome);
+            ps.setString(4, nomecat);
+
+            status = ps.executeUpdate() > 0;
+            }
+            else{
+            PreparedStatement ps = conn.prepareStatement("UPDATE Prodotto SET Note=? WHERE Nome=? AND NomeCat=?");
+            ps.setString(1, descrizione);
+            ps.setString(2, nome);
+            ps.setString(3, nomecat);
+
+            status = ps.executeUpdate() > 0;
+            }                
+            
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 }

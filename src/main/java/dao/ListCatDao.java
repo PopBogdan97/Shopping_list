@@ -107,4 +107,101 @@ public class ListCatDao {
         }
         return status;
     }
+    
+        public static JSONObject getData(String nome) {
+        JSONObject object = new JSONObject();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome=?");
+            ps.setString(1, nome);
+
+            ResultSet rs = ps.executeQuery();
+
+                if(rs.next()){
+                    object.put("Descrizione", rs.getString("Descrizione"));
+                }
+                
+                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM Rel_cat WHERE Nomecatlista=?");
+            ps1.setString(1, nome);
+
+            ResultSet rs1 = ps1.executeQuery();
+                    JSONArray array=new JSONArray();
+
+                while(rs1.next()){
+                    JSONObject obj=new JSONObject();
+                    obj.put("Nomecatprodotto", rs1.getString("Nomecatprodotto"));
+                    array.add(obj);
+                }                
+                
+                object.put("Categorie", array);
+            conn.close();
+
+            System.out.println(object);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return object;
+    }
+        
+                public static String getImage(String nome) {
+
+                    String file="";
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome=?");
+            ps.setString(1, nome);
+
+            ResultSet rs = ps.executeQuery();
+
+            
+                if(rs.next()){
+                    file=rs.getString("Immagine");
+                }
+
+            conn.close();
+
+            System.out.println(file);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return file;
+    }
+                
+                    public static boolean modify(String nome, String descrizione, String immagine, boolean mod) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+            
+            if(mod){
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_lista SET Descrizione=?, Immagine=? WHERE Nome=?");
+            ps.setString(1, descrizione);
+            ps.setString(2, immagine);
+            ps.setString(3, nome);
+
+            status = ps.executeUpdate() > 0;
+            }
+            else{
+            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_lista SET Descrizione=? WHERE Nome=?");
+            ps.setString(1, descrizione);
+            ps.setString(2, nome);
+
+            status = ps.executeUpdate() > 0;
+            }                
+            
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 }

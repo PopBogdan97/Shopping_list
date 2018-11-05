@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Properties;
+import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 
 /**
@@ -19,7 +20,7 @@ import javax.servlet.http.Part;
  */
 public class UploadImage {
     
-        public static void upload(Part part, String name) throws IOException {
+        public static void upload(Part part, String name, String sub) throws IOException {
             
         InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
         Properties properties = new Properties();
@@ -29,13 +30,22 @@ public class UploadImage {
         
         if (!dir.exists()) {
             dir.mkdir();
-            System.out.println("create");
+            System.out.println("createdir");
         }
         
-File file = new File(dir, name);
-
-try (InputStream input = part.getInputStream()) {
-    Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                File subdir = new File(properties.getProperty("location"), sub);
+        
+        if (!subdir.exists()) {
+            subdir.mkdir();
+            System.out.println("createsubdir");
+        }
+        
+try {
+    File outputfile = new File(subdir, name);
+    ImageIO.write(ImageIO.read(part.getInputStream()), "png", outputfile);
+} catch (IOException e) {
+    // handle exception
 }
+
         }
 }
