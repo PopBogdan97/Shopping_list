@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +41,7 @@ public class LoginServlet extends HttpServlet {
           
     String email=request.getParameter("username");
     String password=request.getParameter("passwordLogin");
+    String remember=request.getParameter("remember");
           
     String result=LoginDao.authenticate(email, password);
     
@@ -47,7 +49,19 @@ public class LoginServlet extends HttpServlet {
         HttpSession session=request.getSession();
         session.setAttribute("email", email);
         request.setAttribute("email", email);
-        RequestDispatcher rd=request.getRequestDispatcher("home.jsp");  
+        
+        
+        if(remember == "on"){
+            /*recupero Cod dell'utente che si sta loggando*/
+            
+            
+            
+            Cookie rememberCookie = new Cookie("rememberUser", email);
+            rememberCookie.setMaxAge(30);  //432000 sec = 5 giorni
+            response.addCookie(rememberCookie);
+        }
+        
+        RequestDispatcher rd=request.getRequestDispatcher("index.jsp");  
         rd.forward(request,response);
     }  
     else{

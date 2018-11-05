@@ -84,7 +84,7 @@ $(function() {
     /* control login fields */
     function controlLoginFields(){
             if(document.getElementById("username").value == ""){
-                    setAlert(alertParagraph,"Field Username not compiled");
+                    setAlert(alertParagraph,"Field Email not compiled");
                     appearAlert(pageMessages);
                     $("#username").addClass("placeholderwrong");
                     return false;
@@ -103,26 +103,15 @@ $(function() {
     }
 		
 /** checkbox changement **/
-    function myMouseOver(x){
-            if(x.checked){
-                    x.style.backgroundColor = '#FFFFFF';
-                    x.style.borderColor = '#d9d9d9';
-            }
-            else{
-                    x.style.backgroundColor = '#28CE7B';
-                    x.style.borderColor = '#28CE7B';
-            }
-    }
-
-    function myMouseOut(x){
-            if(x.checked){
-                    x.style.backgroundColor = '#28CE7B';
-                    x.style.borderColor = '#28CE7B';
-            }
-            else{
-                    x.style.backgroundColor = '#FFFFFF';
-                    x.style.borderColor = '#d9d9d9';
-            }
+    function checkboxClicked(x){
+        if(x.checked){
+                x.style.backgroundColor = '#FFFFFF';
+                x.style.borderColor = '#d9d9d9';
+        }
+        else{
+                x.style.backgroundColor = '#28CE7B';
+                x.style.borderColor = '#28CE7B';
+        }
     }
 		
 /** Alert **/

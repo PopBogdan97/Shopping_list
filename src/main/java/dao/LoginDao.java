@@ -17,29 +17,28 @@ import servlets.DbConnect;
 public class LoginDao {
     
     public static String authenticate(String email, String password){  
-    String status="false";  
-    try{  
-        
-        Connection conn=DbConnect.getConnection();
-          
-        PreparedStatement ps=conn.prepareStatement(  
-"SELECT * FROM Utente WHERE Email=? AND Password=PASSWORD(?)");  
-ps.setString(1,email);  
-ps.setString(2,password);  
+        String status="false";
+        try{  
 
-    ResultSet rs=ps.executeQuery();  
-    
-    if(rs.next()){
-    
-        status=rs.getString("Valid");
-    }
-    
-    conn.close();
-    
-        System.out.println(status);
-              
-    }catch(Exception e){System.out.println(e);}  
-    return status;  
+            Connection conn=DbConnect.getConnection();
+
+            PreparedStatement ps=conn.prepareStatement("SELECT * FROM Utente WHERE Email=? AND Password=PASSWORD(?)");  
+            ps.setString(1,email);  
+            ps.setString(2,password);  
+
+            ResultSet rs=ps.executeQuery();  
+
+            if(rs.next()){
+
+                status=rs.getString("Valid");
+            }
+
+            conn.close();
+
+                System.out.println(status);
+
+        }catch(Exception e){System.out.println(e);}  
+        return status;  
     }  
     
 }  

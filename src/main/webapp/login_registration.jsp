@@ -16,9 +16,9 @@
         <link rel="stylesheet" type="text/css" href="css/login_registration.css">
 
         <!-- including the bootstrap tamplate -->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -29,14 +29,23 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- javascript function for switching from login to registration form and vice versa -->
         <script type="text/javascript" src="js/login_registration.js"></script>
-
+        
     </head>
 
     <body>
-
         <div class="container">
-
-            <div id="pageMessages" style="display: none;">
+        
+            <%  
+                if(request.getAttribute("error") == "Login error!"){
+                    out.print("<div id='pageMessages' style='display: block;'>");
+                }
+                else if(request.getAttribute("error") == "Account not verified!"){
+                    out.print("<div id='pageMessages' style='display: block;'>");
+                }
+                else{
+                    out.print("<div id='pageMessages' style='display: none;'>");
+                }
+            %>
                 <div class="alert animated flipInX alert-danger alert-dismissible">
                     <span class="close" data-dismiss="alert">
                         <i class="fa fa-times-circle" onClick="disappearAlert(pageMessages)"></i>
@@ -45,10 +54,21 @@
                         <i class="fa ffa fa-exclamation-circle"></i>Opps!
                     </h4>
                     <strong>Something went wrong</strong>
-                    <p id="alertParagraph"><!--Here is a bunch of text about some stuff that happened.--></p>
-
+                    <%
+                        if(request.getAttribute("error") == "Login error!"){
+                            out.print("<p id='alertParagraph'>Login error!"
+                                    + "<br><br>Email or Password incorrect"
+                                    + "</p>");
+                        }
+                        else if(request.getAttribute("error") == "Account not verified!"){
+                            out.print("<p id='alertParagraph'>Account not verified!</p>");
+                        }
+                        else{
+                            out.print("<p id='alertParagraph'></p>");
+                        }
+                    %>
                 </div>
-            </div>
+            <% out.print("</div>"); %>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -101,15 +121,17 @@
                                             <!-- LOGIN FORM -->
                                             <form id="login-form" action="LoginServlet" method="POST" role="form" style="display: block;" onSubmit="return controlLoginFields()">
                                                 <div class="form-group">
-                                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username/Email" value="" onChange="changeWrongText(this)">
+                                                    <img src="img/email.png" class="form-image">
+                                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="" onChange="changeWrongText(this)">
                                                 </div>
                                                 <div class="form-group">
+                                                    <img src="img/password.png" class="form-image">
                                                     <input type="password" name="passwordLogin" id="passwordLogin" tabindex="2" class="form-control" placeholder="Password" onChange="changeWrongText(this)">
                                                 </div>
                                                 <div class="form-group text-center">
                                                     <div class="remember-div">
-                                                        <input type="checkbox" tabindex="3" name="remember" id="remember" class="checkbox-login" onMouseOver="myMouseOver(this)" onMouseOut="myMouseOut(this)" style="outline: none;">
-                                                        <label for="remember" class="checkbox-label" onMouseOver="myMouseOver(remember)" onMouseOut="myMouseOut(remember)">Remember Me</label>
+                                                        <input type="checkbox" tabindex="3" name="remember" id="remember" class="checkbox-login" onmousedown="checkboxClicked(this)" style="outline: none;">
+                                                        <label for="remember" class="checkbox-label" onmousedown="checkboxClicked(remember)">Remember Me</label>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="row">
@@ -134,7 +156,7 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="reset" name="reset-login" id="reset-login" tabindex="4" class="form-control btn resetButton" value="Reset">
+                                                            <input type="reset" name="reset-login" id="reset-login" tabindex="4" class="form-control btn resetButton" value="Return" onClick="javascript:history.back()">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,24 +165,28 @@
                                             <!-- REGISTER FORM -->
                                             <form id="register-form" action="RegistrationServlet" method="POST" role="form" onSubmit='return controlRegisterFields()' style="display: none;">
                                                 <div class="form-group">
+                                                    <img src="img/username.png" class="form-image">
                                                     <input type="text" name="nominativo" id="nominativo" tabindex="1" class="form-control" placeholder="Nominativo" value="" onChange="changeWrongText(this)">
                                                 </div>
                                                 <div class="form-group">
+                                                    <img src="img/email.png" class="form-image">
                                                     <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" onChange="changeWrongText(this)">
                                                 </div>
                                                 <div class="form-group">
+                                                    <img src="img/password.png" class="form-image">
                                                     <input type="password" name="passwordRegistration" id="passwordRegistration" tabindex="2" class="form-control" placeholder="Password" onChange="changeWrongText(this)" onkeyup="displayProgressBar(this, divProgressBar)">
                                                     <div id="divProgressBar" class="progress" style="display: none;">
                                                         <div id="StrengthProgressBar" class="progress-bar"></div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
+                                                    <img src="img/password.png" class="form-image">
                                                     <input type="password" name="confirmPassword" id="confirmPassword" tabindex="2" class="form-control" placeholder="Confirm Password" onChanged="changeWrongText(this)">
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="accept-div">
-                                                        <input type="checkbox" tabindex="3" name="acceptPrivacy" id="acceptPrivacy" class="checkbox-login" onMouseOver="myMouseOver(this)" onMouseOut="myMouseOut(this)" style="outline: none;">
-                                                        <label for="acceptPrivacy" class="checkbox-label" onMouseOver="myMouseOver(acceptPrivacy)" onMouseOut="myMouseOut(acceptPrivacy)">Acconsento al trattamento dei miei dati personali secondo la privacy policy ...(link-policy)...</label>
+                                                        <input type="checkbox" tabindex="3" name="acceptPrivacy" id="acceptPrivacy" class="checkbox-login" onmousedown="checkboxClicked(this)" style="outline: none;">
+                                                        <label for="acceptPrivacy" class="checkbox-label" onmousedown="checkboxClicked(acceptPrivacy)">Acconsento al trattamento dei miei dati personali secondo la privacy policy</label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -175,7 +201,7 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="reset" name="reset-register" id="reset-register" tabindex="4" class="form-control btn resetButton" value="Reset">
+                                                            <input type="reset" name="reset-register" id="reset-register" tabindex="4" class="form-control btn resetButton" value="Return" onClick="javascript:history.back()">
                                                         </div>
                                                     </div>
                                                 </div>
