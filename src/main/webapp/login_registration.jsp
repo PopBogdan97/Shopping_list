@@ -15,8 +15,10 @@
         <!-- including the stylesheet file -->
         <link rel="stylesheet" type="text/css" href="css/login_registration.css">
 
-        <!-- including the bootstrap tamplate -->
+        
+        
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!-- including the bootstrap tamplate -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
@@ -34,41 +36,44 @@
 
     <body>
         <div class="container">
+            
         
-            <%  
+            
+            <div id="pageMessages" <%
                 if(request.getAttribute("error") == "Login error!"){
-                    out.print("<div id='pageMessages' style='display: block;'>");
+                    out.print("style='display: block;'");
                 }
                 else if(request.getAttribute("error") == "Account not verified!"){
-                    out.print("<div id='pageMessages' style='display: block;'>");
+                    out.print("style='display: block;'");
                 }
                 else{
-                    out.print("<div id='pageMessages' style='display: none;'>");
+                    out.print("style='display: none;'");
                 }
-            %>
-                <div class="alert animated flipInX alert-danger alert-dismissible">
+                 %>>
+                <div class="animated flipInX alert-danger alert-dismissible">
                     <span class="close" data-dismiss="alert">
-                        <i class="fa fa-times-circle" onClick="disappearAlert(pageMessages)"></i>
+                        <i class="fa fa-times-circle" onClick="disappearAlert()"></i>
                     </span>
                     <h4>
                         <i class="fa ffa fa-exclamation-circle"></i>Opps!
                     </h4>
-                    <strong>Something went wrong</strong>
+                    <strong>Something went wrong</strong>x
+                    <p id="alertParagraph">
                     <%
                         if(request.getAttribute("error") == "Login error!"){
-                            out.print("<p id='alertParagraph'>Login error!"
-                                    + "<br><br>Email or Password incorrect"
-                                    + "</p>");
+                            out.print("Login error!"
+                                    + "<br><br>Email or Password incorrect");
                         }
                         else if(request.getAttribute("error") == "Account not verified!"){
-                            out.print("<p id='alertParagraph'>Account not verified!</p>");
+                            out.print("Account not verified!");
                         }
                         else{
-                            out.print("<p id='alertParagraph'></p>");
+                            out.print("");
                         }
                     %>
+                    </p>
                 </div>
-            <% out.print("</div>"); %>
+            </div>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -215,7 +220,7 @@
                 </div>
 
 
-                <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+                
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>
                 <script type="text/javascript" src="js/zxcvbn-bootstrap-strength-meter.js"></script>
                 <script type="text/javascript">

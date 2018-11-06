@@ -34,49 +34,49 @@ $(function() {
     /* control registration felds */
     function controlRegisterFields(){
             if(document.getElementById("nominativo").value == ""){
-                    setAlert(alertParagraph,"Field Nominativo not compiled");
-                    appearAlert(pageMessages);
+                    setAlert("Field Nominativo not compiled");
+                    appearAlert();
                     $("#nominativo").addClass("placeholderwrong");
                     return false;
             }
             if(document.getElementById("email").value == ""){
-                    setAlert(alertParagraph,"Field Email not compiled");
-                    appearAlert(pageMessages);
+                    setAlert("Field Email not compiled");
+                    appearAlert();
                     $("#email").addClass("placeholderwrong");
                     return false;
             }
             if(document.getElementById("passwordRegistration").value == ""){
-                    setAlert(alertParagraph,"Field Password not compiled");
-                    appearAlert(pageMessages);
+                    setAlert("Field Password not compiled");
+                    appearAlert();
                     $("#passwordRegistration").addClass("placeholderwrong");
                     return false;
             }
             if(document.getElementById("confirmPassword").value == ""){
-                    setAlert(alertParagraph,"Field Confirm Password not compiled");
-                    appearAlert(pageMessages);
+                    setAlert("Field Confirm Password not compiled");
+                    appearAlert();
                     $("#confirmPassword").addClass("placeholderwrong");
                     return false;
             }
 
             if(document.getElementById("passwordRegistration").value != document.getElementById("confirmPassword").value){
-                    setAlert(alertParagraph,"The confirmation password doesn't match!");
-                    appearAlert(pageMessages);
+                    setAlert("The confirmation password doesn't match!");
+                    appearAlert();
                     $("#confirmPassword").val("");
                     $("#confirmPassword").addClass("placeholderwrong");
                     $("#confirmPassword").focus();
                     return false;
             }
             if(document.getElementById("acceptPrivacy").checked == false){
-                    setAlert(alertParagraph,"Is necessary to accept the privacy policy");
-                    appearAlert(pageMessages);
+                    setAlert("Is necessary to accept the privacy policy");
+                    appearAlert();
                     return false;
             }
 
             /* control validation email */
             var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
             if (!reg.test(document.getElementById("email").value)){
-                    setAlert(alertParagraph,"Email format incorrect");
-                    appearAlert(pageMessages);
+                    setAlert("Email format incorrect");
+                    appearAlert();
                     return false;
             }
     }
@@ -84,14 +84,14 @@ $(function() {
     /* control login fields */
     function controlLoginFields(){
             if(document.getElementById("username").value == ""){
-                    setAlert(alertParagraph,"Field Email not compiled");
-                    appearAlert(pageMessages);
+                    setAlert("Field Email not compiled");
+                    appearAlert();
                     $("#username").addClass("placeholderwrong");
                     return false;
             }
             if(document.getElementById("passwordLogin").value == ""){
-                    setAlert(alertParagraph,"Field Password not compiled");
-                    appearAlert(pageMessages);
+                    setAlert("Field Password not compiled");
+                    appearAlert();
                     $("#passwordLogin").addClass("placeholderwrong");
                     return false;
             }
@@ -115,16 +115,16 @@ $(function() {
     }
 		
 /** Alert **/
-    function setAlert(elem, alertText){
-            $("#alertParagraph").text(alertText);
+    function setAlert(alertText){
+        $("#alertParagraph").text(alertText);
     }
 
-    function disappearAlert(elem){
-            elem.style.display = 'none';
+    function disappearAlert(){
+        $("#pageMessages").css("display","none");
     }
 
-    function appearAlert(elem){
-            elem.style.display = 'block';
+    function appearAlert(){
+        $("#pageMessages").css("display","block");
     }
     
 /** Display progress bar **/
