@@ -41,5 +41,24 @@ public class LoginDao {
         return status;  
     }  
     
+                public static boolean setLoginCookie(String email, String id){  
+    boolean status=false;  
+    try{  
+        
+        Connection conn=DbConnect.getConnection();
+        
+        PreparedStatement ps=conn.prepareStatement(  
+"UPDATE Utente SET Cookie=? WHERE Email=?");  
+ps.setString(1,id);  
+ps.setString(2,email);
+
+status=ps.executeUpdate()>0;
+
+    conn.close();
+              
+    }catch(Exception e){System.out.println(e);}  
+    return status;  
+    }  
+    
 }  
 

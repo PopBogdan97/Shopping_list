@@ -8,6 +8,8 @@ package servlets;
 import dao.LoginDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.util.Objects.hash;
+import java.util.UUID;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,27 +43,32 @@ public class LoginServlet extends HttpServlet {
           
     String email=request.getParameter("username");
     String password=request.getParameter("passwordLogin");
-    String remember=request.getParameter("remember");
+    String remember=(request.getParameterMap().containsKey("remember")) ? request.getParameter("remember") : "";
           
     String result=LoginDao.authenticate(email, password);
     
     if(result.equals("1")){
+        
         HttpSession session=request.getSession();
+
         session.setAttribute("email", email);
         request.setAttribute("email", email);
         
-        
-        if(remember == "on"){
+
+        if(remember.equals("on")){
             /*recupero Cod dell'utente che si sta loggando*/
             
+            String uniqueID = UUID.randomUUID().toString();
+            System.out.println("prova");
+            System.out.println(uniqueID);
             
-            
-            Cookie rememberCookie = new Cookie("rememberUser", email);
-            rememberCookie.setMaxAge(30);  //432000 sec = 5 giorni
+            Cookie rememberCookie = new Cookie("rememberUser", uniqueID);
+            rememberCookie.setMaxAge(4320000);  //432000 sec = 5 giorni
             response.addCookie(rememberCookie);
+            LoginDao.setLoginCookie(email, uniqueID);
         }
         
-        RequestDispatcher rd=request.getRequestDispatcher("index.jsp");  
+        RequestDispatcher rd=request.getRequestDispatcher("/index.jsp");  
         rd.forward(request,response);
     }  
     else{
