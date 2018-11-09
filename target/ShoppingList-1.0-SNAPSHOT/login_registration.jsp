@@ -37,8 +37,6 @@
     <body>
         <div class="container">
             
-        
-            
             <div id="pageMessages" <%
                 if(request.getAttribute("error") == "Login error!"){
                     out.print("style='display: block;'");
@@ -50,14 +48,14 @@
                     out.print("style='display: none;'");
                 }
                  %>>
-                <div class="animated flipInX alert-danger alert-dismissible">
+                <div class="alerto animated flipInX alert-danger alert-dismissible">
                     <span class="close" data-dismiss="alert">
                         <i class="fa fa-times-circle" onClick="disappearAlert()"></i>
                     </span>
                     <h4>
-                        <i class="fa ffa fa-exclamation-circle"></i>Opps!
+                        <i class="fa ffa fa-exclamation-circle"></i> Opps!
                     </h4>
-                    <strong>Something went wrong</strong>x
+                    <strong>Something went wrong</strong>
                     <p id="alertParagraph">
                     <%
                         if(request.getAttribute("error") == "Login error!"){

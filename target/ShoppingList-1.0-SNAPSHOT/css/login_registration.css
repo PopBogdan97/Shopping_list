@@ -249,6 +249,15 @@ input.placeholderwrong:-ms-input-placeholder {
 }
 
 
+.alerto {
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid transparent;
+}
+
+
 .progress {
 	margin-top: 10px;
 }
