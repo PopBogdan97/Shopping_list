@@ -14,48 +14,30 @@
         <link rel="stylesheet" href="css/panel.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     </head>
     <body>
         <h1>Admin Panel</h1>
-
-
-
         <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
-
             <h2>Categorie di lista</h2>
-
             <select class="str-catlist form-control" style="width:500px" name="str-catlist"><option></option></select>
             <button id="delete-catlist" style="display:none;">Elimina</button>
             <button id="modify-catlist" style="display:none;">Modifica</button>
-
         </div>
-
-                <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
-
+        <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
             <h2>Categorie di prodotto</h2>
-
             <select class="str-catprod form-control" style="width:500px" name="str-catprod"><option></option></select>
             <button id="delete-catprod" style="display:none;">Elimina</button>
             <button id="modify-catprod" style="display:none;">Modifica</button>
-
         </div>
-        
-                <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
-
+            <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
             <h2>Prodotti</h2>
-
             <select class="str-product form-control" style="width:500px" name="str-product"><option></option></select>
             <button id="delete-product" style="display:none;">Elimina</button>
             <button id="modify-product" style="display:none;">Modifica</button>
-
         </div>
 
         <!-- CatList Modal -->
@@ -64,10 +46,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="catlistModalLabel">Modal title</h3>
-                        
                     </div>
                     <div class="modal-body">
-                        
                         <label>Descrizione</label>
                         <br>
                         <input type="text" id="descrizione-catlist" style="width:500px"/>
@@ -89,16 +69,14 @@
             </div>
         </div>
         
-                <!-- ProdList Modal -->
+        <!-- ProdList Modal -->
         <div class="modal fade" id="catprodModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000 !important;" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="catprodModalLabel">Modal title</h3>
-                        
                     </div>
                     <div class="modal-body">
-                        
                         <label>Descrizione</label>
                         <br>
                         <input type="text" id="descrizione-catprod" name="descrizione" style="width:500px"/>
@@ -117,16 +95,14 @@
             </div>
         </div>
                 
-                        <!-- Product Modal -->
+        <!-- Product Modal -->
         <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000 !important;" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="productModalLabel">Modal title</h3>
-                        
                     </div>
                     <div class="modal-body">
-                        
                         <label>Descrizione</label>
                         <br>
                         <input type="text" id="descrizione-product" style="width:500px"/>
@@ -147,7 +123,6 @@
                 </div>
             </div>
         </div>
-        
        <script src="js/panel.js"></script>
     </body>
 </html>

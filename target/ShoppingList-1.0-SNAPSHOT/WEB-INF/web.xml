@@ -17,6 +17,19 @@
         <servlet-name>ListCatProdServlet</servlet-name>
         <servlet-class>servlets.ListCatProdServlet</servlet-class>
     </servlet>
+    <filter>
+        <filter-name>ProductsFilter</filter-name>
+        <filter-class>filters.ProductsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ProductsFilter</filter-name>
+        <servlet-name>GetProdServlet</servlet-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>GetProdServlet</servlet-name>
+        <servlet-class>servlets.GetProdServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListCatProdServlet</servlet-name>
         <url-pattern>/ListCatProdServlet</url-pattern>
@@ -24,6 +37,10 @@
     <servlet-mapping>
         <servlet-name>GetCatProdServlet</servlet-name>
         <url-pattern>/GetCatProdServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetProdServlet</servlet-name>
+        <url-pattern>/GetProdServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

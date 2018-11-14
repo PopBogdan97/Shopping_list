@@ -26,6 +26,9 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
         
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
     <body class="bg-success">
@@ -37,7 +40,7 @@
                 </button>
                 <div class="navbar-collapse collapse" id="navbarResponsive" style="">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <img src="img/user.png" alt="" width="40" height="40">
                             <a class="btn btn-outline-primary" href="login_registration.jsp">Accedi</a>
                         </li>
@@ -47,43 +50,25 @@
         </nav>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 portfolio-item">
+                <div class="col-lg-6 portfolio-item ft-text">
                     <div class="card h-100 p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             <input type="image" class="mr-3" src="img/search.png" alt="Ok" width="27" height="27"/>
                             <h6 class="mb-0 mx-auto text-dark lh-100">PRODOTTI</h6>
                         </div>
                         <br>
-                        <ul class="list-group">
-                            <c:forEach var="shoppingList" items="${shoppingLists}">
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-info" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <li class="d-flex justify-content-between align-items-center">
-                                        ${shoppingList.nome}
-                                        <span class="badge badge-primary badge-pill">${shoppingList.counter}</span>
-                                    </li>
-                                </a>
+                        <c:forEach var="shoppingList" items="${shoppingLists}">
+                            <button class="collapsible"><span class="badge badge-primary badge-pill">${shoppingList.counter}</span> ${shoppingList.nome}</button>
+                            <ul class="content list-unstyled">
                                 <br>
-                            </c:forEach>
-                            <!--<br>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-info" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <li class="d-flex justify-content-between align-items-center">
-                                    Categoria 2
-                                    <span class="badge badge-primary badge-pill">2</span>
-                                </li>
-                            </a>
-                            <br>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-info" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <li class="d-flex justify-content-between align-items-center">
-                                    Categoria 3
-                                    <span class="badge badge-primary badge-pill">2</span>
-                                </li>
-                            </a>-->
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </ul>
+                                <c:forEach var="product" items="${products}">
+                                    <c:if test="${product.cat_prodotto == shoppingList.nome}">
+                                        <li class="portfolio-link" data-toggle="modal" href="#exampleModalCenter${product.nome}">${product.nome}</li>
+                                    </c:if>
+                                </c:forEach>
+                                <br>
+                            </ul>
+                        </c:forEach>
                         <br>
                         <br>
                         <br>
@@ -93,7 +78,7 @@
                         <br>
                     </div>
                 </div>
-                <div class="col-lg-6 portfolio-item">
+                <div class="col-lg-6 portfolio-item ft-text">
                     <div class="card h-100 p-1">
                         <div class="p-2 text-center text-dark-50 border-bottom">
                             <h6 class="mb-0 mt-2 text-dark lh-100">LISTE DI PIPPO</h6>
@@ -106,25 +91,66 @@
                         <br>
                         <br>
                         <br>
-                        <input type="image" class="mb-3 float-right" src="img/more.png" alt="Ok" width="30" height="30"/>
+                        <nav class="menu">
+                            <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
+                            <label class="menu-open-button" for="menu-open">
+                                <span class="lines line-1"></span>
+                                <span class="lines line-2"></span>
+                                <span class="lines line-3"></span>
+                            </label>
+                            <a href="#" class="menu-item lightblue"> <i class="fa fa-anchor"></i> </a>
+                            <a href="#" class="menu-item lightblue"> <i class="fa fa-coffee"></i> </a>
+                            <a href="#" class="menu-item lightblue"> <i class="fa fa-heart"></i> </a>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <c:forEach var="product" items="${products}">
+            <div class="modal fade" id="exampleModalCenter${product.nome}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">${product.nome}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                             ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                            <button type="button" class="btn btn-primary">Aggiungi prodotto</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+        
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight){
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } 
+                });
+            }
+        </script>
+        
         <!--<footer class="py-4 bg-light">
             <div class="container">
                 <p class="m-0 text-center text-dark">Copyright © Shopping List 2018</p>
             </div>
         </footer>-->
-        <!--<script>
-            $(document).ready(function() {
-                $.ajax({
-                    url: 'GetCatProdServlet',
-                    type: 'get',
-                    dataType: 'json'
-                });
-            });
-        </script>--> 
     </body>
 </html>
 

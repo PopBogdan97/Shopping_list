@@ -5,26 +5,21 @@
  */
 package servlets;
 
-import dao.ProdCatDao;
-import entities.ShoppingList;
+import dao.ProductDao;
+import entities.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONArray;
 
 /**
  *
  * @author Marco
  */
-
-//@WebServlet(name = "GetCatProdServlet", urlPatterns = {"/GetCatProdServlet"})
-public class GetCatProdServlet extends HttpServlet {
+public class GetProdServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,8 +33,9 @@ public class GetCatProdServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
-        //List<ShoppingList> shoppingLists = ProdCatDao.getProd();
-        //request.setAttribute("shoppingLists", shoppingLists);
+        //String str = request.getParameter("cat_prodotto");
+        //List<Product> products = ProductDao.getProd(str);
+        //request.setAttribute("products", products);
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request,response);
     }
@@ -70,6 +66,7 @@ public class GetCatProdServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

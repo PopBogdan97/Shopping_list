@@ -13,7 +13,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        
         <%=(!(session.getAttribute("email")==null)) ? "Logged as: "+session.getAttribute("email")+" <a href='LogoutServlet'>Logout</a> ": "Not logged <a href='login.jsp'>Login</a>"%>
     </body>
 </html>

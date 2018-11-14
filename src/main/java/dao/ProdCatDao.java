@@ -21,15 +21,13 @@ import servlets.DbConnect;
  * @author Emiliano
  */
 public class ProdCatDao {
+    
     public static JSONArray getList(String str) {
         JSONArray array = new JSONArray();
-        
         try {
             Connection conn = DbConnect.getConnection();
-            
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome LIKE '%"+str+"%' LIMIT 5");
             ResultSet rs = ps.executeQuery();
-
             int i=0;
             while (rs.next()) {
                 String nome = rs.getString("Nome");
@@ -40,31 +38,24 @@ public class ProdCatDao {
                 i++;
             }
             conn.close();
-            
             System.out.println(array);
-
         } catch (Exception e) {
             System.out.println(e);
         }
         return array;
     }
         
-        
     public static boolean initialize(String nome, String descrizione, String immagine) {
         boolean status=false;  
-        try{  
-        
+        try {
             Connection conn=DbConnect.getConnection();
             PreparedStatement ps=conn.prepareStatement("INSERT INTO Cat_prodotto (Nome, Descrizione, Logo) VALUES (?, ?, ?)");  
             ps.setString(1,nome);  
             ps.setString(2,descrizione);
             ps.setString(3,immagine);
-            
             status=ps.executeUpdate()>0;
-
             conn.close();
-              
-        }catch(Exception e){
+        } catch(Exception e) {
             System.out.println(e);
         }  
         return status;  
@@ -72,7 +63,7 @@ public class ProdCatDao {
     
     public static List getProd(){
         List shoppingLists = new ArrayList<>();
-        try{
+        try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement stm = conn.prepareStatement("SELECT * FROM Cat_prodotto");
             try (ResultSet rs = stm.executeQuery()) {
@@ -98,102 +89,72 @@ public class ProdCatDao {
         return shoppingLists;
     }
     
-        public static boolean delete(String nome) {
+    public static boolean delete(String nome) {
         boolean status = false;
         try {
-
             Connection conn = DbConnect.getConnection();
-
-            PreparedStatement ps = conn.prepareStatement(
-                    "DELETE FROM Cat_prodotto WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM Cat_prodotto WHERE Nome=?");
             ps.setString(1, nome);
-
             status = ps.executeUpdate() > 0;
-
             conn.close();
-
         } catch (Exception e) {
             System.out.println(e);
         }
         return status;
     }
         
-                public static JSONObject getData(String nome) {
+    public static JSONObject getData(String nome) {
         JSONObject object = new JSONObject();
-
         try {
             Connection conn = DbConnect.getConnection();
-
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome=?");
             ps.setString(1, nome);
-
             ResultSet rs = ps.executeQuery();
-
-                if(rs.next()){
-                    object.put("Descrizione", rs.getString("Descrizione"));
-                }
-                
+            if(rs.next()){
+                object.put("Descrizione", rs.getString("Descrizione"));
+            }    
             conn.close();
-
             System.out.println(object);
-
         } catch (Exception e) {
             System.out.println(e);
         }
         return object;
     }
         
-                public static String getImage(String nome) {
-
-                    String file="";
-
+    public static String getImage(String nome) {
+        String file="";
         try {
             Connection conn = DbConnect.getConnection();
-
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome=?");
             ps.setString(1, nome);
-
             ResultSet rs = ps.executeQuery();
-
-            
-                if(rs.next()){
-                    file=rs.getString("Logo");
-                }
-
+            if(rs.next()){
+                file=rs.getString("Logo");
+            }
             conn.close();
-
             System.out.println(file);
-
         } catch (Exception e) {
             System.out.println(e);
         }
         return file;
     }
                 
-                    public static boolean modify(String nome, String descrizione, String immagine, boolean mod) {
+    public static boolean modify(String nome, String descrizione, String immagine, boolean mod) {
         boolean status = false;
         try {
-
             Connection conn = DbConnect.getConnection();
-            
             if(mod){
-
-            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=?, Logo=? WHERE Nome=?");
-            ps.setString(1, descrizione);
-            ps.setString(2, immagine);
-            ps.setString(3, nome);
-
-            status = ps.executeUpdate() > 0;
+                PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=?, Logo=? WHERE Nome=?");
+                ps.setString(1, descrizione);
+                ps.setString(2, immagine);
+                ps.setString(3, nome);
+                status = ps.executeUpdate() > 0;
+            } else {
+                PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=? WHERE Nome=?");
+                ps.setString(1, descrizione);
+                ps.setString(2, nome);
+                status = ps.executeUpdate() > 0;
             }
-            else{
-            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=? WHERE Nome=?");
-            ps.setString(1, descrizione);
-            ps.setString(2, nome);
-
-            status = ps.executeUpdate() > 0;
-            }                
-            
-
             conn.close();
 
         } catch (Exception e) {

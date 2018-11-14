@@ -48,127 +48,92 @@ public class ProdCatServlet extends HttpServlet {
         response.setContentType("application/json");
         String str=!request.getParameterMap().containsKey("q") ? "": request.getParameter("q");
         JSONArray array=ProdCatDao.getList(str);
-        try (PrintWriter out = response.getWriter()) {
+        try(PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.print(array);
         }
     }
     
-        protected void processNEWRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processNEWRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         String nome=request.getParameter("nome");
         String descrizione=request.getParameter("descrizione");
         String fileName="";
-        
-        if(Boolean.parseBoolean(request.getParameter("ok"))){
-            
+        if(Boolean.parseBoolean(request.getParameter("ok"))) {
             System.out.println(request.getParts());
-            
             Part part=request.getPart("file");
-            
             System.out.println((Paths.get(part.getSubmittedFileName()).getFileName().toString()));
-            
             fileName=nome+".png";
-                   
-                   System.out.println(fileName);
-
+            System.out.println(fileName);
             UploadImage.upload(part, fileName, "prodcat");
         }
-
-
-    if(ProdCatDao.initialize(nome, descrizione, fileName)){  
-        System.out.println("ok");
-    }  
+        if(ProdCatDao.initialize(nome, descrizione, fileName)) {  
+            System.out.println("ok");
+        }  
     }
         
-            protected void processDELETERequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processDELETERequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String nome = request.getParameter("nome");
-
-        if (ProdCatDao.delete(nome)) {
+        if(ProdCatDao.delete(nome)) {
             System.out.println("ok");
         }
     }
             
-                                protected void processGETDATARequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processGETDATARequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         String nome = request.getParameter("nome");
-
         JSONObject object=ProdCatDao.getData(nome);
-        try (PrintWriter out = response.getWriter()) {
+        try(PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.print(object);
         }
-        
     }
                     
-                    protected void processGETIMAGERequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processGETIMAGERequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("image/png");
-
-                        String nome = request.getParameter("nome");
-
+        String nome = request.getParameter("nome");
         String filename=ProdCatDao.getImage(nome);
-        
-        if(!filename.equals("")){
-        
-                InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
-        Properties properties = new Properties();
-        properties.load(is);
-        
-                        System.out.println(properties.getProperty("location")+"/prodcat/"+filename);
-                        
-                              File file = new File(properties.getProperty("location")+"/prodcat/", filename);
-
-byte[] fileContent = FileUtils.readFileToByteArray(file);
-String encodedString = Base64.getEncoder().encodeToString(fileContent);                              
-      
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.print(encodedString);
+        if(!filename.equals("")) {
+            InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
+            Properties properties = new Properties();
+            properties.load(is);
+            System.out.println(properties.getProperty("location")+"/prodcat/"+filename);
+            File file = new File(properties.getProperty("location")+"/prodcat/", filename);
+            byte[] fileContent = FileUtils.readFileToByteArray(file);
+            String encodedString = Base64.getEncoder().encodeToString(fileContent);                              
+            try(PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.print(encodedString);
+            }
+        } else {
+            try(PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.print("{}");
+            }            
         }
-        }
-        else{
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.print("{}");
-        }            
-        }
-    
     }
                     
-                            protected void processMODIFYRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processMODIFYRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         String nome=request.getParameter("nome");
         String descrizione=request.getParameter("descrizione");
-        
         String fileName="";
-        
-        if(Boolean.parseBoolean(request.getParameter("ok"))){
-
-            
+        if(Boolean.parseBoolean(request.getParameter("ok"))) {
             Part part=request.getPart("file");
-            
             System.out.println((Paths.get(part.getSubmittedFileName()).getFileName().toString()));
-            
             fileName=nome+".png";
-                   
-                   System.out.println(fileName);
-
+            System.out.println(fileName);
             UploadImage.upload(part, fileName, "prodcat");
         }
-        
-    if(ProdCatDao.modify(nome, descrizione, fileName, Boolean.parseBoolean(request.getParameter("mod")) || Boolean.parseBoolean(request.getParameter("ok")))){  
-        System.out.println("ok");
-
-    }  
-    
+        if(ProdCatDao.modify(nome, descrizione, fileName, Boolean.parseBoolean(request.getParameter("mod")) || Boolean.parseBoolean(request.getParameter("ok")))) {  
+            System.out.println("ok");
+        }  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -229,5 +194,4 @@ String encodedString = Base64.getEncoder().encodeToString(fileContent);
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
