@@ -6,6 +6,8 @@
 package filters;
 
 import dao.ProdCatDao;
+import dao.ProductDao;
+import entities.Product;
 import entities.ShoppingList;
 import java.io.IOException;
 import java.util.List;
@@ -48,6 +50,23 @@ public class ShoppingListFilter implements Filter {
         }
 
         ProdCatDao shoppingListDao = null;
+        
+        ProductDao productDao = null;
+        
+        try {
+            request.setAttribute("ProductDao", productDao);
+        } catch (Exception ex) {
+            throw new RuntimeException(new ServletException("Impossible to get the dao factory for shopping list storage system", ex));
+        }
+        
+        try {
+            String str = request.getParameter("cat_prodotto");
+            List<Product> products = productDao.getProd();
+            request.setAttribute("products", products);
+        } catch (Exception ex) {
+            throw new RuntimeException(new ServletException("Impossible to get products", ex));
+        }
+        
         
         try {
             request.setAttribute("shoppingListDao", shoppingListDao);

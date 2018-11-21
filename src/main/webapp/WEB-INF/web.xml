@@ -4,9 +4,16 @@
         <filter-name>ShoppingListsFilter</filter-name>
         <filter-class>filters.ShoppingListFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filters.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/adminPanel.jsp</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>ShoppingListsFilter</filter-name>
-        <servlet-name>GetCatProdServlet</servlet-name>
         <url-pattern>/index.jsp</url-pattern>
     </filter-mapping>
     <servlet>
@@ -17,15 +24,6 @@
         <servlet-name>ListCatProdServlet</servlet-name>
         <servlet-class>servlets.ListCatProdServlet</servlet-class>
     </servlet>
-    <filter>
-        <filter-name>ProductsFilter</filter-name>
-        <filter-class>filters.ProductsFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>ProductsFilter</filter-name>
-        <servlet-name>GetProdServlet</servlet-name>
-        <url-pattern>/index.jsp</url-pattern>
-    </filter-mapping>
     <servlet>
         <servlet-name>GetProdServlet</servlet-name>
         <servlet-class>servlets.GetProdServlet</servlet-class>

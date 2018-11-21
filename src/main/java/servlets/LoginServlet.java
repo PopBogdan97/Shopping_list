@@ -38,53 +38,80 @@ public class LoginServlet extends HttpServlet {
     protected void processPOSTRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-            PrintWriter out = response.getWriter();  
-          
-    String email=request.getParameter("username");
-    String password=request.getParameter("passwordLogin");
-    String remember=(request.getParameterMap().containsKey("remember")) ? request.getParameter("remember") : "";
-          
-    String result=LoginDao.authenticate(email, password);
-    
-    if(result.equals("1")){
-        
-        HttpSession session=request.getSession();
 
-        session.setAttribute("email", email);
-        request.setAttribute("email", email);
-        
+        PrintWriter out = response.getWriter();
 
-        if(remember.equals("on")){
-            /*recupero Cod dell'utente che si sta loggando*/
-            
-            String uniqueID = UUID.randomUUID().toString();
-            System.out.println("prova");
-            System.out.println(uniqueID);
-            
-            Cookie rememberCookie = new Cookie("rememberUser", uniqueID);
-            rememberCookie.setMaxAge(4320000);  //432000 sec = 5 giorni
-            response.addCookie(rememberCookie);
-            LoginDao.setLoginCookie(email, uniqueID);
-        }
-        
-        RequestDispatcher rd=request.getRequestDispatcher("/index.jsp");  
-        rd.forward(request,response);
-    }  
-    else{
-        if(result.equals("false")){
-            request.setAttribute("error", "Login error!");
+        String email = request.getParameter("username");
+        String password = request.getParameter("passwordLogin");
+        String remember = (request.getParameterMap().containsKey("remember")) ? request.getParameter("remember") : "";
 
-        }
-        else{
+        String result = LoginDao.authenticate(email, password);
+
+        if (result.equals("notexist")) {
+            response.sendRedirect("login_registration.jsp?error=Login error!");
+
+        } else if (result.equals("notvalid")) {
+            response.sendRedirect("login_registration.jsp?error=Account not verified!&email="+email);
+
+        } else {
+            HttpSession session = request.getSession();
+
+            session.setAttribute("email", email);
+            session.setAttribute("tipo", result);
             request.setAttribute("email", email);
-            request.setAttribute("error", "Account not verified!");
+
+            if (remember.equals("on")) {
+                /*recupero Cod dell'utente che si sta loggando*/
+
+                String uniqueID = UUID.randomUUID().toString();
+                System.out.println("prova");
+                System.out.println(uniqueID);
+
+                Cookie rememberCookie = new Cookie("rememberUser", uniqueID);
+                rememberCookie.setMaxAge(4320000);  //432000 sec = 5 giorni
+                response.addCookie(rememberCookie);
+                LoginDao.setLoginCookie(email, uniqueID);
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
         }
-        RequestDispatcher rd=request.getRequestDispatcher("login_registration.jsp");
-        rd.forward(request,response);
-    }  
-          
-    out.close();  
+
+        /*
+        if (result.equals("1")) {
+
+            HttpSession session = request.getSession();
+
+            session.setAttribute("email", email);
+            request.setAttribute("email", email);
+
+            if (remember.equals("on")) {
+                //recupero Cod dell'utente che si sta loggando
+
+                String uniqueID = UUID.randomUUID().toString();
+                System.out.println("prova");
+                System.out.println(uniqueID);
+
+                Cookie rememberCookie = new Cookie("rememberUser", uniqueID);
+                rememberCookie.setMaxAge(4320000);  //432000 sec = 5 giorni
+                response.addCookie(rememberCookie);
+                LoginDao.setLoginCookie(email, uniqueID);
+            }
+
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        } else {
+            if (result.equals("false")) {
+                request.setAttribute("error", "Login error!");
+
+            } else {
+                request.setAttribute("email", email);
+                request.setAttribute("error", "Account not verified!");
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("login_registration.jsp");
+            rd.forward(request, response);
+        }
+         */
+        out.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

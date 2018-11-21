@@ -15,50 +15,57 @@ import servlets.DbConnect;
  * @author Emiliano
  */
 public class LoginDao {
-    
-    public static String authenticate(String email, String password){  
-        String status="false";
-        try{  
 
-            Connection conn=DbConnect.getConnection();
+    public static String authenticate(String email, String password) {
+        String status = "notexist";
+        try {
 
-            PreparedStatement ps=conn.prepareStatement("SELECT * FROM Utente WHERE Email=? AND Password=PASSWORD(?)");  
-            ps.setString(1,email);  
-            ps.setString(2,password);  
+            Connection conn = DbConnect.getConnection();
 
-            ResultSet rs=ps.executeQuery();  
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Utente WHERE Email=? AND Password=PASSWORD(?)");
+            ps.setString(1, email);
+            ps.setString(2, password);
 
-            if(rs.next()){
+            ResultSet rs = ps.executeQuery();
 
-                status=rs.getString("Valid");
+            if (rs.next()) {
+/////
+                if (rs.getString("Valid").equals("")) {
+                    status = rs.getString("Tipologia");
+                } else {
+                    status = "notvalid";
+                }
             }
 
             conn.close();
 
-                System.out.println(status);
+            System.out.println(status);
 
-        }catch(Exception e){System.out.println(e);}  
-        return status;  
-    }  
-    
-                public static boolean setLoginCookie(String email, String id){  
-    boolean status=false;  
-    try{  
-        
-        Connection conn=DbConnect.getConnection();
-        
-        PreparedStatement ps=conn.prepareStatement(  
-"UPDATE Utente SET Cookie=? WHERE Email=?");  
-ps.setString(1,id);  
-ps.setString(2,email);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 
-status=ps.executeUpdate()>0;
+    public static boolean setLoginCookie(String email, String id) {
+        boolean status = false;
+        try {
 
-    conn.close();
-              
-    }catch(Exception e){System.out.println(e);}  
-    return status;  
-    }  
-    
-}  
+            Connection conn = DbConnect.getConnection();
 
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE Utente SET Cookie=? WHERE Email=?");
+            ps.setString(1, id);
+            ps.setString(2, email);
+
+            status = ps.executeUpdate() > 0;
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+}
