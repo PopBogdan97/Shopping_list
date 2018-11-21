@@ -70,11 +70,9 @@ public class LoginServlet extends HttpServlet {
         
         RequestDispatcher rd=request.getRequestDispatcher("/index.jsp");  
         rd.forward(request,response);
-    }  
-    else{
+    } else {
         if(result.equals("false")){
             request.setAttribute("error", "Login error!");
-
         }
         else{
             request.setAttribute("email", email);
