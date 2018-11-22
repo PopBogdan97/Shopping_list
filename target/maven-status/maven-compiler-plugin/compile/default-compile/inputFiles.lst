@@ -3,7 +3,6 @@ C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlet
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ListCatDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\mail\Mailer.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ResetDao.java
-C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\filters\ProductsFilter.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\SetPasswordDao.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\filters\ShoppingListFilter.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ProductDao.java
@@ -28,6 +27,7 @@ C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\Pro
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\GetProdServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\LogoutServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\dao\ActivateDao.java
+C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\filters\AdminFilter.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\LoginServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\servlets\ListCatServlet.java
 C:\Users\Emiliano\Documents\NetBeansProjects\Shopping_list\src\main\java\mail\ResetPasswordMailer.java

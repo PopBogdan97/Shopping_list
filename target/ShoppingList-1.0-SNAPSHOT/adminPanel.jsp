@@ -13,6 +13,7 @@
         
         <link rel="stylesheet" href="css/panel.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -20,24 +21,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     </head>
     <body>
-        <h1>Admin Panel</h1>
-        <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
-            <h2>Categorie di lista</h2>
-            <select class="str-catlist form-control" style="width:500px" name="str-catlist"><option></option></select>
-            <button id="delete-catlist" style="display:none;">Elimina</button>
-            <button id="modify-catlist" style="display:none;">Modifica</button>
-        </div>
-        <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
-            <h2>Categorie di prodotto</h2>
-            <select class="str-catprod form-control" style="width:500px" name="str-catprod"><option></option></select>
-            <button id="delete-catprod" style="display:none;">Elimina</button>
-            <button id="modify-catprod" style="display:none;">Modifica</button>
-        </div>
-            <div style="width:520px;margin:0px auto;margin-top:30px;height:250px;">
-            <h2>Prodotti</h2>
-            <select class="str-product form-control" style="width:500px" name="str-product"><option></option></select>
-            <button id="delete-product" style="display:none;">Elimina</button>
-            <button id="modify-product" style="display:none;">Modifica</button>
+        <h1>Admin Panel</h1> 
+        <div class="container">
+            <div class="row">
+                <div class="col portfolio-item ft-text">
+                    <h1>Categorie di lista</h1>
+                    <select class="str-catlist form-control" name="str-catlist"><option></option></select>
+                    <button id="delete-catlist" style="display:none;">Elimina</button>
+                    <button id="modify-catlist" style="display:none;">Modifica</button>
+                </div>
+                <div class="col portfolio-item ft-text">
+                    <h1>Categorie di prodotto</h1>
+                    <select class="str-catprod form-control" name="str-catprod"><option></option></select>
+                    <button id="delete-catprod" style="display:none;">Elimina</button>
+                    <button id="modify-catprod" style="display:none;">Modifica</button>
+                </div>
+                <div class="col portfolio-item ft-text">
+                    <h1>Prodotti</h1>
+                    <select class="str-product form-control" name="str-product"><option></option></select>
+                    <button id="delete-product" style="display:none;">Elimina</button>
+                    <button id="modify-product" style="display:none;">Modifica</button>
+                </div>
+            </div>
         </div>
 
         <!-- CatList Modal -->

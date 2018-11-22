@@ -72,8 +72,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(rememberCookie);
                 LoginDao.setLoginCookie(email, uniqueID);
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
+            response.sendRedirect("/ShoppingList/index.jsp");   
         }
 
         /*

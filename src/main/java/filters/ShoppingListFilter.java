@@ -29,10 +29,10 @@ public class ShoppingListFilter implements Filter {
 
     private static final boolean DEBUG = true;
     private FilterConfig filterConfig = null;
-    
+
     public ShoppingListFilter() {
     }
-    
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
@@ -42,7 +42,7 @@ public class ShoppingListFilter implements Filter {
             }
         }
     }
-    
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (DEBUG) {
@@ -50,15 +50,15 @@ public class ShoppingListFilter implements Filter {
         }
 
         ProdCatDao shoppingListDao = null;
-        
+
         ProductDao productDao = null;
-        
+
         try {
             request.setAttribute("ProductDao", productDao);
         } catch (Exception ex) {
             throw new RuntimeException(new ServletException("Impossible to get the dao factory for shopping list storage system", ex));
         }
-        
+
         try {
             String str = request.getParameter("cat_prodotto");
             List<Product> products = productDao.getProd();
@@ -66,22 +66,32 @@ public class ShoppingListFilter implements Filter {
         } catch (Exception ex) {
             throw new RuntimeException(new ServletException("Impossible to get products", ex));
         }
-        
-        
+
         try {
             request.setAttribute("shoppingListDao", shoppingListDao);
         } catch (Exception ex) {
             throw new RuntimeException(new ServletException("Impossible to get the dao factory for shopping list storage system", ex));
         }
-        
+
         try {
             List<ShoppingList> shoppingLists = shoppingListDao.getProd();
             request.setAttribute("shoppingLists", shoppingLists);
         } catch (Exception ex) {
             throw new RuntimeException(new ServletException("Impossible to get user or shopping lists", ex));
         }
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        if (req.getSession(false) != null) {
+            if (req.getSession(false).getAttribute("Tipologia") == "admin") {
+                res.sendRedirect("index.jsp?button=visible");
+            } else {
+                res.sendRedirect("index.jsp?button=hidden");
+            }
+        }
     }
-    
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (DEBUG) {
@@ -121,11 +131,11 @@ public class ShoppingListFilter implements Filter {
             ((HttpServletResponse) response).sendError(500, problem.getMessage());
         }
     }
-    
+
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
     }
-    
+
     public void setFilterConfig(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
     }
@@ -133,7 +143,7 @@ public class ShoppingListFilter implements Filter {
     @Override
     public void destroy() {
     }
-    
+
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
     }

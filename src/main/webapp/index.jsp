@@ -43,9 +43,11 @@
                 <div class="navbar-collapse collapse" id="navbarResponsive" style="">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <img src="img/impostazioni.png" alt="" width="30" height="30">
-                            <a class="btn" href="adminPanel.jsp">Gestisci categorie</a>
-                        </li>
+                            
+                            <!--<img src="img/impostazioni.png" alt="" style="visibility: <%=(session.getAttribute("Tipologia")=="admin") ? "block" : "hidden"%>" width="30" height="30">
+                            <a class="btn" href="adminPanel.jsp" style="visibility: <%=(session.getAttribute("Tipologia")=="admin") ? "block" : "hidden"%>" >Gestisci categorie</a>
+                        -->
+                            </li>
                         <li class="nav-item">
                             <img src="img/user.png" alt="" width="40" height="40">
                             <a class="btn btn-outline-primary" href="login_registration.jsp">Accedi</a>
@@ -59,7 +61,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 portfolio-item ft-text">
-                    <div class="card h-100 p-1">
+                    <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             <input type="image" class="mr-3" src="img/search.png" alt="Ok" width="27" height="27" data-toggle="modal" data-target="#searchModal"/>
                             <h6 class="mb-0 mx-auto text-dark lh-100">PRODOTTI</h6>
@@ -76,31 +78,22 @@
                                 <br>
                             </ul>
                         </c:forEach>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
                     </div>
                 </div>
-                <div class="col-lg-6 portfolio-item ft-text">
-                    <div class="card h-100 p-1">
+                <div class="col-lg-6 portfolio-item ft-text" style="height: 400px;">
+                    <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             <input type="image" class="mr-3" src="img/annulla.png" onclick="returnBack()" alt="Ok" width="27" height="27"/>
                             <h6 class="mb-0 mx-auto text-dark lh-100">LISTE DI PIPPO</h6>
                             <input type="image" class="mr-3" src="img/campana.png" alt="Ok" width="27" height="27"/>
                         </div>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        
                         <nav class="menu" id="menu"> <!--style="visibility:hidden"-->
                             <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
                             <label class="menu-open-button" for="menu-open">

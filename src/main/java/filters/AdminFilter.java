@@ -43,8 +43,11 @@ public class AdminFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        if (req.getSession().getAttribute("Tipologia").equals("Admin")) {
-            res.sendRedirect("index.jsp?error=pirla");
+        if (req.getSession(false) != null) {
+
+            if (req.getSession(false).getAttribute("Tipologia") == "admin") {
+                res.sendRedirect("index.jsp?error=pirla");
+            }
         }
         // Write code here to process the request and/or response before
         // the rest of the filter chain is invoked.

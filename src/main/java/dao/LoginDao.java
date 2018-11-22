@@ -17,7 +17,9 @@ import servlets.DbConnect;
 public class LoginDao {
 
     public static String authenticate(String email, String password) {
+        
         String status = "notexist";
+
         try {
 
             Connection conn = DbConnect.getConnection();
@@ -29,8 +31,9 @@ public class LoginDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+
 /////
-                if (rs.getString("Valid").equals("")) {
+                if (rs.getString("Valid").equals("1")) {
                     status = rs.getString("Tipologia");
                 } else {
                     status = "notvalid";
@@ -40,6 +43,7 @@ public class LoginDao {
             conn.close();
 
             System.out.println(status);
+            
 
         } catch (Exception e) {
             System.out.println(e);
@@ -67,5 +71,5 @@ public class LoginDao {
         }
         return status;
     }
-
+    
 }

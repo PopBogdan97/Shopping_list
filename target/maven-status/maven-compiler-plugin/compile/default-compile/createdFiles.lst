@@ -1,7 +1,7 @@
 dao\ProductDao.class
-filters\ProductsFilter.class
 dao\MailExistsDao.class
 dao\ResetDao.class
+filters\AdminFilter.class
 mail\Mailer.class
 dao\SetPasswordDao.class
 mail\Mailer$1.class
