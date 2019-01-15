@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import services.UploadImage;
 import dao.ProdCatDao;
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +67,7 @@ public class ProdCatServlet extends HttpServlet {
             System.out.println((Paths.get(part.getSubmittedFileName()).getFileName().toString()));
             fileName=nome+".png";
             System.out.println(fileName);
-            UploadImage.upload(part, fileName, "prodcat");
+            UploadImage.upload(part.getInputStream(), fileName, "prodcat");
         }
         if(ProdCatDao.initialize(nome, descrizione, fileName)) {  
             System.out.println("ok");
@@ -129,7 +130,7 @@ public class ProdCatServlet extends HttpServlet {
             System.out.println((Paths.get(part.getSubmittedFileName()).getFileName().toString()));
             fileName=nome+".png";
             System.out.println(fileName);
-            UploadImage.upload(part, fileName, "prodcat");
+            UploadImage.upload(part.getInputStream(), fileName, "prodcat");
         }
         if(ProdCatDao.modify(nome, descrizione, fileName, Boolean.parseBoolean(request.getParameter("mod")) || Boolean.parseBoolean(request.getParameter("ok")))) {  
             System.out.println("ok");

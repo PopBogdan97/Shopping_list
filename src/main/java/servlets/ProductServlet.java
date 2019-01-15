@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import services.UploadImage;
 import dao.ProductDao;
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class ProductServlet extends HttpServlet {
 
             System.out.println(fileName);
 
-            UploadImage.upload(part, fileName, "product");
+            UploadImage.upload(part.getInputStream(), fileName, "product");
         }
 
         if (ProductDao.initialize(nome, descrizione, fileName, prodcat)) {
@@ -163,7 +164,7 @@ String encodedString = Base64.getEncoder().encodeToString(fileContent);
                    
                    System.out.println(fileName);
 
-            UploadImage.upload(part, fileName, "product");
+            UploadImage.upload(part.getInputStream(), fileName, "product");
         }
         
     if(ProductDao.modify(nome, catprod, descrizione, fileName, Boolean.parseBoolean(request.getParameter("mod")) || Boolean.parseBoolean(request.getParameter("ok")))){  

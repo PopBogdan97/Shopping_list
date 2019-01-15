@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import services.UploadImage;
 import dao.ImageDao;
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class ImageUploadServlet extends HttpServlet {
             
             String fileName=email+".png";
        
-            UploadImage.upload(part, fileName, "users");
+            UploadImage.upload(part.getInputStream(), fileName, "users");
 
 
     if(ImageDao.setimage(email, fileName)){  

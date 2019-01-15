@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import services.UploadImage;
 import dao.ListCatDao;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -81,7 +82,7 @@ public class ListCatServlet extends HttpServlet {
                    
                    System.out.println(fileName);
 
-            UploadImage.upload(part, fileName, "listcat");
+            UploadImage.upload(part.getInputStream(), fileName, "listcat");
         }
 
 
@@ -171,7 +172,7 @@ String encodedString = Base64.getEncoder().encodeToString(fileContent);
                    
                    System.out.println(fileName);
 
-            UploadImage.upload(part, fileName, "listcat");
+            UploadImage.upload(part.getInputStream(), fileName, "listcat");
         }
         
     if(ListCatDao.modify(nome, descrizione, fileName, Boolean.parseBoolean(request.getParameter("mod")) || Boolean.parseBoolean(request.getParameter("ok")))){  

@@ -84,12 +84,13 @@ public class ShoppingListFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         if (req.getSession(false) != null) {
-            if (req.getSession(false).getAttribute("Tipologia") == "admin") {
-                res.sendRedirect("index.jsp?button=visible");
+            if (req.getSession(false).getAttribute("tipo") == "admin") {
+                req.setAttribute("button", "block");
             } else {
-                res.sendRedirect("index.jsp?button=hidden");
+                req.setAttribute("button", "hidden");
             }
         }
+                req.setAttribute("button", "hidden");        
     }
 
     private void doAfterProcessing(ServletRequest request, ServletResponse response)

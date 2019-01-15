@@ -5,9 +5,13 @@
  */
 package dao;
 
+import entities.Element;
+import entities.ElementList;
+import entities.ListCatBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import servlets.DbConnect;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -203,5 +207,75 @@ public class ListCatDao {
             System.out.println(e);
         }
         return status;
+    }
+
+    public static ElementList getListListBean(String str, String limit) {
+
+        ElementList el=new ElementList();
+        
+        ArrayList<Element> listlist = new ArrayList<>();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome LIKE '%" + str + "%' "+limit);
+
+            ResultSet rs = ps.executeQuery();
+
+            int i = 0;
+            while (rs.next()) {
+                Element e = new Element();
+                String nome = rs.getString("Nome");
+                e.setId(i + "");
+                e.setText(nome);
+                listlist.add(e);
+                i++;
+            }
+            conn.close();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        el.setResults(listlist);
+        
+        return el;
+    }
+    
+            public static ListCatBean getDataBean(String nome) {
+        ListCatBean list = new ListCatBean();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome=?");
+            ps.setString(1, nome);
+
+            ResultSet rs = ps.executeQuery();
+
+                if(rs.next()){
+                    list.setDescription(rs.getString("Descrizione"));
+                }
+                
+                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM Rel_cat WHERE Nomecatlista=?");
+            ps1.setString(1, nome);
+
+            ResultSet rs1 = ps1.executeQuery();
+            
+            ArrayList<String> cat=new ArrayList<>();
+            
+                while(rs1.next()){                    
+                    cat.add(rs1.getString("Nomecatprodotto"));
+                }                
+                
+                list.setCategories(cat);
+            conn.close();
+            
+            list.setName(nome);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
     }
 }

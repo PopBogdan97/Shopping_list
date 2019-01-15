@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(rememberCookie);
                 LoginDao.setLoginCookie(email, uniqueID);
             }
-            response.sendRedirect("/ShoppingList/index.jsp");   
+            response.sendRedirect("index.jsp");   
         }
 
         /*

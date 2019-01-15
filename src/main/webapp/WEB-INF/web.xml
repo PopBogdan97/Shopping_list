@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <init-param>
+    <param-name>jersey.config.server.provider.classnames</param-name>
+    <param-value>org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
+</init-param>
     <filter>
         <filter-name>ShoppingListsFilter</filter-name>
         <filter-class>filters.ShoppingListFilter</filter-class>

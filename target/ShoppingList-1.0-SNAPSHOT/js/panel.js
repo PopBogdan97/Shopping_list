@@ -8,15 +8,10 @@ $('.str-catlist').select2({
     placeholder: 'Categorie di lista',
     allowClear: true,
     ajax: {
-        url: 'ListCatServlet',
+        url: 'http://localhost:8080/ShoppingList/services/listcat?limit=5',
         type: 'get',
         dataType: 'json',
         delay: 250,
-        processResults: function (data) {
-            return {
-                results: data
-            };
-        },
         cache: true
     },
     language: {
@@ -96,18 +91,10 @@ $('.str-product').select2({
 $('#delete-catlist').click(function () {
     if (confirm("Vuoi davvero eliminare la categoria di lista: " + $('.str-catlist option:selected').text() + "?\nI dati relativi ad esso verranno eliminati.")) {
 
-        var formData = new FormData();
-
-        formData.append('action', 'delete');
-        formData.append('nome', $('.str-catlist option:selected').text());
-
         $.ajax({
-            type: 'POST',
-            url: 'ListCatServlet',
-            data: formData,
+            type: 'DELETE',
+            url: 'http://localhost:8080/ShoppingList/services/listcat/'+$('.str-catlist option:selected').text(),
             cache: false,
-            contentType: false,
-            processData: false,
             success: function () {
                 console.log("success");
                 $('.str-catlist').empty();
@@ -186,26 +173,18 @@ $('#modify-catlist').click(function () {
     mode = "modify";
 
     $("#catlistModal").modal("toggle");
-    var formData = new FormData();
-
-    formData.append('action', 'getdata');
-    formData.append('nome', $('.str-catlist option:selected').text());
-
-
+    
     $.ajax({
-        type: 'POST',
-        url: 'ListCatServlet',
-        data: formData,
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/listcat/'+$('.str-catlist option:selected').text(),
         datatype: 'json',
         cache: false,
-        contentType: false,
-        processData: false,
         success: function (data) {
             console.log("success");
             $('#catlistModalLabel').text('Edita categoria di lista: ' + $('.str-catlist :selected').text());
-            $('#descrizione-catlist').val(data['Descrizione']);
-            $.each(data['Categorie'], function (i, item) {
-                $('#prodcat-catlist').append("<option selected='true' value='" + i + "'>" + item['Nomecatprodotto'] + "</option>").trigger('change');
+            $('#descrizione-catlist').val(data['description']);
+            $.each(data['categories'], function (i, item) {
+                $('#prodcat-catlist').append("<option selected='true' value='" + i + "'>" + item + "</option>").trigger('change');
             });
 
             $('#prodcat-catlist').prop("disabled", true);
@@ -215,18 +194,10 @@ $('#modify-catlist').click(function () {
             console.log("error");
         }
     });
-
-    var formData1 = new FormData();
-
-    formData1.append('action', 'getimage');
-    formData1.append('nome', $('.str-catlist option:selected').text());
-
+    
     $.ajax({
-        type: 'POST',
-        url: 'ListCatServlet',
-        data: formData1,
-        contentType: false,
-        processData: false,
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/listcat/image/'+$('.str-catlist option:selected').text(),
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
@@ -443,12 +414,8 @@ $('#savebutton-catlist').click(function () {
 
     if (mode === "modify") {
         var formData = new FormData();
-        formData.append('action', 'modify');
         if ($('#file-catlist').val()) {
             formData.append('file', $('#file-catlist')[0].files[0]);
-            formData.append('ok', 'true');
-        } else {
-            formData.append('ok', 'false');
         }
         if ($('#removeimage-catlist').is(':visible')) {
             formData.append('mod', 'false');
@@ -456,12 +423,11 @@ $('#savebutton-catlist').click(function () {
             formData.append('mod', 'true');
 
         }
-        formData.append('nome', $('.str-catlist :selected').text());
-        formData.append('descrizione', $('#descrizione-catlist').val());
+        formData.append('description', $('#descrizione-catlist').val());
 
         $.ajax({
-            type: 'POST',
-            url: 'ListCatServlet',
+            type: 'PUT',
+            url: 'http://localhost:8080/ShoppingList/services/listcat/'+$('.str-catlist :selected').text(),
             data: formData,
             cache: false,
             contentType: false,
@@ -476,18 +442,13 @@ $('#savebutton-catlist').click(function () {
             }
         });
     } else {
-
-
+        
         var formData = new FormData();
-        formData.append('action', 'new');
         if ($('#file-catlist').val()) {
             formData.append('file', $('#file-catlist')[0].files[0]);
-            formData.append('ok', 'true');
-        } else {
-            formData.append('ok', 'false');
         }
-        formData.append('nome', nome);
-        formData.append('descrizione', $('#descrizione-catlist').val());
+        formData.append('name', nome);
+        formData.append('description', $('#descrizione-catlist').val());
         var arr = $("#prodcat-catlist").select2("data");
         for (var i = 0; i < arr.length; i++) {
             formData.append('arr', arr[i].text);
@@ -495,7 +456,7 @@ $('#savebutton-catlist').click(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'ListCatServlet',
+            url: 'http://localhost:8080/ShoppingList/services/listcat/',
             data: formData,
             cache: false,
             contentType: false,

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package services;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import javax.servlet.http.Part;
  */
 public class UploadImage {
     
-        public static void upload(Part part, String name, String sub) throws IOException {
+        public static void upload(InputStream file, String name, String sub) throws IOException {
             
         InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
         Properties properties = new Properties();
@@ -42,7 +42,7 @@ public class UploadImage {
         
 try {
     File outputfile = new File(subdir, name);
-    ImageIO.write(ImageIO.read(part.getInputStream()), "png", outputfile);
+    ImageIO.write(ImageIO.read(file), "png", outputfile);
 } catch (IOException e) {
     // handle exception
 }
