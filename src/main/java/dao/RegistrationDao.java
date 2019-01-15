@@ -28,6 +28,6 @@ public class RegistrationDao {
         } catch(Exception e) {
             System.out.println(e);
         }  
-        return status;  
+        return status;
     }  
 }

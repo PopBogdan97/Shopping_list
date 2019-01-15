@@ -20,6 +20,6 @@
         </form>
         <span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span>
         <br>
-        <a href="login.jsp">Don't set now</a>
+        <a href="login_registration.jsp">Don't set now</a>
     </body>
 </html>

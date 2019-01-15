@@ -48,9 +48,8 @@ public class RegistrationServlet extends HttpServlet {
 
     }  
     else{  
-        RequestDispatcher rd=request.getRequestDispatcher("login_registration.jsp");
-        rd.include(request,response);  
-        out.print("Error!");
+        response.sendRedirect("login_registration.jsp?error=regError");  
+        //out.print("Error!");
     }  
           
     out.close();  

@@ -34,11 +34,19 @@
     <body>
         <div class="container">
             <div id="pageMessages" <%
-                if(request.getAttribute("error") == "Login error!"){
-                    out.print("style='display: block;'");
-                }
-                else if(request.getAttribute("error") == "Account not verified!"){
-                    out.print("style='display: block;'");
+                if(request.getParameter("error") != null){
+                    if(request.getParameter("error").equals("Login error!")){
+                        out.print("style='display: block;'");
+                    }
+                    else if(request.getParameter("error").equals("Account not verified!")){
+                        out.print("style='display: block;'");
+                    }
+                    else if(request.getParameter("error").equals("regError")){
+                        out.print("style='display: block;'");
+                    }
+                    else{
+                        out.print("style='display: none;'");
+                    }
                 }
                 else{
                     out.print("style='display: none;'");
@@ -54,12 +62,20 @@
                     <strong>Something went wrong</strong>
                     <p id="alertParagraph">
                     <%
-                        if(request.getAttribute("error") == "Login error!"){
-                            out.print("Login error!"
-                                    + "<br><br>Email or Password incorrect");
-                        }
-                        else if(request.getAttribute("error") == "Account not verified!"){
-                            out.print("Account not verified!");
+                        if(request.getParameter("error") != null){
+                            if(request.getParameter("error").equals("Login error!")){
+                                out.print("Login error!"
+                                        + "<br><br>Email or Password incorrect");
+                            }
+                            else if(request.getParameter("error").equals("Account not verified!")){
+                                out.print("Account not verified!");
+                            }
+                            else if(request.getParameter("error").equals("regError")){
+                                out.print("Email already in use!");
+                            }
+                            else{
+                                out.print("");
+                            }
                         }
                         else{
                             out.print("");
@@ -101,10 +117,10 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <a href="#" class="active" id="login-form-link">Login</a>
+                                    <a href="#" id="login-form-link" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "class=''" : "class='active'" %>>Login</a>
                                 </div>
                                 <div class="col-xs-6">
-                                    <a href="#" id="register-form-link">Register</a>
+                                    <a href="#" id="register-form-link" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "class='active'" : "class=''" %>>Register</a>
                                 </div>
                             </div>
                             <hr>
@@ -112,8 +128,9 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
+                                    
                                     <!-- LOGIN FORM -->
-                                    <form id="login-form" action="LoginServlet" method="POST" role="form" style="display: block;" onSubmit="return controlLoginFields()">
+                                    <form id="login-form" action="LoginServlet" method="POST" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: none;'" : "style='display: block;'" %> onSubmit="return controlLoginFields()">
                                         <div class="form-group">
                                             <img src="img/email.png" class="form-image">
                                             <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="" onChange="changeWrongText(this)">
@@ -146,7 +163,7 @@
                                         </div>
                                     </form>
 
-                                    <form id="reset-form-login" action=".." method="post" role="form" style="display: block;">
+                                    <form id="reset-form-login" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: none;'" : "style='display: block;'" %>>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
@@ -157,7 +174,7 @@
                                     </form>
 
                                     <!-- REGISTER FORM -->
-                                    <form id="register-form" action="RegistrationServlet" method="POST" role="form" onSubmit='return controlRegisterFields()' style="display: none;">
+                                    <form id="register-form" action="RegistrationServlet" method="POST" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: block;'" : "style='display: none;'" %> onSubmit='return controlRegisterFields()'>
                                         <div class="form-group">
                                             <img src="img/username.png" class="form-image">
                                             <input type="text" name="nominativo" id="nominativo" tabindex="1" class="form-control" placeholder="Nominativo" value="" onChange="changeWrongText(this)">
@@ -180,7 +197,7 @@
                                         <div class="form-group">
                                             <div class="accept-div">
                                                 <input type="checkbox" tabindex="3" name="acceptPrivacy" id="acceptPrivacy" class="checkbox-login" onmousedown="checkboxClicked(this)" style="outline: none;">
-                                                <label for="acceptPrivacy" class="checkbox-label" onmousedown="checkboxClicked(acceptPrivacy)">Acconsento al trattamento dei miei dati personali secondo la privacy policy</label>
+                                                <label for="acceptPrivacy" class="checkbox-label" onmousedown="checkboxClicked(acceptPrivacy)">Ho letto e acconsento alla <a href="https://eur-lex.europa.eu/legal-content/IT/TXT/PDF/?uri=CELEX:32016R0679&from=IT">normativa sulla privacy</a></label>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -191,7 +208,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <form id="reset-form-register" action=".." method="post" role="form" style="display: none;">
+                                    <form id="reset-form-register" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: block;'" : "style='display: none;'" %>>
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">

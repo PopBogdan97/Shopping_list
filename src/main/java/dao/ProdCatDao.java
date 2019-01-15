@@ -83,6 +83,7 @@ public class ProdCatDao {
                     shoppingLists.add(shoppingList);
                 }
             }
+            conn.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }

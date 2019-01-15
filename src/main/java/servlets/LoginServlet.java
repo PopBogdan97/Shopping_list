@@ -47,6 +47,8 @@ public class LoginServlet extends HttpServlet {
 
         String result = LoginDao.authenticate(email, password);
 
+        System.out.println("Result dao: "+result);
+        
         if (result.equals("notexist")) {
             response.sendRedirect("login_registration.jsp?error=Login error!");
 
@@ -68,11 +70,11 @@ public class LoginServlet extends HttpServlet {
                 System.out.println(uniqueID);
 
                 Cookie rememberCookie = new Cookie("rememberUser", uniqueID);
-                rememberCookie.setMaxAge(4320000);  //432000 sec = 5 giorni
+                rememberCookie.setMaxAge(50*24*60*60);  //50 giorni
                 response.addCookie(rememberCookie);
                 LoginDao.setLoginCookie(email, uniqueID);
             }
-            response.sendRedirect("index.jsp");   
+            response.sendRedirect("index.jsp");
         }
 
         /*

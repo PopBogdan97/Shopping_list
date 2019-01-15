@@ -132,6 +132,7 @@ input.placeholderwrong:-ms-input-placeholder {
 }
 .accept-div {
 	padding-bottom: 10px;
+        text-align: center;
 }
 
 .btn-register {
