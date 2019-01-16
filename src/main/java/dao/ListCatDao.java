@@ -28,13 +28,13 @@ public class ListCatDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome LIKE '%" + str + "%' LIMIT 5");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ListCategory WHERE Name LIKE '%" + str + "%' LIMIT 5");
 
             ResultSet rs = ps.executeQuery();
 
             int i = 0;
             while (rs.next()) {
-                String nome = rs.getString("Nome");
+                String nome = rs.getString("Name");
                 JSONObject object = new JSONObject();
                 object.put("id", i + "");
                 object.put("text", nome);
@@ -57,7 +57,7 @@ public class ListCatDao {
 
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO Cat_lista (Nome, Descrizione, Immagine) VALUES (?, ?, ?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO ListCategory (Name, Description, Image) VALUES (?, ?, ?)");
             ps.setString(1, nome);
             ps.setString(2, descrizione);
             ps.setString(3, immagine);
@@ -79,7 +79,7 @@ public class ListCatDao {
             Connection conn = DbConnect.getConnection();
 
             for (String p : prodcat) {
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO Rel_cat (Nomecatlista, Nomecatprodotto) VALUES (?, ?)");
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO ProductCat_ListCat (ListCatName, ProductCatName) VALUES (?, ?)");
                 ps.setString(1, listcat);
                 ps.setString(2, p);
                 status = status && (ps.executeUpdate() > 0);
@@ -99,7 +99,7 @@ public class ListCatDao {
             Connection conn = DbConnect.getConnection();
 
             PreparedStatement ps = conn.prepareStatement(
-                    "DELETE FROM Cat_lista WHERE Nome=?");
+                    "DELETE FROM ListCategory WHERE Name=?");
             ps.setString(1, nome);
 
             status = ps.executeUpdate() > 0;
@@ -118,16 +118,16 @@ public class ListCatDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ListCategory WHERE Name=?");
             ps.setString(1, nome);
 
             ResultSet rs = ps.executeQuery();
 
                 if(rs.next()){
-                    object.put("Descrizione", rs.getString("Descrizione"));
+                    object.put("Descrizione", rs.getString("Description"));
                 }
                 
-                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM Rel_cat WHERE Nomecatlista=?");
+                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM ProductCat_ListCat WHERE ListCatName=?");
             ps1.setString(1, nome);
 
             ResultSet rs1 = ps1.executeQuery();
@@ -135,7 +135,7 @@ public class ListCatDao {
 
                 while(rs1.next()){
                     JSONObject obj=new JSONObject();
-                    obj.put("Nomecatprodotto", rs1.getString("Nomecatprodotto"));
+                    obj.put("Nomecatprodotto", rs1.getString("ProductCatName"));
                     array.add(obj);
                 }                
                 
@@ -157,14 +157,14 @@ public class ListCatDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ListCategory WHERE Name=?");
             ps.setString(1, nome);
 
             ResultSet rs = ps.executeQuery();
 
             
                 if(rs.next()){
-                    file=rs.getString("Immagine");
+                    file=rs.getString("Image");
                 }
 
             conn.close();
@@ -185,7 +185,7 @@ public class ListCatDao {
             
             if(mod){
 
-            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_lista SET Descrizione=?, Immagine=? WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("UPDATE ListCategory SET Description=?, Image=? WHERE Name=?");
             ps.setString(1, descrizione);
             ps.setString(2, immagine);
             ps.setString(3, nome);
@@ -193,7 +193,7 @@ public class ListCatDao {
             status = ps.executeUpdate() > 0;
             }
             else{
-            PreparedStatement ps = conn.prepareStatement("UPDATE Cat_lista SET Descrizione=? WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("UPDATE ListCategory SET Description=? WHERE Name=?");
             ps.setString(1, descrizione);
             ps.setString(2, nome);
 
@@ -218,20 +218,22 @@ public class ListCatDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome LIKE '%" + str + "%' "+limit);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ListCategory WHERE Name LIKE '%" + str + "%' "+limit);
 
             ResultSet rs = ps.executeQuery();
 
             int i = 0;
             while (rs.next()) {
                 Element e = new Element();
-                String nome = rs.getString("Nome");
+                String nome = rs.getString("Name");
                 e.setId(i + "");
                 e.setText(nome);
                 listlist.add(e);
                 i++;
             }
             conn.close();
+            
+            System.out.println(listlist);
             
         } catch (Exception e) {
             System.out.println(e);
@@ -248,16 +250,16 @@ public class ListCatDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_lista WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ListCategory WHERE Name=?");
             ps.setString(1, nome);
 
             ResultSet rs = ps.executeQuery();
 
                 if(rs.next()){
-                    list.setDescription(rs.getString("Descrizione"));
+                    list.setDescription(rs.getString("Description"));
                 }
                 
-                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM Rel_cat WHERE Nomecatlista=?");
+                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM ProductCat_ListCat WHERE ListCatName=?");
             ps1.setString(1, nome);
 
             ResultSet rs1 = ps1.executeQuery();
@@ -265,7 +267,7 @@ public class ListCatDao {
             ArrayList<String> cat=new ArrayList<>();
             
                 while(rs1.next()){                    
-                    cat.add(rs1.getString("Nomecatprodotto"));
+                    cat.add(rs1.getString("ProductCatName"));
                 }                
                 
                 list.setCategories(cat);

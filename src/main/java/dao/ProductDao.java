@@ -25,12 +25,12 @@ public class ProductDao {
         JSONArray array = new JSONArray();
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Prodotto WHERE Nome LIKE '%" + str + "%' LIMIT 5");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name LIKE '%" + str + "%' LIMIT 5");
             ResultSet rs = ps.executeQuery();
             int i = 0;
             while(rs.next()) {
-                String nome = rs.getString("Nome");
-                String nomecat = rs.getString("NomeCat");
+                String nome = rs.getString("Name");
+                String nomecat = rs.getString("CatName");
                 JSONObject object = new JSONObject();
                 object.put("id", i + "");
                 object.put("text", nome+"-"+nomecat);
@@ -49,14 +49,14 @@ public class ProductDao {
         List products = new ArrayList<>();
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Prodotto");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Product");
             try (ResultSet rs = stm.executeQuery()) {
                 while(rs.next()) {
                     Product product = new Product();
-                    product.setNome(rs.getString("Nome"));
-                    product.setCat_prodotto(rs.getString("NomeCat"));
-                    product.setNote(rs.getString("Note"));
-                    product.setFotografia(rs.getString("Fotografia"));
+                    product.setNome(rs.getString("Name"));
+                    product.setCat_prodotto(rs.getString("CatName"));
+                    product.setNote(rs.getString("Description"));
+                    product.setFotografia(rs.getString("Image"));
                     products.add(product);
                 }
             }
@@ -70,7 +70,7 @@ public class ProductDao {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO Prodotto (Nome, NomeCat, Note, Fotografia) VALUES (?, ?, ?, ?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Product (Name, CatName, Description, Image) VALUES (?, ?, ?, ?)");
             ps.setString(1, nome);
             ps.setString(2, cat);
             ps.setString(3, descrizione);
@@ -87,7 +87,7 @@ public class ProductDao {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM Prodotto WHERE Nome=? AND NomeCat=?");
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM Product WHERE Name=? AND CatName=?");
             ps.setString(1, nome);
             ps.setString(2, cat);
             status = ps.executeUpdate() > 0;
@@ -102,12 +102,12 @@ public class ProductDao {
         JSONObject object = new JSONObject();
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Prodotto WHERE Nome=? AND NomeCat=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=? AND CatName=?");
             ps.setString(1, nome);
             ps.setString(2, nomecat);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-                object.put("Descrizione", rs.getString("Note"));
+                object.put("Descrizione", rs.getString("Description"));
             }
             conn.close();
             System.out.println(object);
@@ -121,12 +121,12 @@ public class ProductDao {
         String file="";
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Prodotto WHERE Nome=? AND NomeCat=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=? AND CatName=?");
             ps.setString(1, nome);
             ps.setString(2, nomecat);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-                file=rs.getString("Fotografia");
+                file=rs.getString("Image");
             }
             conn.close();
             System.out.println(file);
@@ -141,14 +141,14 @@ public class ProductDao {
         try {
             Connection conn = DbConnect.getConnection();
             if(mod) {
-                PreparedStatement ps = conn.prepareStatement("UPDATE Prodotto SET Note=?, Fotografia=? WHERE Nome=? AND NomeCat=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=? WHERE Name=? AND CatName=?");
                 ps.setString(1, descrizione);
                 ps.setString(2, immagine);
                 ps.setString(3, nome);
                 ps.setString(4, nomecat);
                 status = ps.executeUpdate() > 0;
             } else {
-                PreparedStatement ps = conn.prepareStatement("UPDATE Prodotto SET Note=? WHERE Nome=? AND NomeCat=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=? WHERE Name=? AND CatName=?");
                 ps.setString(1, descrizione);
                 ps.setString(2, nome);
                 ps.setString(3, nomecat);

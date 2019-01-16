@@ -22,7 +22,7 @@ public class MailExistsDao {
         Connection conn=DbConnect.getConnection();
           
         PreparedStatement ps=conn.prepareStatement(  
-"SELECT * FROM Utente WHERE Email=?");  
+"SELECT * FROM User WHERE Email=?");  
 ps.setString(1,email);  
 
     ResultSet rs=ps.executeQuery();  

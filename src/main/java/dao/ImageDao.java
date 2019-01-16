@@ -23,7 +23,7 @@ public class ImageDao {
         Connection conn=DbConnect.getConnection();
           
         PreparedStatement ps=conn.prepareStatement(  
-"UPDATE Utente SET Immagine=? WHERE Email=?");  
+"UPDATE User SET Image=? WHERE Email=?");  
 ps.setString(1,path);  
 ps.setString(2,email);  
 

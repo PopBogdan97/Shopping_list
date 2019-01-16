@@ -26,11 +26,11 @@ public class ProdCatDao {
         JSONArray array = new JSONArray();
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome LIKE '%"+str+"%' LIMIT 5");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ProductCategory WHERE Name LIKE '%"+str+"%' LIMIT 5");
             ResultSet rs = ps.executeQuery();
             int i=0;
             while (rs.next()) {
-                String nome = rs.getString("Nome");
+                String nome = rs.getString("Name");
                 JSONObject object = new JSONObject();
                 object.put("id", i+"");
                 object.put("text", nome);
@@ -49,7 +49,7 @@ public class ProdCatDao {
         boolean status=false;  
         try {
             Connection conn=DbConnect.getConnection();
-            PreparedStatement ps=conn.prepareStatement("INSERT INTO Cat_prodotto (Nome, Descrizione, Logo) VALUES (?, ?, ?)");  
+            PreparedStatement ps=conn.prepareStatement("INSERT INTO ProductCategory (Name, Description, Logo) VALUES (?, ?, ?)");  
             ps.setString(1,nome);  
             ps.setString(2,descrizione);
             ps.setString(3,immagine);
@@ -65,15 +65,15 @@ public class ProdCatDao {
         List shoppingLists = new ArrayList<>();
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Cat_prodotto");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM ProductCategory");
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     ShoppingList shoppingList = new ShoppingList();
-                    shoppingList.setNome(rs.getString("Nome"));
-                    shoppingList.setDescrizione(rs.getString("Descrizione"));
+                    shoppingList.setNome(rs.getString("Name"));
+                    shoppingList.setDescrizione(rs.getString("Description"));
                     
-                    PreparedStatement stm1 = conn.prepareStatement("SELECT count(*) as cnt FROM Prodotto where NomeCat=?");
-                    stm1.setString(1,rs.getString("Nome"));  
+                    PreparedStatement stm1 = conn.prepareStatement("SELECT count(*) as cnt FROM Product where CatName=?");
+                    stm1.setString(1,rs.getString("Name"));  
                     try(ResultSet rs1 = stm1.executeQuery()){
                         rs1.next();
                         shoppingList.setCounter(rs1.getString("cnt"));
@@ -94,7 +94,7 @@ public class ProdCatDao {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM Cat_prodotto WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM ProductCategory WHERE Name=?");
             ps.setString(1, nome);
             status = ps.executeUpdate() > 0;
             conn.close();
@@ -108,11 +108,11 @@ public class ProdCatDao {
         JSONObject object = new JSONObject();
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ProductCategory WHERE Name=?");
             ps.setString(1, nome);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                object.put("Descrizione", rs.getString("Descrizione"));
+                object.put("Descrizione", rs.getString("Description"));
             }    
             conn.close();
             System.out.println(object);
@@ -126,7 +126,7 @@ public class ProdCatDao {
         String file="";
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Cat_prodotto WHERE Nome=?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ProductCategory WHERE Name=?");
             ps.setString(1, nome);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -145,13 +145,13 @@ public class ProdCatDao {
         try {
             Connection conn = DbConnect.getConnection();
             if(mod){
-                PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=?, Logo=? WHERE Nome=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE ProductCategory SET Description=?, Logo=? WHERE Name=?");
                 ps.setString(1, descrizione);
                 ps.setString(2, immagine);
                 ps.setString(3, nome);
                 status = ps.executeUpdate() > 0;
             } else {
-                PreparedStatement ps = conn.prepareStatement("UPDATE Cat_prodotto SET Descrizione=? WHERE Nome=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE ProductCategory SET Description=? WHERE Name=?");
                 ps.setString(1, descrizione);
                 ps.setString(2, nome);
                 status = ps.executeUpdate() > 0;

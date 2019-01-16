@@ -75,14 +75,14 @@ public class Upload extends HttpServlet {
                 stmt = conn.createStatement();
                 
                 String sql;
-                sql = "SELECT * FROM cat_prodotto";
+                sql = "SELECT * FROM ProductCategory";
                 
                 ResultSet rs = stmt.executeQuery(sql);
                 
                 while(rs.next()){
                     //Retrieve by column name
-                    String Nome  = rs.getString("Nome");
-                    String Descrizione  = rs.getString("Descrizione");
+                    String Nome  = rs.getString("Name");
+                    String Descrizione  = rs.getString("Description");
                     String Logo  = rs.getString("Logo");
                     
                     //Display values

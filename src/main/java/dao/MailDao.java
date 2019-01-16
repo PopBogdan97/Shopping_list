@@ -23,7 +23,7 @@ public class MailDao {
         Connection conn=DbConnect.getConnection();
           
         PreparedStatement ps=conn.prepareStatement(  
-"UPDATE Utente SET Cod=? WHERE Email=?");  
+"UPDATE User SET Cod=? WHERE Email=?");  
 ps.setString(1,cod);  
 ps.setString(2,email);
     

@@ -24,7 +24,7 @@ public class LoginDao {
 
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Utente WHERE Email=? AND Password=PASSWORD(?)");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM User WHERE Email=? AND Password=PASSWORD(?)");
             ps.setString(1, email);
             ps.setString(2, password);
 
@@ -34,7 +34,7 @@ public class LoginDao {
 
 /////
                 if (rs.getString("Valid").equals("1")) {
-                    status = rs.getString("Tipologia");
+                    status = rs.getString("Typology");
                 } else {
                     status = "notvalid";
                 }
@@ -58,7 +58,7 @@ public class LoginDao {
             Connection conn = DbConnect.getConnection();
 
             PreparedStatement ps = conn.prepareStatement(
-                    "UPDATE Utente SET Cookie=? WHERE Email=?");
+                    "UPDATE User SET Cookie=? WHERE Email=?");
             ps.setString(1, id);
             ps.setString(2, email);
 

@@ -22,7 +22,7 @@ public class ResetDao {
         Connection conn=DbConnect.getConnection();
           
         PreparedStatement ps=conn.prepareStatement(  
-"SELECT * FROM Utente WHERE Email=? AND Cod=?");  
+"SELECT * FROM User WHERE Email=? AND Cod=?");  
 ps.setString(1,email);  
 ps.setString(2,cod);  
 
