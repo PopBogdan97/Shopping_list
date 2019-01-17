@@ -5,7 +5,10 @@
  */
 package dao;
 
+import entities.Element;
+import entities.ElementList;
 import entities.Product;
+import entities.ProductBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +20,7 @@ import servlets.DbConnect;
 
 /**
  *
- * @author Emiliano
+ * @author Emiliano/Bogdan
  */
 public class ProductDao {
 
@@ -65,38 +68,6 @@ public class ProductDao {
         }
         return products;
     }
-
-    public static boolean initialize(String nome, String descrizione, String immagine, String cat) {
-        boolean status = false;
-        try {
-            Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO Product (Name, CatName, Description, Image) VALUES (?, ?, ?, ?)");
-            ps.setString(1, nome);
-            ps.setString(2, cat);
-            ps.setString(3, descrizione);
-            ps.setString(4, immagine);
-            status = ps.executeUpdate() > 0;
-            conn.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return status;
-    }
-
-    public static boolean delete(String nome, String cat) {
-        boolean status = false;
-        try {
-            Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM Product WHERE Name=? AND CatName=?");
-            ps.setString(1, nome);
-            ps.setString(2, cat);
-            status = ps.executeUpdate() > 0;
-            conn.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return status;
-    }
     
     public static JSONObject getData(String nome, String nomecat) {
         JSONObject object = new JSONObject();
@@ -116,14 +87,127 @@ public class ProductDao {
         }
         return object;
     }
+    
+    //-------  api functions --------
+    
+    public static ElementList getAllProducts(String str, String limit) {
+
+        ElementList el = new ElementList();
+
+        ArrayList<Element> listlist = new ArrayList<>();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name LIKE '%" + str + "%' " + limit);
+
+            ResultSet rs = ps.executeQuery();
+
+            int i = 0;
+            while (rs.next()) {
+                Element e = new Element();
+                String name = rs.getString("Name");
+                e.setId(i + "");
+                e.setText(name);
+                listlist.add(e);
+                i++;
+            }
+            conn.close();
+
+            System.out.println(listlist);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        el.setResults(listlist);
+
+        return el;
+    }
+    
+    public static ProductBean getSingleProduct(String name) {
+        ProductBean list = new ProductBean();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=?");
+            ps.setString(1, name);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                list.setCatName(rs.getString("CatName"));
+                list.setDescription(rs.getString("Description"));
+            }
+            
+            conn.close();
+
+            list.setName(name);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+    public static boolean initialize(String name, String description, String image, String catName) {
+        boolean status = false;
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Product (Name, CatName, Description, Image) VALUES (?, ?, ?, ?)");
+            ps.setString(1, name);
+            ps.setString(2, catName);
+            ps.setString(3, description);
+            ps.setString(4, image);
+            status = ps.executeUpdate() > 0;
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+    
+    public static boolean initialize(String name, String description, String image, String catName, String logo) {
+        boolean status = false;
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Product (Name, CatName, Description, Image, Logo) VALUES (?, ?, ?, ?, ?)");
+            ps.setString(1, name);
+            ps.setString(2, catName);
+            ps.setString(3, description);
+            ps.setString(4, image);
+            ps.setString(5, logo);
+            status = ps.executeUpdate() > 0;
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean delete(String name, String catName) {
+        boolean status = false;
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM Product WHERE Name=? AND CatName=?");
+            ps.setString(1, name);
+            ps.setString(2, catName);
+            status = ps.executeUpdate() > 0;
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
         
-    public static String getImage(String nome, String nomecat) {
+    public static String getImage(String name, String catName) {
         String file="";
         try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=? AND CatName=?");
-            ps.setString(1, nome);
-            ps.setString(2, nomecat);
+            ps.setString(1, name);
+            ps.setString(2, catName);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 file=rs.getString("Image");
@@ -136,22 +220,49 @@ public class ProductDao {
         return file;
     }
                 
-    public static boolean modify(String nome, String nomecat, String descrizione, String immagine, boolean mod) {
+    public static boolean modify(String name, String catName, String description, String image, boolean mod) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
             if(mod) {
                 PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=? WHERE Name=? AND CatName=?");
-                ps.setString(1, descrizione);
-                ps.setString(2, immagine);
-                ps.setString(3, nome);
-                ps.setString(4, nomecat);
+                ps.setString(1, description);
+                ps.setString(2, image);
+                ps.setString(3, name);
+                ps.setString(4, catName);
                 status = ps.executeUpdate() > 0;
             } else {
                 PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=? WHERE Name=? AND CatName=?");
-                ps.setString(1, descrizione);
-                ps.setString(2, nome);
-                ps.setString(3, nomecat);
+                ps.setString(1, description);
+                ps.setString(2, name);
+                ps.setString(3, catName);
+                status = ps.executeUpdate() > 0;
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+    
+    public static boolean modify(String name, String catName, String description, String logo, String image, boolean mod) {
+        boolean status = false;
+        try {
+            Connection conn = DbConnect.getConnection();
+            if(mod) {
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=?, Logo=? WHERE Name=? AND CatName=?");
+                ps.setString(1, description);
+                ps.setString(2, image);
+                ps.setString(3, logo);
+                ps.setString(4, name);
+                ps.setString(5, catName);
+                status = ps.executeUpdate() > 0;
+            } else {
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Logo=? WHERE Name=? AND CatName=?");
+                ps.setString(1, description);
+                ps.setString(2, logo);
+                ps.setString(3, name);
+                ps.setString(4, catName);
                 status = ps.executeUpdate() > 0;
             }
             conn.close();

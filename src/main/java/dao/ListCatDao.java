@@ -111,8 +111,8 @@ public class ListCatDao {
         }
         return status;
     }
-    
-        public static JSONObject getData(String nome) {
+
+    public static JSONObject getData(String nome) {
         JSONObject object = new JSONObject();
 
         try {
@@ -123,23 +123,23 @@ public class ListCatDao {
 
             ResultSet rs = ps.executeQuery();
 
-                if(rs.next()){
-                    object.put("Descrizione", rs.getString("Description"));
-                }
-                
-                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM ProductCat_ListCat WHERE ListCatName=?");
+            if (rs.next()) {
+                object.put("Descrizione", rs.getString("Description"));
+            }
+
+            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM ProductCat_ListCat WHERE ListCatName=?");
             ps1.setString(1, nome);
 
             ResultSet rs1 = ps1.executeQuery();
-                    JSONArray array=new JSONArray();
+            JSONArray array = new JSONArray();
 
-                while(rs1.next()){
-                    JSONObject obj=new JSONObject();
-                    obj.put("Nomecatprodotto", rs1.getString("ProductCatName"));
-                    array.add(obj);
-                }                
-                
-                object.put("Categorie", array);
+            while (rs1.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put("Nomecatprodotto", rs1.getString("ProductCatName"));
+                array.add(obj);
+            }
+
+            object.put("Categorie", array);
             conn.close();
 
             System.out.println(object);
@@ -149,10 +149,10 @@ public class ListCatDao {
         }
         return object;
     }
-        
-                public static String getImage(String nome) {
 
-                    String file="";
+    public static String getImage(String nome) {
+
+        String file = "";
 
         try {
             Connection conn = DbConnect.getConnection();
@@ -162,10 +162,9 @@ public class ListCatDao {
 
             ResultSet rs = ps.executeQuery();
 
-            
-                if(rs.next()){
-                    file=rs.getString("Image");
-                }
+            if (rs.next()) {
+                file = rs.getString("Image");
+            }
 
             conn.close();
 
@@ -176,30 +175,28 @@ public class ListCatDao {
         }
         return file;
     }
-                
-                    public static boolean modify(String nome, String descrizione, String immagine, boolean mod) {
+
+    public static boolean modify(String nome, String descrizione, String immagine, boolean mod) {
         boolean status = false;
         try {
 
             Connection conn = DbConnect.getConnection();
-            
-            if(mod){
 
-            PreparedStatement ps = conn.prepareStatement("UPDATE ListCategory SET Description=?, Image=? WHERE Name=?");
-            ps.setString(1, descrizione);
-            ps.setString(2, immagine);
-            ps.setString(3, nome);
+            if (mod) {
 
-            status = ps.executeUpdate() > 0;
+                PreparedStatement ps = conn.prepareStatement("UPDATE ListCategory SET Description=?, Image=? WHERE Name=?");
+                ps.setString(1, descrizione);
+                ps.setString(2, immagine);
+                ps.setString(3, nome);
+
+                status = ps.executeUpdate() > 0;
+            } else {
+                PreparedStatement ps = conn.prepareStatement("UPDATE ListCategory SET Description=? WHERE Name=?");
+                ps.setString(1, descrizione);
+                ps.setString(2, nome);
+
+                status = ps.executeUpdate() > 0;
             }
-            else{
-            PreparedStatement ps = conn.prepareStatement("UPDATE ListCategory SET Description=? WHERE Name=?");
-            ps.setString(1, descrizione);
-            ps.setString(2, nome);
-
-            status = ps.executeUpdate() > 0;
-            }                
-            
 
             conn.close();
 
@@ -211,14 +208,14 @@ public class ListCatDao {
 
     public static ElementList getListListBean(String str, String limit) {
 
-        ElementList el=new ElementList();
-        
+        ElementList el = new ElementList();
+
         ArrayList<Element> listlist = new ArrayList<>();
 
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ListCategory WHERE Name LIKE '%" + str + "%' "+limit);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM ListCategory WHERE Name LIKE '%" + str + "%' " + limit);
 
             ResultSet rs = ps.executeQuery();
 
@@ -232,19 +229,19 @@ public class ListCatDao {
                 i++;
             }
             conn.close();
-            
+
             System.out.println(listlist);
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         el.setResults(listlist);
-        
+
         return el;
     }
-    
-            public static ListCatBean getDataBean(String nome) {
+
+    public static ListCatBean getDataBean(String nome) {
         ListCatBean list = new ListCatBean();
 
         try {
@@ -255,24 +252,24 @@ public class ListCatDao {
 
             ResultSet rs = ps.executeQuery();
 
-                if(rs.next()){
-                    list.setDescription(rs.getString("Description"));
-                }
-                
-                            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM ProductCat_ListCat WHERE ListCatName=?");
+            if (rs.next()) {
+                list.setDescription(rs.getString("Description"));
+            }
+
+            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM ProductCat_ListCat WHERE ListCatName=?");
             ps1.setString(1, nome);
 
             ResultSet rs1 = ps1.executeQuery();
-            
-            ArrayList<String> cat=new ArrayList<>();
-            
-                while(rs1.next()){                    
-                    cat.add(rs1.getString("ProductCatName"));
-                }                
-                
-                list.setCategories(cat);
+
+            ArrayList<String> cat = new ArrayList<>();
+
+            while (rs1.next()) {
+                cat.add(rs1.getString("ProductCatName"));
+            }
+
+            list.setCategories(cat);
             conn.close();
-            
+
             list.setName(nome);
 
         } catch (Exception e) {
