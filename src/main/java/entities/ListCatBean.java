@@ -15,7 +15,7 @@ public class ListCatBean {
     
     private String name;
     private String description;
-    private ArrayList<String> categories;
+    private ArrayList<String> categories; //product categories
 
     /**
      * @return the name
