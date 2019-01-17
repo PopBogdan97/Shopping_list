@@ -16,6 +16,23 @@ public class ProductCatBean {
     private String Name;
     private String Description;
     private ArrayList<String> Products;
+    private ArrayList<String> Lists;
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<String> getLists() {
+        return Lists;
+    }
+
+    /**
+     *
+     * @param Lists
+     */
+    public void setLists(ArrayList<String> Lists) {
+        this.Lists = Lists;
+    }
 
     /**
      *
