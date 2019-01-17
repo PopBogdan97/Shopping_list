@@ -5,10 +5,63 @@
  */
 package entities;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author bogdan
  */
 public class ProductCatBean {
     
+    private String Name;
+    private String Description;
+    private ArrayList<String> Products;
+
+    /**
+     *
+     * @return
+     */
+    public String getName() {
+        return Name;
+    }
+
+    /**
+     *
+     * @param Name
+     */
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getDescription() {
+        return Description;
+    }
+
+    /**
+     *
+     * @param Description
+     */
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<String> getProducts() {
+        return Products;
+    }
+
+    /**
+     *
+     * @param Products
+     */
+    public void setProducts(ArrayList<String> Products) {
+        this.Products = Products;
+    }
 }

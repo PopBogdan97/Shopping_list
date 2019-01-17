@@ -11,4 +11,55 @@ package entities;
  */
 public class ProductBean {
     
+    private String Name;
+    private String CatName;
+    private String Description;
+
+    /**
+     *
+     * @return
+     */
+    public String getName() {
+        return Name;
+    }
+
+    /**
+     *
+     * @param Name
+     */
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getCatName() {
+        return CatName;
+    }
+
+    /**
+     *
+     * @param CatName
+     */
+    public void setCatName(String CatName) {
+        this.CatName = CatName;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getDescription() {
+        return Description;
+    }
+
+    /**
+     *
+     * @param Description
+     */
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
 }
