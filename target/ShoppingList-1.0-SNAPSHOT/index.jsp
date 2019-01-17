@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 18-ott-2018, 14.43.31
-    Author     : Marco
+    Author     : Marco & Luca
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,26 +34,65 @@
     </head>
 
     <body class="bg-success">
+        
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="#">Shopping List</a>
                 <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <%
+                    if(session == null || session.getAttribute("email") == null){
+                        out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
+                                    + " <ul class=\"navbar-nav ml-auto\">"
+                                    + "     <li class=\"nav-item\">"
+                                    + "         <img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
+                                    + "         <a class=\"btn btn-outline-primary\" href=\"login_registration.jsp\">Accedi</a>"
+                                    + "     </li>"
+                                    + " </ul>"
+                                    + "</div>");
+                    }
+                    else if(session != null && session.getAttribute("email") != null && session.getAttribute("tipo").equals("admin")){
+                        out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
+                                    + " <ul class=\"navbar-nav ml-auto\">"
+                                    + "     <li class=\"nav-item\">"
+                                    + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left;\" width=\"30\" height=\"30\">"
+                                    + "         <a class=\"btn btn-outline-primary\" href=\"adminPanel.jsp\" style=\"float: left;\">Pannello amministratore</a>"
+                                    + "     </li>"
+                                    + "     <li class=\"nav-item\">"
+                                    + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
+                                    + "     </li>"
+                                    + " </ul>"
+                                    + "</div>");
+                    }
+                    else{
+                        out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
+                                    + " <ul class=\"navbar-nav ml-auto\">"
+                                    + "     <li class=\"nav-item\">"
+                                    + "         <b>"+session.getAttribute("email")+"</b>"
+                                    + "     </li>"
+                                    + "     <li class=\"nav-item\">"
+                                    + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
+                                    + "     </li>"
+                                    + " </ul>"
+                                    + "</div>");
+                    }
+                %>
+            <!--
                 <div class="navbar-collapse collapse" id="navbarResponsive" style="">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            
-                            <!--<img src="img/impostazioni.png" alt="" style="visibility: <%=(session.getAttribute("Tipologia")=="admin") ? "block" : "hidden"%>" width="30" height="30">
+                            <img src="img/impostazioni.png" alt="" style="visibility: <%=(session.getAttribute("Tipologia")=="admin") ? "block" : "hidden"%>" width="30" height="30">
                             <a class="btn" href="adminPanel.jsp" style="visibility: <%=(session.getAttribute("Tipologia")=="admin") ? "block" : "hidden"%>" >Gestisci categorie</a>
-                        -->
-                            </li>
+                        </li>
                         <li class="nav-item">
                             <img src="img/user.png" alt="" width="40" height="40">
                             <a class="btn btn-outline-primary" href="login_registration.jsp">Accedi</a>
                         </li>
                     </ul>
                 </div>
+            -->
+                        
             </div>
         </nav>
         <br><br><br><br>

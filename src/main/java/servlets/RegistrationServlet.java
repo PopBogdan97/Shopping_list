@@ -44,7 +44,9 @@ public class RegistrationServlet extends HttpServlet {
           
     if(RegistrationDao.register(email, password, nominativo)){  
         Mailer.sendMail(email);
-        out.println("Check your email: "+email);
+        out.println("Check your email: "+email
+                    + "<br>"
+                    + "<a href='login_registration.jsp'>Return to Login</a>");
 
     }  
     else{  

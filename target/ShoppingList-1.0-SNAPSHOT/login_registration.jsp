@@ -14,7 +14,10 @@
 
         <!-- including the stylesheet file -->
         <link rel="stylesheet" type="text/css" href="css/login_registration.css">
-
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         
         
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -32,6 +35,24 @@
     </head>
 
     <body>
+        
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.jsp">Shopping List</a>
+                
+                <div class="navbar-collapse collapse" id="navbarResponsive" style="">
+                    <ul class="navbar-nav ml-auto" style="float: right;">
+                        <li class="nav-item">
+                            <a href="index.jsp" s><u>Utilizza piattaforma senza account</u></a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </nav>
+        
+        
+        
         <div class="container">
             <div id="pageMessages" <%
                 if(request.getParameter("error") != null){
@@ -71,7 +92,7 @@
                                 out.print("Account not verified!");
                             }
                             else if(request.getParameter("error").equals("regError")){
-                                out.print("Email already in use!");
+                                out.print("Email address already in use!");
                             }
                             else{
                                 out.print("");

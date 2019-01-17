@@ -78,7 +78,7 @@ public class ImageUploadServlet extends HttpServlet {
 
     if(ImageDao.setimage(email, fileName)){  
         request.setAttribute("email", email);
-        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+        RequestDispatcher rd=request.getRequestDispatcher("login_registration.jsp");  
         rd.forward(request,response);  
     }  
     else{ 
