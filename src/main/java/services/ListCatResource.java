@@ -51,87 +51,83 @@ public class ListCatResource {
 
     /**
      * Retrieves representation of an instance of services.ListCatResource
+     *
      * @return an instance of java.lang.String
      */
-    
-    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getListsJson(@QueryParam("q") String q, @QueryParam("limit") int limit) {
-        ElementList el = ListCatDao.getListListBean(q==null ? "" : q, limit==0 ? "" : "LIMIT "+limit);
-        System.out.println("q: "+q);
-        System.out.println("limit: "+limit);
+        ElementList el = ListCatDao.getListListBean(q == null ? "" : q, limit == 0 ? "" : "LIMIT " + limit);
+        System.out.println("q: " + q);
+        System.out.println("limit: " + limit);
 
         return new Gson().toJson(el);
     }
-    
+
     @POST
-    @Consumes(MediaType.MULTIPART_FORM_DATA)    
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void postListJson(@FormDataParam("name") String name, @FormDataParam("description") String description, @FormDataParam("arr") List<String> prodcat, @FormDataParam("file") InputStream file) throws IOException {
-        
-        String fileName="";
-        
-        if(file!=null){
-            
-            fileName=name+".png";
-                   
-                   System.out.println(fileName);
+
+        String fileName = "";
+
+        if (file != null) {
+
+            fileName = name + ".png";
+
+            System.out.println(fileName);
 
             UploadImage.upload(file, fileName, "listcat");
         }
 
-
-    if(ListCatDao.initialize(name, description, fileName)){  
-        if(ListCatDao.setProdCat(name, prodcat.toArray(new String[prodcat.size()]))){
-            System.out.println("ok");
+        if (ListCatDao.initialize(name, description, fileName)) {
+            if (ListCatDao.setProdCat(name, prodcat.toArray(new String[prodcat.size()]))) {
+                System.out.println("ok");
+            }
         }
-    }  
-    
+
     }
-    
-    
+
     @GET
     @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getDataJson(@PathParam("name") String name){
+    public String getDataJson(@PathParam("name") String name) {
         ListCatBean list = ListCatDao.getDataBean(name);
         return new Gson().toJson(list);
     }
-        
+
     @DELETE
     @Path("/{name}")
     public void deleteListJson(@PathParam("name") String name) {
         ListCatDao.delete(name);
         System.out.println(name);
     }
-    
-    
+
     /**
      * PUT method for updating or creating an instance of ListCatResource
+     *
      * @param content representation for the resource
      */
-    
     @PUT
     @Path("/{name}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void putListJson(@PathParam("name") String name, @FormDataParam("description") String description, @FormDataParam("file") InputStream file, @FormDataParam("mod") boolean mod) throws IOException {
-        
-        String fileName="";
-        
-        if(file!=null){
-            
-            fileName=name+".png";
-                   
-                   System.out.println(fileName);
+
+        String fileName = "";
+
+        if (file != null) {
+
+            fileName = name + ".png";
+
+            System.out.println(fileName);
 
             UploadImage.upload(file, fileName, "listcat");
         }
-        
-    if(ListCatDao.modify(name, description, fileName, (mod || file!=null))){
-        System.out.println("ok");
+
+        if (ListCatDao.modify(name, description, fileName, (mod || file != null))) {
+            System.out.println("ok");
+        }
     }
-    }
-    
+
     @GET
     @Path("/image/{name}")
     @Produces("image/png")
@@ -160,5 +156,5 @@ public class ListCatResource {
 
         }
     }
-    
+
 }
