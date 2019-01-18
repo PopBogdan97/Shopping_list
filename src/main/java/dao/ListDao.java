@@ -83,7 +83,7 @@ public class ListDao {
                 products.add(rs1.getString("ProductName"));
             }
 
-            list.setProduct(products);
+            list.setProducts(products);
             conn.close();
 
             list.setName(name);

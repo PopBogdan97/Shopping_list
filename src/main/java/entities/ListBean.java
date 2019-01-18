@@ -16,7 +16,7 @@ public class ListBean {
     private String CatName;
     private String Description;
     private String OwnerEmail;
-    private ArrayList<String> Product;
+    private ArrayList<String> Products;
 
     public String getName() {
         return Name;
@@ -50,12 +50,12 @@ public class ListBean {
         this.OwnerEmail = OwnerEmail;
     }
 
-    public ArrayList<String> getProduct() {
-        return Product;
+    public ArrayList<String> getProducts() {
+        return Products;
     }
 
-    public void setProduct(ArrayList<String> Product) {
-        this.Product = Product;
+    public void setProducts(ArrayList<String> Products) {
+        this.Products = Products;
     }
     
 }
