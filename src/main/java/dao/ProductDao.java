@@ -31,12 +31,12 @@ public class ProductDao {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name LIKE '%" + str + "%' LIMIT 5");
             ResultSet rs = ps.executeQuery();
             int i = 0;
-            while(rs.next()) {
+            while (rs.next()) {
                 String nome = rs.getString("Name");
                 String nomecat = rs.getString("CatName");
                 JSONObject object = new JSONObject();
                 object.put("id", i + "");
-                object.put("text", nome+"-"+nomecat);
+                object.put("text", nome + "-" + nomecat);
                 array.add(object);
                 i++;
             }
@@ -47,14 +47,14 @@ public class ProductDao {
         }
         return array;
     }
-    
-    public static List getProd(){
+
+    public static List getProd() {
         List products = new ArrayList<>();
         try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement stm = conn.prepareStatement("SELECT * FROM Product");
             try (ResultSet rs = stm.executeQuery()) {
-                while(rs.next()) {
+                while (rs.next()) {
                     Product product = new Product();
                     product.setNome(rs.getString("Name"));
                     product.setCat_prodotto(rs.getString("CatName"));
@@ -68,7 +68,7 @@ public class ProductDao {
         }
         return products;
     }
-    
+
     public static JSONObject getData(String nome, String nomecat) {
         JSONObject object = new JSONObject();
         try {
@@ -77,7 +77,7 @@ public class ProductDao {
             ps.setString(1, nome);
             ps.setString(2, nomecat);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 object.put("Descrizione", rs.getString("Description"));
             }
             conn.close();
@@ -87,9 +87,8 @@ public class ProductDao {
         }
         return object;
     }
-    
+
     //-------  api functions --------
-    
     public static ElementList getAllProducts(String str, String limit) {
 
         ElementList el = new ElementList();
@@ -124,7 +123,7 @@ public class ProductDao {
 
         return el;
     }
-    
+
     public static ProductBean getSingleProduct(String name) {
         ProductBean list = new ProductBean();
 
@@ -140,7 +139,7 @@ public class ProductDao {
                 list.setCatName(rs.getString("CatName"));
                 list.setDescription(rs.getString("Description"));
             }
-            
+
             conn.close();
 
             list.setName(name);
@@ -150,8 +149,9 @@ public class ProductDao {
         }
         return list;
     }
-    
-    public static boolean initialize(String name, String description, String image, String catName) {
+
+    //funzione probabilmente da cancellare, da vedere se viene usata da emiliano da qualche parte
+    public static boolean initialize(String name, String catName, String description, String image) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
@@ -167,8 +167,8 @@ public class ProductDao {
         }
         return status;
     }
-    
-    public static boolean initialize(String name, String description, String image, String catName, String logo) {
+
+    public static boolean initialize(String name, String catName, String description, String image, String logo) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
@@ -197,7 +197,7 @@ public class ProductDao {
             PreparedStatement ps1 = conn.prepareStatement(
                     "DELETE FROM List_Product WHERE ProductName=?");
             ps.setString(1, name);
-            
+
             status = (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
             conn.close();
         } catch (Exception e) {
@@ -205,7 +205,7 @@ public class ProductDao {
         }
         return status;
     }
-    
+
     public static boolean deleteByCat(String catName) {
         boolean status = true;
         try {
@@ -213,20 +213,20 @@ public class ProductDao {
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM Product WHERE CatName=?");
             ps.setString(1, catName);
-            
+
             PreparedStatement ps1 = conn.prepareStatement(""
                     + "SELECT Name FROM Product WHERE CatName=?");
             ps.setString(1, catName);
 
             ResultSet rs = ps1.executeQuery();
-            
+
             if (rs.next()) {
                 PreparedStatement ps2 = conn.prepareStatement(
-                    "DELETE FROM List_Product WHERE ProductName=?");
+                        "DELETE FROM List_Product WHERE ProductName=?");
                 ps2.setString(1, rs.getString("Name"));
                 status = status && (ps2.executeUpdate() > 0);
             }
-            
+
             status = status && (ps.executeUpdate() > 0);
             conn.close();
         } catch (Exception e) {
@@ -234,17 +234,37 @@ public class ProductDao {
         }
         return status;
     }
-        
+
+    public static boolean deleteByName(String name) {
+        boolean status = true;
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM Product WHERE Name=?");
+            ps.setString(1, name);
+
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM List_Product WHERE ProductName=?");
+            ps1.setString(1, name);
+
+            status = status && (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
     public static String getImage(String name, String catName) {
-        String file="";
+        String file = "";
         try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=? AND CatName=?");
             ps.setString(1, name);
             ps.setString(2, catName);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                file=rs.getString("Image");
+            if (rs.next()) {
+                file = rs.getString("Image");
             }
             conn.close();
             System.out.println(file);
@@ -253,16 +273,16 @@ public class ProductDao {
         }
         return file;
     }
-    
+
     public static String getImage(String name) {
-        String file="";
+        String file = "";
         try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=?");
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                file=rs.getString("Image");
+            if (rs.next()) {
+                file = rs.getString("Image");
             }
             conn.close();
             System.out.println(file);
@@ -271,12 +291,12 @@ public class ProductDao {
         }
         return file;
     }
-                
+
     public static boolean modify(String name, String catName, String description, String image, boolean mod) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
-            if(mod) {
+            if (mod) {
                 PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=? WHERE Name=? AND CatName=?");
                 ps.setString(1, description);
                 ps.setString(2, image);
@@ -296,12 +316,12 @@ public class ProductDao {
         }
         return status;
     }
-    
+
     public static boolean modify(String name, String catName, String description, String logo, String image, boolean mod) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
-            if(mod) {
+            if (mod) {
                 PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=?, Logo=? WHERE Name=? AND CatName=?");
                 ps.setString(1, description);
                 ps.setString(2, image);
