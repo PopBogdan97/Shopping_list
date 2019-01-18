@@ -307,6 +307,27 @@ public class UserDao {
         }
         return status;
     }
+    
+    public static boolean setCookie(String email, String cookie){
+        boolean status = false;
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE User SET Cookie=? WHERE Email=?");
+            ps.setString(1, cookie);
+            ps.setString(2, email);
+
+            status = ps.executeUpdate() > 0;
+
+            conn.close();
+
+            System.out.println(status);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
      
     public static boolean getValid(String email){
         boolean valid = false;
