@@ -206,4 +206,24 @@ public class ListDao {
         }
         return status;
     }
+
+    public static boolean setProducts(String list, String[] products) {
+        boolean status = true;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            for (String p : products) {
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO List_Product (ListName, ProductName) VALUES (?, ?)");
+                ps.setString(1, list);
+                ps.setString(2, p);
+                status = status && (ps.executeUpdate() > 0);
+            }
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 }   
