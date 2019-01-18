@@ -253,6 +253,24 @@ public class ProductDao {
         }
         return file;
     }
+    
+    public static String getImage(String name) {
+        String file="";
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=?");
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                file=rs.getString("Image");
+            }
+            conn.close();
+            System.out.println(file);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return file;
+    }
                 
     public static boolean modify(String name, String catName, String description, String image, boolean mod) {
         boolean status = false;
