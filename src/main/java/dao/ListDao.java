@@ -95,19 +95,53 @@ public class ListDao {
     }
     
     public static boolean delete(String name) {
-        boolean status = false;
+        boolean status = true;
         try {
 
             Connection conn = DbConnect.getConnection();
 
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM List_Product WHERE List_Name=?");
+            ps1.setString(1, name);
+            
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM List WHERE Name=?");
             ps.setString(1, name);
-
-            status = ps.executeUpdate() > 0;
+            
+            status = status && (ps1.executeUpdate() > 0);
+            status = status && (ps.executeUpdate() > 0);
 
             conn.close();
 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+    
+    public static boolean deleteByCat(String catName) {
+        boolean status = true;
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM List WHERE CatName=?");
+            ps.setString(1, catName);
+            
+            PreparedStatement ps1 = conn.prepareStatement(""
+                    + "SELECT Name FROM List WHERE CatName=?");
+            ps.setString(1, catName);
+
+            ResultSet rs = ps1.executeQuery();
+            
+            if (rs.next()) {
+                PreparedStatement ps2 = conn.prepareStatement(
+                    "DELETE FROM List_Product WHERE ListName=?");
+                ps2.setString(1, rs.getString("Name"));
+                status = status && (ps2.executeUpdate() > 0);
+            }
+            
+            status = status && (ps.executeUpdate() > 0);
+            conn.close();
         } catch (Exception e) {
             System.out.println(e);
         }

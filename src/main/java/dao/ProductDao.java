@@ -190,10 +190,44 @@ public class ProductDao {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM Product WHERE Name=? AND CatName=?");
+            PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM Product WHERE Name=? AND CatName=?");
             ps.setString(1, name);
             ps.setString(2, catName);
-            status = ps.executeUpdate() > 0;
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM List_Product WHERE ProductName=?");
+            ps.setString(1, name);
+            
+            status = (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+    
+    public static boolean deleteByCat(String catName) {
+        boolean status = true;
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM Product WHERE CatName=?");
+            ps.setString(1, catName);
+            
+            PreparedStatement ps1 = conn.prepareStatement(""
+                    + "SELECT Name FROM Product WHERE CatName=?");
+            ps.setString(1, catName);
+
+            ResultSet rs = ps1.executeQuery();
+            
+            if (rs.next()) {
+                PreparedStatement ps2 = conn.prepareStatement(
+                    "DELETE FROM List_Product WHERE ProductName=?");
+                ps2.setString(1, rs.getString("Name"));
+                status = status && (ps2.executeUpdate() > 0);
+            }
+            
+            status = status && (ps.executeUpdate() > 0);
             conn.close();
         } catch (Exception e) {
             System.out.println(e);

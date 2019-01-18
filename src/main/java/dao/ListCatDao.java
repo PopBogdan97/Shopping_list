@@ -92,7 +92,7 @@ public class ListCatDao {
         return status;
     }
 
-    public static boolean delete(String nome) {
+    public static boolean delete(String name) {
         boolean status = false;
         try {
 
@@ -100,10 +100,14 @@ public class ListCatDao {
 
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM ListCategory WHERE Name=?");
-            ps.setString(1, nome);
+            ps.setString(1, name);
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM ProductCat_ListCat WHERE ListCatName=?");
+            ps1.setString(1, name);
+            
+            status = ListDao.deleteByCat(name);
 
-            status = ps.executeUpdate() > 0;
-
+            status = status && (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
             conn.close();
 
         } catch (Exception e) {

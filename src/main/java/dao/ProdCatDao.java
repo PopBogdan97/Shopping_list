@@ -199,12 +199,19 @@ public class ProdCatDao {
     }
 
     public static boolean delete(String name) {
-        boolean status = false;
+        boolean status = true;
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM ProductCategory WHERE Name=?");
+            PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM ProductCategory WHERE Name=?");
             ps.setString(1, name);
-            status = ps.executeUpdate() > 0;
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM ProductCat_ListCat WHERE ProductCatName=?");
+            ps1.setString(1, name);
+            
+            status = ProductDao.deleteByCat(name);
+            
+            status = status && (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
             conn.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -254,5 +261,23 @@ public class ProdCatDao {
         return status;
     }
     
-    
+    public static boolean setListCat(String prodcat, String[] listcat){
+        boolean status = true;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            for (String l : listcat) {
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO ProductCat_ListCat (ListCatName, ProductCatName) VALUES (?, ?)");
+                ps.setString(1, l);
+                ps.setString(2, prodcat);
+                status = status && (ps.executeUpdate() > 0);
+            }
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 }

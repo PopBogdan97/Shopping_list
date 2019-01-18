@@ -97,7 +97,7 @@ public class UserDao {
     }
     
     public static boolean delete(String email) {
-        boolean status = false;
+        boolean status = true;
         try {
 
             Connection conn = DbConnect.getConnection();
@@ -105,8 +105,18 @@ public class UserDao {
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM User WHERE Email=?");
             ps.setString(1, email);
+            
+            PreparedStatement ps1 = conn.prepareStatement(""
+                    + "SELECT Name FROM List WHERE OwnerEmail=?");
+            ps.setString(1, email);
 
-            status = ps.executeUpdate() > 0;
+            ResultSet rs = ps1.executeQuery();
+            
+            if (rs.next()) {
+                status = status && ListDao.delete(rs.getString("Name"));
+            }
+
+            status = status && ps.executeUpdate() > 0;
 
             conn.close();
 
