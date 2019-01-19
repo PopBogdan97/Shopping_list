@@ -22,7 +22,7 @@ public class ActivateDao {
         Connection conn=DbConnect.getConnection();
           
         PreparedStatement ps=conn.prepareStatement(  
-"UPDATE Utente SET Valid=1 WHERE Email=? AND Cod=?");  
+"UPDATE User SET Valid=1 WHERE Email=? AND Cod=?");  
 ps.setString(1,email);  
 ps.setString(2,cod);  
 

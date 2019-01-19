@@ -21,7 +21,7 @@ public class SetPasswordDao {
         Connection conn=DbConnect.getConnection();
           
         PreparedStatement ps=conn.prepareStatement(  
-"UPDATE Utente SET Password=PASSWORD(?) WHERE Email=? AND Cod=?");  
+"UPDATE User SET Password=PASSWORD(?) WHERE Email=? AND Cod=?");  
 ps.setString(1,password);  
 ps.setString(2,email);  
 ps.setString(3,cod);  
