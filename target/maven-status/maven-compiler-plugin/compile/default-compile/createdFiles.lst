@@ -10,6 +10,7 @@ dao\MailDao.class
 entities\Element.class
 services\UploadImage.class
 servlets\ProdCatServlet.class
+filters\LoggedFilter.class
 servlets\SetPasswordServlet.class
 servlets\ListCatServlet.class
 servlets\ActivateServlet.class

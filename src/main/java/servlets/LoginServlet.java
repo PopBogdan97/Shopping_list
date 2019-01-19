@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         PrintWriter out = response.getWriter();
-
+        
         String email = request.getParameter("username");
         String password = request.getParameter("passwordLogin");
         String remember = (request.getParameterMap().containsKey("remember")) ? request.getParameter("remember") : "";

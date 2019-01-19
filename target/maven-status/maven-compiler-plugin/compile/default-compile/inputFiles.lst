@@ -27,6 +27,7 @@ D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\ListC
 D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\ProductDao.java
 D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\servlets\SetPasswordServlet.java
 D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\SetPasswordDao.java
+D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\filters\LoggedFilter.java
 D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\services\UploadImage.java
 D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\dao\MailExistsDao.java
 D:\UNI\2°anno\WebProgramming\Shopping_list\Shopping_list\src\main\java\services\ListCatResource.java
