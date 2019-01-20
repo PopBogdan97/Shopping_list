@@ -70,11 +70,11 @@ public class ProductCatResource {
     }
     
     @GET
-    @Path("/image/{name}")
-    @Produces("image/png")
+    @Path("/logo/{name}")
+    @Produces("logo/png")
     public String getImage(@PathParam("name") String name) throws IOException {
 
-        String filename = ProdCatDao.getImage(name);
+        String filename = ProdCatDao.getLogo(name);
 
         if (!filename.equals("")) {
 
@@ -82,9 +82,9 @@ public class ProductCatResource {
             Properties properties = new Properties();
             properties.load(is);
 
-            System.out.println(properties.getProperty("location") + "/productCat/" + filename);
+            System.out.println(properties.getProperty("logoLocation") + "/productCat/" + filename);
 
-            File file = new File(properties.getProperty("location") + "/productCat/", filename);
+            File file = new File(properties.getProperty("logoLocation") + "/productCat/", filename);
 
             byte[] fileContent = FileUtils.readFileToByteArray(file);
             String encodedString = Base64.getEncoder().encodeToString(fileContent);
@@ -115,7 +115,7 @@ public class ProductCatResource {
 
             System.out.println(fileName);
 
-            UploadImage.upload(file, fileName, "productCat");
+            UploadImage.uploadLogo(file, fileName, "productCat");
         }
 
         if (ProdCatDao.modify(name, description, fileName, (mod || file != null))) {
@@ -136,7 +136,7 @@ public class ProductCatResource {
 
             System.out.println(fileName);
 
-            UploadImage.upload(file, fileName, "productCat");
+            UploadImage.uploadLogo(file, fileName, "productCat");
         }
 
         if (ProdCatDao.initialize(name, description, fileName)) {

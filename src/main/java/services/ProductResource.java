@@ -97,6 +97,35 @@ public class ProductResource {
 
         }
     }
+    
+    @GET
+    @Path("/logo/{name}")
+    @Produces("logo/png")
+    public String getLogo(@PathParam("name") String name) throws IOException {
+
+        String filename = ProductDao.getLogo(name);
+
+        if (!filename.equals("")) {
+
+            InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
+            Properties properties = new Properties();
+            properties.load(is);
+
+            System.out.println(properties.getProperty("logoLocation") + "/product/" + filename);
+
+            File file = new File(properties.getProperty("logoLocation") + "/product/", filename);
+
+            byte[] fileContent = FileUtils.readFileToByteArray(file);
+            String encodedString = Base64.getEncoder().encodeToString(fileContent);
+
+            return encodedString;
+
+        } else {
+
+            return "{}";
+
+        }
+    }
 
     /**
      * PUT method for updating or creating an instance of ProductResource
@@ -131,7 +160,7 @@ public class ProductResource {
 
             System.out.println(fileNameLogo);
 
-            UploadImage.upload(fileLogo, fileNameLogo, "product");
+            UploadImage.uploadLogo(fileLogo, fileNameLogo, "product");
         }
 
         if (fileLogo != null) {
@@ -172,7 +201,7 @@ public class ProductResource {
 
             System.out.println(fileNameLogo);
 
-            UploadImage.upload(fileLogo, fileNameLogo, "product");
+            UploadImage.uploadLogo(fileLogo, fileNameLogo, "product");
         }
 
         if (ProductDao.initialize(name, catName, description, fileNameImage, fileNameLogo)) {
