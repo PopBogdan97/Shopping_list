@@ -198,7 +198,8 @@ public class ProductDao {
                     "DELETE FROM List_Product WHERE ProductName=?");
             ps.setString(1, name);
 
-            status = (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
+            status = (ps1.executeUpdate() > 0) || status; 
+            status = (ps.executeUpdate() > 0) && status;
             conn.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -224,10 +225,10 @@ public class ProductDao {
                 PreparedStatement ps2 = conn.prepareStatement(
                         "DELETE FROM List_Product WHERE ProductName=?");
                 ps2.setString(1, rs.getString("Name"));
-                status = status && (ps2.executeUpdate() > 0);
+                status = (ps2.executeUpdate() > 0) && status;
             }
 
-            status = status && (ps.executeUpdate() > 0);
+            status = (ps.executeUpdate() > 0) && status;
             conn.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -247,7 +248,8 @@ public class ProductDao {
                     "DELETE FROM List_Product WHERE ProductName=?");
             ps1.setString(1, name);
 
-            status = status && (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
+            status = status && (ps1.executeUpdate() > 0);
+            status = (ps.executeUpdate() > 0) && status;
             conn.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -283,6 +285,24 @@ public class ProductDao {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 file = rs.getString("Image");
+            }
+            conn.close();
+            System.out.println(file);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return file;
+    }
+    
+    public static String getLogo(String name) {
+        String file = "";
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=?");
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                file = rs.getString("Logo");
             }
             conn.close();
             System.out.println(file);

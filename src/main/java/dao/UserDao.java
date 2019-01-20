@@ -113,10 +113,10 @@ public class UserDao {
             ResultSet rs = ps1.executeQuery();
             
             if (rs.next()) {
-                status = status && ListDao.delete(rs.getString("Name"));
+                status = ListDao.delete(rs.getString("Name")) && status;
             }
 
-            status = status && ps.executeUpdate() > 0;
+            status = (ps.executeUpdate() > 0) && status;
 
             conn.close();
 

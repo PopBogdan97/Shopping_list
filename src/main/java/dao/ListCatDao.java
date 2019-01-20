@@ -93,7 +93,7 @@ public class ListCatDao {
     }
 
     public static boolean delete(String name) {
-        boolean status = false;
+        boolean status = true;
         try {
 
             Connection conn = DbConnect.getConnection();
@@ -107,7 +107,8 @@ public class ListCatDao {
             
             status = ListDao.deleteByCat(name);
 
-            status = status && (ps1.executeUpdate() > 0) && (ps.executeUpdate() > 0);
+            status = (ps1.executeUpdate() > 0) && status;
+            status = (ps.executeUpdate() > 0) && status;
             conn.close();
 
         } catch (Exception e) {

@@ -109,7 +109,7 @@ public class ListDao {
             ps.setString(1, name);
             
             status = status && (ps1.executeUpdate() > 0);
-            status = status && (ps.executeUpdate() > 0);
+            status = (ps.executeUpdate() > 0) && status;
 
             conn.close();
 
@@ -137,10 +137,10 @@ public class ListDao {
                 PreparedStatement ps2 = conn.prepareStatement(
                     "DELETE FROM List_Product WHERE ListName=?");
                 ps2.setString(1, rs.getString("Name"));
-                status = status && (ps2.executeUpdate() > 0);
+                status = (ps2.executeUpdate() > 0) && status;
             }
             
-            status = status && (ps.executeUpdate() > 0);
+            status = (ps.executeUpdate() > 0) && status;
             conn.close();
         } catch (Exception e) {
             System.out.println(e);
