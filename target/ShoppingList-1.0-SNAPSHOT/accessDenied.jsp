@@ -40,7 +40,8 @@
         </nav>
         
         <center style="margin-top: 100px;">
-            <h1>Non hai i permessi per accedere a questa pagina</h1>
+            <h1>Accesso Negato</h1>
+            <h3>Non hai i permessi per accedere a questa pagina</h3>
             <br>
             <a href="index.jsp"><button class="btn btn-outline-primary">Torna alla home page</button></a>
         </center>

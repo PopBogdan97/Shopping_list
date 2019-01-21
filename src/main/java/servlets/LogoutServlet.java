@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sun.management.StackTraceElementCompositeData;
 
 /**
  *
@@ -37,10 +38,18 @@ public class LogoutServlet extends HttpServlet {
         
         HttpSession session=request.getSession();
         
-        session.invalidate();
+        try{
+            session.invalidate();
+        }
+        catch(IllegalStateException e){
+            System.out.println("Eccezione:  "+e);
+        }
         
-        RequestDispatcher rd=request.getRequestDispatcher("login_registration.jsp");
-        rd.forward(request,response);
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        response.setHeader("Expires", "0"); // Proxies
+        
+        response.sendRedirect("login_registration.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
