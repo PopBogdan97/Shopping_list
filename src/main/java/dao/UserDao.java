@@ -89,7 +89,7 @@ public class UserDao {
             }
             
             PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
-            ps1.setString(1, email);
+            ps2.setString(1, email);
 
             ResultSet rs2 = ps2.executeQuery();
 
@@ -103,7 +103,7 @@ public class UserDao {
             list.setEmail(email);
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + "single user");
         }
         return list;
     }
