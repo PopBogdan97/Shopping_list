@@ -33,10 +33,16 @@ $(function() {
 
     /* control registration felds */
     function controlRegisterFields(){
-            if(document.getElementById("nominativo").value == ""){
-                    setAlert("Field Nominativo not compiled");
+            if(document.getElementById("name").value == ""){
+                    setAlert("Field Name not compiled");
                     appearAlert();
-                    $("#nominativo").addClass("placeholderwrong");
+                    $("#name").addClass("placeholderwrong");
+                    return false;
+            }
+            if(document.getElementById("surname").value == ""){
+                    setAlert("Field Surname not compiled");
+                    appearAlert();
+                    $("#surname").addClass("placeholderwrong");
                     return false;
             }
             if(document.getElementById("email").value == ""){

@@ -29,8 +29,8 @@
         
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- including the bootstrap tamplate -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -44,20 +44,11 @@
     <body>
         
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="index.jsp">Shopping List</a>
-                
-                <div class="navbar-collapse collapse" id="navbarResponsive" style="">
-                    <ul class="navbar-nav ml-auto" style="float: right;">
-                        <li class="nav-item">
-                            <a href="index.jsp" s><u>Utilizza piattaforma senza account</u></a>
-                        </li>
-                    </ul>
-                </div>
-                
+            <div style="width: 1150px; margin: 0 auto;">
+                    <a class="navbar-brand" href="index.jsp">Shopping List</a>
+                    <a href="index.jsp" style="float: right; height: 50px; padding: 15px;"><u>Utilizza piattaforma senza account</u></a>
             </div>
         </nav>
-        
         
         
         <div class="container">
@@ -185,7 +176,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In"  onClick="disappearAlert(pageMessages)">
+                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" style="border-color: #007bff; color: #007bff;" class="form-control btn btn-outline-primary" value="Log In"  onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #007bff; color: white;'" onmouseout="style='border-color: #007bff; color: #007bff;'">
                                                 </div>
                                             </div>
                                         </div>
@@ -195,7 +186,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="reset" name="reset-login" id="reset-login" tabindex="4" class="form-control btn resetButton" value="Return" onClick="javascript:history.back()">
+                                                    <input type="reset" name="reset-login" id="reset-login" tabindex="4" style="border-color: #dc3545; color: #dc3545;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white;'" onmouseout="style='border-color: #dc3545; color: #dc3545;'">
                                                 </div>
                                             </div>
                                         </div>
@@ -205,7 +196,11 @@
                                     <form id="register-form" action="RegistrationServlet" method="POST" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: block;'" : "style='display: none;'" %> onSubmit='return controlRegisterFields()'>
                                         <div class="form-group">
                                             <img src="img/username.png" class="form-image">
-                                            <input type="text" name="nominativo" id="nominativo" tabindex="1" class="form-control" placeholder="Nominativo" value="" onChange="changeWrongText(this)">
+                                            <input type="text" name="name" id="name" tabindex="1" class="form-control" placeholder="Name" value="" onChange="changeWrongText(this)">
+                                        </div>
+                                        <div class="form-group">
+                                            <img src="img/username.png" class="form-image">
+                                            <input type="text" name="surname" id="surname" tabindex="1" class="form-control" placeholder="Surname" value="" onChange="changeWrongText(this)">
                                         </div>
                                         <div class="form-group">
                                             <img src="img/email.png" class="form-image">
@@ -231,7 +226,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now" onClick="disappearAlert(pageMessages)">
+                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" style="border-color: #28a745; color: #28a745;" class="form-control btn btn-outline-success" value="Register Now" onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #28a745; color: white;'" onmouseout="style='border-color: #28a745; color: #28a745;'">
                                                 </div>
                                             </div>
                                         </div>
@@ -240,7 +235,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="reset" name="reset-register" id="reset-register" tabindex="4" class="form-control btn resetButton" value="Return" onClick="javascript:history.back()">
+                                                    <input type="reset" name="reset-register" id="reset-register" tabindex="4" style="border-color: #dc3545; color: #dc3545;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white;'" onmouseout="style='border-color: #dc3545; color: #dc3545;'">
                                                 </div>
                                             </div>
                                         </div>

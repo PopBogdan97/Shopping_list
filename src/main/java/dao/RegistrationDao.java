@@ -15,14 +15,15 @@ import servlets.DbConnect;
  */
 public class RegistrationDao {
     
-    public static boolean register(String email, String password, String nominativo){  
+    public static boolean register(String email, String password, String name, String surname){  
         boolean status=false;  
         try {
             Connection conn=DbConnect.getConnection();
-            PreparedStatement ps=conn.prepareStatement("INSERT INTO User (Email, Password, FirstName, LastName, Typology, Valid) VALUES (?, PASSWORD(?), ?,'cognome', 'normal', 0)");  
+            PreparedStatement ps=conn.prepareStatement("INSERT INTO User (Email, Password, FirstName, LastName, Typology, Valid) VALUES (?, PASSWORD(?), ?, ?, 'normal', 0)");  
             ps.setString(1,email);  
             ps.setString(2,password);
-            ps.setString(3,nominativo);
+            ps.setString(3,name);
+            ps.setString(4,surname);
             status=ps.executeUpdate()>0;
             conn.close();
         } catch(Exception e) {

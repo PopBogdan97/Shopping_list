@@ -106,7 +106,7 @@ public class ShoppingListFilter implements Filter {
         if (DEBUG) {
             log("ShoppingListsFilter:doFilter()");
         }
-
+        
         doBeforeProcessing(request, response);
 
         Throwable problem = null;

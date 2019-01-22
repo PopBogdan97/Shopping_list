@@ -75,42 +75,6 @@ input.placeholderwrong:-ms-input-placeholder {
    color: red;  
 }
 
-.btn-login {
-	background-color: #59B2E0;
-	outline: none;
-	color: #fff;
-	font-size: 14px;
-	height: auto;
-	font-weight: normal;
-	padding: 14px 0;
-	text-transform: uppercase;
-	border-color: #59B2E6;
-}
-.btn-login:hover,
-.btn-login:focus {
-	color: #fff;
-	background-color: #53A3CD;
-	border-color: #53A3CD;
-}
-
-.resetButton {
-	background-color: #e54b4b;
-	outline: none;
-	color: #fff;
-	font-size: 14px;
-	height: auto;
-	font-weight: normal;
-	padding: 14px 0;
-	text-transform: uppercase;
-	border-color: #e54b4b;
-}
-.resetButton:hover,
-.resetButton:focus {
-	color: #fff;
-	background-color: #e54b4b;
-	border-color: #e54b4b;
-}
-
 .forgot-password {
 	text-decoration: underline;
 	color: #888;
@@ -132,7 +96,7 @@ input.placeholderwrong:-ms-input-placeholder {
         text-align: center;
 }
 
-.btn-register {
+/*.btn-register {
 	background-color: #1CB94E;
 	outline: none;
 	color: #fff;
@@ -148,7 +112,7 @@ input.placeholderwrong:-ms-input-placeholder {
 	color: #fff;
 	background-color: #1CA347;
 	border-color: #1CA347;
-}
+}*/
 
 
 
