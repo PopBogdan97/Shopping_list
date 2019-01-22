@@ -11,7 +11,10 @@ import entities.UserBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import servlets.DbConnect;
 
 /**
@@ -19,7 +22,7 @@ import servlets.DbConnect;
  * @author bogdan
  */
 public class UserDao {
-    
+
     public static ElementList getAllUsers(String str, String limit) {
 
         ElementList el = new ElementList();
@@ -54,7 +57,7 @@ public class UserDao {
 
         return el;
     }
-    
+
     public static UserBean getSingleUser(String email) {
         UserBean list = new UserBean();
 
@@ -84,6 +87,15 @@ public class UserDao {
             while (rs1.next()) {
                 lists.add(rs1.getString("Name"));
             }
+            
+            PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
+            ps1.setString(1, email);
+
+            ResultSet rs2 = ps2.executeQuery();
+
+            while (rs2.next()) {
+                lists.add(rs2.getString("ListName"));
+            }
 
             list.setLists(lists);
             conn.close();
@@ -95,7 +107,7 @@ public class UserDao {
         }
         return list;
     }
-    
+
     public static boolean delete(String email) {
         boolean status = true;
         try {
@@ -105,13 +117,13 @@ public class UserDao {
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM User WHERE Email=?");
             ps.setString(1, email);
-            
+
             PreparedStatement ps1 = conn.prepareStatement(""
                     + "SELECT Name FROM List WHERE OwnerEmail=?");
             ps.setString(1, email);
 
             ResultSet rs = ps1.executeQuery();
-            
+
             if (rs.next()) {
                 status = ListDao.delete(rs.getString("Name")) && status;
             }
@@ -125,7 +137,7 @@ public class UserDao {
         }
         return status;
     }
-    
+
     public static String getImage(String email) {
 
         String file = "";
@@ -151,7 +163,7 @@ public class UserDao {
         }
         return file;
     }
-    
+
     public static String getCookie(String email) {
 
         String cookie = "";
@@ -177,7 +189,7 @@ public class UserDao {
         }
         return cookie;
     }
-    
+
     public static boolean modify(String email, String firstName, String lastName, String typology, String cod, String image, boolean mod) {
         boolean status = false;
         try {
@@ -212,16 +224,16 @@ public class UserDao {
             System.out.println(e);
         }
         return status;
-    
+
     }
-    
+
     public static boolean initialize(String email, String firstName, String lastName, String typology, String cod, String image, boolean mod) {
         boolean status = false;
         try {
 
             Connection conn = DbConnect.getConnection();
-            
-            if(mod){
+
+            if (mod) {
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, FirstName, LastName, Typology, Valid, Cod, Image) VALUES (?, ?, ?, ?, 0, ?, ?)");
                 ps.setString(1, email);
                 ps.setString(2, firstName);
@@ -231,7 +243,7 @@ public class UserDao {
                 ps.setString(6, image);
 
                 status = ps.executeUpdate() > 0;
-            }else{
+            } else {
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, FirstName, LastName, Typology, Valid, Cod) VALUES (?, ?, ?, ?, 0, ?)");
                 ps.setString(1, email);
                 ps.setString(2, firstName);
@@ -241,7 +253,7 @@ public class UserDao {
 
                 status = ps.executeUpdate() > 0;
             }
-            
+
             conn.close();
 
         } catch (Exception e) {
@@ -249,14 +261,14 @@ public class UserDao {
         }
         return status;
     }
-    
+
     public static boolean initialize(String email, String firstName, String lastName, String typology, String cod, String image, String cookie, boolean mod) {
         boolean status = false;
         try {
 
             Connection conn = DbConnect.getConnection();
-            
-            if(mod){
+
+            if (mod) {
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, FirstName, LastName, Typology, Valid, Cod, Image, Cookie) VALUES (?, ?, ?, ?, 0, ?, ?, ?)");
                 ps.setString(1, email);
                 ps.setString(2, firstName);
@@ -267,7 +279,7 @@ public class UserDao {
                 ps.setString(7, cookie);
 
                 status = ps.executeUpdate() > 0;
-            }else{
+            } else {
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, FirstName, LastName, Typology, Valid, Cod, Cookie) VALUES (?, ?, ?, ?, 0, ?, ?)");
                 ps.setString(1, email);
                 ps.setString(2, firstName);
@@ -278,7 +290,35 @@ public class UserDao {
 
                 status = ps.executeUpdate() > 0;
             }
-            
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean initializeAnonymous(String cookie) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            Date date = new Date();
+            date.setTime(ts.getTime());
+            String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
+
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, Password, FirstName, LastName, Typology, Valid, Cookie) VALUES (?, PASSWORD(?), ?, ?, 'anonymous', 1, ?)");
+            ps.setString(1, cookie);
+            ps.setString(2, cookie);
+            ps.setString(3, cookie);
+            ps.setString(4, formattedDate);
+            ps.setString(5, cookie);
+
+            status = ps.executeUpdate() > 0;
+
             conn.close();
 
         } catch (Exception e) {
@@ -287,7 +327,32 @@ public class UserDao {
         return status;
     }
     
-    public static boolean setValid(String email, boolean valid){
+    public static boolean updateAnonymous(String cookie) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            Date date = new Date();
+            date.setTime(ts.getTime());
+            String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE User SET LastName=? WHERE Cookie=?");
+            ps.setString(1, formattedDate);
+            ps.setString(2, cookie);
+
+            status = ps.executeUpdate() > 0;
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean setValid(String email, boolean valid) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
@@ -307,8 +372,8 @@ public class UserDao {
         }
         return status;
     }
-    
-    public static boolean setCookie(String email, String cookie){
+
+    public static boolean setCookie(String email, String cookie) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
@@ -328,8 +393,8 @@ public class UserDao {
         }
         return status;
     }
-     
-    public static boolean getValid(String email){
+
+    public static boolean getValid(String email) {
         boolean valid = false;
 
         try {
