@@ -13,6 +13,7 @@ import entities.ListBean;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
@@ -69,6 +70,26 @@ public class ListResource {
     public String getSingleListJson(@PathParam("name") String name) {
         ListBean list = ListDao.getSingleList(name);
         return new Gson().toJson(list);
+    }
+    
+    @GET
+    @Path("/{name}/products")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSingleListProductsJson(@PathParam("name") String name) {
+        ListBean list = ListDao.getSingleList(name);
+        ElementList el = new ElementList();
+        ArrayList<Element> listProducts = new ArrayList<>();
+        
+        int i = 0;
+        for(String s : list.getProducts()){
+            Element e = new Element();
+            e.setId(i +"");
+            e.setText(s);
+            listProducts.add(e);
+            i++;
+        }
+        el.setResults(listProducts);
+        return new Gson().toJson(el);
     }
     
     @GET
