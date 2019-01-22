@@ -97,24 +97,26 @@ public class AdminFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void doFilter(ServletRequest req, ServletResponse res,
-            FilterChain chain)
-            throws IOException, ServletException {
-
-        if (debug) {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        /*if (debug) {
             log("AdminFilter:doFilter()");
-        }
+        }*/
 
-        doBeforeProcessing(req, res);
+        //doBeforeProcessing(req, res);
 
+        System.out.println("Filtro Admin");
         
-        /************************ Logged Filer ************************/
+        /************************ Logged Filter ************************/
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         
         HttpSession session = request.getSession(false);
         
-        if(session != null && session.getAttribute("email") != null && session.getAttribute("tipo").equals("admin")){
+        boolean isLogged = (session != null && session.getAttribute("email") != null);
+        boolean isAdmin = (isLogged && session.getAttribute("tipo").equals("admin"));
+        
+        if(isAdmin){
+            System.out.println("is admin");
             chain.doFilter(request, response);
         }
         else{
@@ -124,7 +126,7 @@ public class AdminFilter implements Filter {
         /**************************************************************/
         
         
-        Throwable problem = null;
+        /*Throwable problem = null;
         try {
             chain.doFilter(request, response);
         } catch (Throwable t) {
@@ -133,13 +135,13 @@ public class AdminFilter implements Filter {
             // rethrow the problem after that.
             problem = t;
             t.printStackTrace();
-        }
+        }*/
 
-        doAfterProcessing(request, response);
+        //doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
-        if (problem != null) {
+        /*if (problem != null) {
             if (problem instanceof ServletException) {
                 throw (ServletException) problem;
             }
@@ -147,7 +149,7 @@ public class AdminFilter implements Filter {
                 throw (IOException) problem;
             }
             sendProcessingError(problem, response);
-        }
+        }*/
     }
 
     /**

@@ -98,11 +98,14 @@ public class LoggedFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        if (debug) {
+        /*if (debug) {
             log("LoggedFilter:doFilter()");
-        }
+        }*/
         
-        doBeforeProcessing(req, res);
+        //doBeforeProcessing(req, res);
+        
+        
+        System.out.println("Filtro Login");
         
         
         /************************ Logged Filer ************************/
@@ -145,10 +148,10 @@ public class LoggedFilter implements Filter {
                 chain.doFilter(request, response);
             }
         }
-        
-        if(isLogged){   //LOGGED
+        else if(isLogged){   //LOGGED
+            System.out.println("is logged");
             
-            if(URI.equals(adminPanel)){   //not accessible
+            /*if(URI.equals(adminPanel)){   //not accessible
                 if(isAdmin){    //accessible
                     chain.doFilter(request, response);
                 }
@@ -156,7 +159,7 @@ public class LoggedFilter implements Filter {
                     response.sendRedirect("accessDenied.jsp");
                 }
             }
-            else if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet)){  //not accessible
+            else*/ if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet)){  //not accessible
                response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible
@@ -179,7 +182,7 @@ public class LoggedFilter implements Filter {
             t.printStackTrace();
         }*/
         
-        doAfterProcessing(request, response);
+        //doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
