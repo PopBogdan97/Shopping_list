@@ -98,11 +98,11 @@ public class LoggedFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        /*if (debug) {
+        if (debug) {
             log("LoggedFilter:doFilter()");
-        }*/
+        }
         
-        //doBeforeProcessing(req, res);
+        doBeforeProcessing(req, res);
         
         
         System.out.println("Filtro Login");
@@ -114,6 +114,8 @@ public class LoggedFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         
         HttpSession session = request.getSession(false);
+        
+        System.out.println(request.getServletPath());
         
         boolean isUnlogged = (session == null || session.getAttribute("email") == null);
         boolean isLogged = (session != null && session.getAttribute("email") != null);
@@ -141,29 +143,30 @@ public class LoggedFilter implements Filter {
         
         
         if(isUnlogged){ //NOT LOGGED
+            System.out.println("is UNlogged");
             if(URI.equals(resetPassword) || URI.equals(adminPanel) || URI.equals(logoutServlet) || URI.equals(resetServlet)){   //not accessible
                 response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible
-                chain.doFilter(request, response);
+                chain.doFilter(req, res);
             }
         }
         else if(isLogged){   //LOGGED
             System.out.println("is logged");
             
-            /*if(URI.equals(adminPanel)){   //not accessible
+            if(URI.equals(adminPanel)){   //not accessible
                 if(isAdmin){    //accessible
-                    chain.doFilter(request, response);
+                    chain.doFilter(req, res);
                 }
                 else{   //not accessible
                     response.sendRedirect("accessDenied.jsp");
                 }
             }
-            else*/ if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet)){  //not accessible
+            else if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet)){  //not accessible
                response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible
-                chain.doFilter(request, response);
+                chain.doFilter(req, res);
             }
             
         }        
@@ -171,30 +174,7 @@ public class LoggedFilter implements Filter {
         /**************************************************************/
         
         
-        /*Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }*/
-        
-        //doAfterProcessing(request, response);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        /*if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }*/
+        doAfterProcessing(req, res);
     }
 
     /**
