@@ -106,8 +106,10 @@ public class ShoppingListFilter implements Filter {
         if (DEBUG) {
             log("ShoppingListsFilter:doFilter()");
         }
-
+        
         doBeforeProcessing(request, response);
+        
+        System.out.println("shopping list filter");
 
         Throwable problem = null;
         try {

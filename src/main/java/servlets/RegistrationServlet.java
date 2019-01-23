@@ -37,12 +37,13 @@ public class RegistrationServlet extends HttpServlet {
         
                     PrintWriter out = response.getWriter();  
     
-    String nominativo=request.getParameter("nominativo");
+    String name=request.getParameter("name");
+    String surname=request.getParameter("surname");
     String email=request.getParameter("email");  
     String password=request.getParameter("passwordRegistration"); 
    
           
-    if(RegistrationDao.register(email, password, nominativo)){  
+    if(RegistrationDao.register(email, password, name, surname)){  
         Mailer.sendMail(email);
         out.println("Check your email: "+email
                     + "<br>"
