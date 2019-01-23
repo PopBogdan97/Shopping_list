@@ -145,7 +145,7 @@
                                     <c:out value="${user.getTypology()}"/>
                                 </c:if>
                                 <c:if test="${user.getTypology() == 'normal' || user.getTypology() == 'admin'}">
-                                    <c:out value="${user.getEmail()}"/>
+                                    <c:out value="${user.getFirstName()} ${user.getLastName()}"/>
                                 </c:if>
                             </h6>
                             <input type="image" class="mr-3" src="img/campana.png" alt="Ok" width="27" height="27"/>
