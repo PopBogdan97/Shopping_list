@@ -41,6 +41,8 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="js/indexAjax.js"></script>
     </head>
 
     <body class="bg-success">
@@ -138,9 +140,36 @@
                     <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             <input type="image" class="mr-3" src="img/annulla.png" onclick="returnBack()" alt="Ok" width="27" height="27"/>
-                            <h6 class="mb-0 mx-auto text-dark lh-100">LISTE DI PIPPO</h6>
+                            <h6 class="mb-0 mx-auto text-dark lh-100">Liste di 
+                                <c:if test="${user.getTypology() == 'anonymous'}">
+                                    <c:out value="${user.getTypology()}"/>
+                                </c:if>
+                                <c:if test="${user.getTypology() == 'normal' || user.getTypology() == 'admin'}">
+                                    <c:out value="${user.getEmail()}"/>
+                                </c:if>
+                            </h6>
                             <input type="image" class="mr-3" src="img/campana.png" alt="Ok" width="27" height="27"/>
                         </div>
+                        <br>
+
+                        <c:forEach var="List" items="${user.getLists()}">
+                            <button class="collapsible list-button"><span class="badge badge-primary badge-pill" id="product-number-span"></span> ${List}</button>
+                            <ul class="content list-unstyled">
+                                <c:forEach var="product" items="${products}">
+                                    <c:if test="${product.cat_prodotto == shoppingList.nome}">
+                                        <br><li class="portfolio-link" style="cursor:pointer;" data-toggle="modal" href="#${fn:replace(product.nome,' ','')}">${product.nome}</li>
+                                        </c:if>
+                                    </c:forEach>
+                                <br>
+                            </ul>
+                        </c:forEach>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
                         <nav class="menu" id="menu"> <!--style="visibility:hidden"-->
                             <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
                             <label class="menu-open-button" for="menu-open">
