@@ -108,6 +108,8 @@ public class ShoppingListFilter implements Filter {
         }
         
         doBeforeProcessing(request, response);
+        
+        System.out.println("shopping list filter");
 
         Throwable problem = null;
         try {

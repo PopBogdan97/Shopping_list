@@ -9,9 +9,9 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <%
-    response.setHeader("Cache-Control","no-store"); //HTTP 1.1
-    response.setHeader("Pragma","no-cache"); //HTTP 1.0
-    response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
+    response.setHeader("Cache-Control", "no-store"); //HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server
 %>
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Expires" content="0" />
-        
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
@@ -32,19 +32,21 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        
+
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="js/indexAjax.js"></script>
     </head>
 
     <body class="bg-success">
-        
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="#">Shopping List</a>
@@ -52,68 +54,66 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <%
-                    if(session == null || session.getAttribute("email") == null){
+                    if (session == null || session.getAttribute("email") == null) {
                         out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
-                                    + " <ul class=\"navbar-nav ml-auto\">"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
-                                    + "         <a class=\"btn btn-outline-primary\" href=\"login_registration.jsp\">Accedi</a>"
-                                    + "     </li>"
-                                    + " </ul>"
-                                    + "</div>");
-                    }
-                    else if(session != null && session.getAttribute("email") != null && session.getAttribute("tipo").equals("admin")){
+                                + " <ul class=\"navbar-nav ml-auto\">"
+                                + "     <li class=\"nav-item\">"
+                                + "         <img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
+                                + "         <a class=\"btn btn-outline-primary\" href=\"login_registration.jsp\">Accedi</a>"
+                                + "     </li>"
+                                + " </ul>"
+                                + "</div>");
+                    } else if (session != null && session.getAttribute("email") != null && session.getAttribute("tipo").equals("admin")) {
                         out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
-                                    + " <ul class=\"navbar-nav ml-auto\">"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left;\" width=\"30\" height=\"30\">"
-                                    + "         <a class=\"btn btn-outline-primary\" href=\"adminPanel.jsp\" style=\"float: left;\">Pannello amministratore</a>"
-                                    + "     </li>"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
-                                    + "     </li>"
-                                    + " </ul>"
-                                    + "</div>");
-                    }
-                    else{
+                                + " <ul class=\"navbar-nav ml-auto\">"
+                                + "     <li class=\"nav-item\">"
+                                + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left;\" width=\"30\" height=\"30\">"
+                                + "         <a class=\"btn btn-outline-primary\" href=\"adminPanel.jsp\" style=\"float: left;\">Pannello amministratore</a>"
+                                + "     </li>"
+                                + "     <li class=\"nav-item\">"
+                                + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
+                                + "     </li>"
+                                + " </ul>"
+                                + "</div>");
+                    } else {
                         out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
-                                    + " <ul class=\"navbar-nav ml-auto\">"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <b>"+session.getAttribute("email")+"</b>"
-                                    + "     </li>"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
-                                    + "     </li>"
-                                    + " </ul>"
-                                    + "</div>");
+                                + " <ul class=\"navbar-nav ml-auto\">"
+                                + "     <li class=\"nav-item\">"
+                                + "         <b>" + session.getAttribute("email") + "</b>"
+                                + "     </li>"
+                                + "     <li class=\"nav-item\">"
+                                + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
+                                + "     </li>"
+                                + " </ul>"
+                                + "</div>");
                     }
                 %>
-            <!--
-                <div class="navbar-collapse collapse" id="navbarResponsive" style="">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <img src="img/impostazioni.png" alt="" style="visibility: <%=(session.getAttribute("Tipologia")=="admin") ? "block" : "hidden"%>" width="30" height="30">
-                            <a class="btn" href="adminPanel.jsp" style="visibility: <%=(session.getAttribute("Tipologia")=="admin") ? "block" : "hidden"%>" >Gestisci categorie</a>
-                        </li>
-                        <li class="nav-item">
-                            <img src="img/user.png" alt="" width="40" height="40">
-                            <a class="btn btn-outline-primary" href="login_registration.jsp">Accedi</a>
-                        </li>
-                    </ul>
-                </div>
-            -->
-                        
+                <!--
+                    <div class="navbar-collapse collapse" id="navbarResponsive" style="">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <img src="img/impostazioni.png" alt="" style="visibility: <%=(session.getAttribute("Tipologia") == "admin") ? "block" : "hidden"%>" width="30" height="30">
+                                <a class="btn" href="adminPanel.jsp" style="visibility: <%=(session.getAttribute("Tipologia") == "admin") ? "block" : "hidden"%>" >Gestisci categorie</a>
+                            </li>
+                            <li class="nav-item">
+                                <img src="img/user.png" alt="" width="40" height="40">
+                                <a class="btn btn-outline-primary" href="login_registration.jsp">Accedi</a>
+                            </li>
+                        </ul>
+                    </div>
+                -->
+
             </div>
         </nav>
         <br><br><br><br>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 portfolio-item ft-text">
                     <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             <input type="image" class="mr-3" src="img/search.png" alt="Ok" width="27" height="27" data-toggle="modal" data-target="#searchModal"/>
-                            <h6 class="mb-0 mx-auto text-dark lh-100">PRODOTTI</h6>
+                            <h6 class="mb-0 mx-auto text-dark lh-100">Prodotti</h6>
                         </div>
                         <br>
                         <c:forEach var="shoppingList" items="${shoppingLists}">
@@ -122,8 +122,8 @@
                                 <c:forEach var="product" items="${products}">
                                     <c:if test="${product.cat_prodotto == shoppingList.nome}">
                                         <br><li class="portfolio-link" style="cursor:pointer;" data-toggle="modal" href="#${fn:replace(product.nome,' ','')}">${product.nome}</li>
-                                    </c:if>
-                                </c:forEach>
+                                        </c:if>
+                                    </c:forEach>
                                 <br>
                             </ul>
                         </c:forEach>
@@ -140,9 +140,36 @@
                     <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             <input type="image" class="mr-3" src="img/annulla.png" onclick="returnBack()" alt="Ok" width="27" height="27"/>
-                            <h6 class="mb-0 mx-auto text-dark lh-100">LISTE DI PIPPO</h6>
+                            <h6 class="mb-0 mx-auto text-dark lh-100">Liste di 
+                                <c:if test="${user.getTypology() == 'anonymous'}">
+                                    <c:out value="${user.getTypology()}"/>
+                                </c:if>
+                                <c:if test="${user.getTypology() == 'normal' || user.getTypology() == 'admin'}">
+                                    <c:out value="${user.getEmail()}"/>
+                                </c:if>
+                            </h6>
                             <input type="image" class="mr-3" src="img/campana.png" alt="Ok" width="27" height="27"/>
                         </div>
+                        <br>
+
+                        <c:forEach var="List" items="${user.getLists()}">
+                            <button class="collapsible list-button"><span class="badge badge-primary badge-pill" id="product-number-span"></span> ${List}</button>
+                            <ul class="content list-unstyled">
+                                <c:forEach var="product" items="${products}">
+                                    <c:if test="${product.cat_prodotto == shoppingList.nome}">
+                                        <br><li class="portfolio-link" style="cursor:pointer;" data-toggle="modal" href="#${fn:replace(product.nome,' ','')}">${product.nome}</li>
+                                        </c:if>
+                                    </c:forEach>
+                                <br>
+                            </ul>
+                        </c:forEach>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
                         <nav class="menu" id="menu"> <!--style="visibility:hidden"-->
                             <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
                             <label class="menu-open-button" for="menu-open">
@@ -170,15 +197,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                    ...
+                        ...
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <c:forEach var="product" items="${products}">
             <div class="modal fade" id="${fn:replace(product.nome,' ','')}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 10000 !important;">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -194,7 +221,7 @@
                             <br><br>
                             <div>Descrizione: ${product.note}</div>
                             <br><br>
-                            
+
                             <div class="counter">
                                 <div class='btn-group'>
                                     <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
@@ -202,7 +229,7 @@
                                     <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
@@ -212,75 +239,78 @@
                 </div>
             </div>
         </c:forEach>
-        
+
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;
             for (i = 0; i < coll.length; i++) {
-                coll[i].addEventListener("click", function() {
+                coll[i].addEventListener("click", function () {
                     this.classList.toggle("active");
                     var content = this.nextElementSibling;
-                    if (content.style.maxHeight){
+                    if (content.style.maxHeight) {
                         content.style.maxHeight = null;
                     } else {
                         content.style.maxHeight = content.scrollHeight + "px";
-                    } 
+                    }
                 });
             }
         </script>
-        
+
         <script>
-            function showHamburgerMenu(){
+            function showHamburgerMenu() {
                 document.getElementById('menu').style.visibility = 'visible';
                 document.getElementById('more').style.visibility = 'hidden';
             }
-            function returnBack(){
+            function returnBack() {
                 document.getElementById('menu').style.visibility = 'hidden';
                 document.getElementById('more').style.visibility = 'visible';
             }
         </script>
-        
+
         <script>
-            function counter(field){
+            function counter(field) {
                 var field = $(field);
-                function fieldCount(el){
+                function fieldCount(el) {
                     var min = el.data('min') || false,
-                        max = el.data('max') || false,
-                        dec = el.prev('.dec'),
-                        inc = el.next('.inc');
+                            max = el.data('max') || false,
+                            dec = el.prev('.dec'),
+                            inc = el.next('.inc');
                     function init(el) {
-			if(!el.attr('disabled')) {
+                        if (!el.attr('disabled')) {
                             dec.on('click', decrement);
                             inc.on('click', increment);
                         }
                         function decrement() {
                             var value = parseInt(el.val());
                             value--;
-                            if(!min || value >= min) {
+                            if (!min || value >= min) {
                                 el.val(value);
                             }
-                        };
+                        }
+                        ;
                         function increment() {
                             var value = parseInt(el.val());
                             value++;
-                            if(!max || value <= max) {
+                            if (!max || value <= max) {
                                 el.val(value++);
                             }
-                        };
+                        }
+                        ;
                     }
-                    el.each(function() {
-			init($(this));
+                    el.each(function () {
+                        init($(this));
                     });
-		};
-                if(field.length){
-                    field.each(function(){
+                }
+                ;
+                if (field.length) {
+                    field.each(function () {
                         fieldCount($(this));
                     });
                 }
             }
             counter('.field');
         </script>
-        
+
         <!--<footer class="py-4 bg-light">
             <div class="container">
                 <p class="m-0 text-center text-dark">Copyright © Shopping List 2018</p>
