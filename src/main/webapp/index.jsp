@@ -115,7 +115,8 @@
                             <input type="image" class="mr-3" src="img/search.png" alt="Ok" width="27" height="27" data-toggle="modal" data-target="#searchModal"/>
                             <h6 class="mb-0 mx-auto text-dark lh-100">Prodotti</h6>
                         </div>
-                        <br>
+                        <p></p>
+
                         <c:forEach var="shoppingList" items="${shoppingLists}">
                             <button class="collapsible"><span class="badge badge-primary badge-pill">${shoppingList.counter}</span> ${shoppingList.nome}</button>
                             <ul class="content list-unstyled">
@@ -137,7 +138,9 @@
                     </div>
                 </div>
                 <div class="col-lg-6 portfolio-item ft-text" style="height: 400px;">
-                    <div class="card p-1">
+
+                    <!-- SHOW USER LISTS-->
+                    <div class="card p-1" id="show-user-list" >
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             <input type="image" class="mr-3" src="img/annulla.png" onclick="returnBack()" alt="Ok" width="27" height="27"/>
                             <h6 class="mb-0 mx-auto text-dark lh-100">Liste di 
@@ -150,16 +153,16 @@
                             </h6>
                             <input type="image" class="mr-3" src="img/campana.png" alt="Ok" width="27" height="27"/>
                         </div>
-                        <br>
+                        <p></p>
 
                         <c:forEach var="List" items="${user.getLists()}">
-                            <button class="collapsible list-button"><span class="badge badge-primary badge-pill" id="product-number-span"></span> ${List}</button>
-                            <ul class="content list-unstyled">
-                                <c:forEach var="product" items="${products}">
-                                    <c:if test="${product.cat_prodotto == shoppingList.nome}">
-                                        <br><li class="portfolio-link" style="cursor:pointer;" data-toggle="modal" href="#${fn:replace(product.nome,' ','')}">${product.nome}</li>
-                                        </c:if>
-                                    </c:forEach>
+                            <button class="collapsible list-button">
+                                <span class="badge badge-primary badge-pill" id="product-number-span"></span>
+                                <span class="list-span">
+                                    ${List}
+                                </span>
+                            </button>
+                            <ul class="content list-unstyled product-list">
                                 <br>
                             </ul>
                         </c:forEach>
