@@ -63,15 +63,16 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("email", email);
 
             if (remember.equals("on")) {
-                /*recupero Cod dell'utente che si sta loggando*/
-
+                
                 String uniqueID = UUID.randomUUID().toString();
-                System.out.println("prova");
-                System.out.println(uniqueID);
-
+                System.out.println("UID: "+uniqueID);
+                
+                //setto il cookie che andrà memorizzato sul browser con un ID alfanumerico univoco
                 Cookie rememberCookie = new Cookie("rememberUser", uniqueID);
-                rememberCookie.setMaxAge(50*24*60*60);  //50 giorni
+                rememberCookie.setMaxAge(15*24*60*60);  //15 giorni
                 response.addCookie(rememberCookie);
+                
+                //aggiungo l'ID all'utente corrispondente nel DB
                 LoginDao.setLoginCookie(email, uniqueID);
             }
             

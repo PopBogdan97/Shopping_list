@@ -5,11 +5,13 @@
  */
 package servlets;
 
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +39,22 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         HttpSession session=request.getSession();
+        
+        boolean res;
+        for(Cookie c : request.getCookies()) {
+            if(c.getName().equals("rememberUser")) {
+                System.out.println("ValueCookie: "+c.getValue());
+                
+                UserDao udao = new UserDao();
+                res = udao.deleteCookie(c.getValue());
+                c.setValue("-1");
+                c.setMaxAge(0);
+                response.addCookie(c);
+                //break;
+                
+                System.out.println("DeleteCookie: "+res);
+            }
+        }
         
         try{
             session.invalidate();

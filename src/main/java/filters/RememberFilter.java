@@ -5,6 +5,8 @@
  */
 package filters;
 
+import dao.UserDao;
+import entities.UserBean;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -15,32 +17,33 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Emiliano
+ * @author Luca
  */
-public class AdminFilter implements Filter {
-
+public class RememberFilter implements Filter {
+    
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
     private FilterConfig filterConfig = null;
-
-    public AdminFilter() {
-    }
-
+    
+    public RememberFilter() {
+    }    
+    
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AdminFilter:DoBeforeProcessing");
+            log("RememberFilter:DoBeforeProcessing");
         }
-        
+
         // Write code here to process the request and/or response before
         // the rest of the filter chain is invoked.
         // For example, a logging filter might log items on the request object,
@@ -61,12 +64,12 @@ public class AdminFilter implements Filter {
 	    log(buf.toString());
 	}
          */
-    }
-
+    }    
+    
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AdminFilter:DoAfterProcessing");
+            log("RememberFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -98,32 +101,46 @@ public class AdminFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        /*if (debug) {
-            log("AdminFilter:doFilter()");
-        }*/
-
-        //doBeforeProcessing(req, res);
-
-        System.out.println("Filtro Admin");
         
-        /************************ Admin Filter ************************/
+        if (debug) {
+            log("RememberFilter:doFilter()");
+        }
+        
+        doBeforeProcessing(req, res);
+        
+        /************************ Remember Filter ************************/
+        
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         
         HttpSession session = request.getSession(false);
         
         boolean isLogged = (session != null && session.getAttribute("email") != null);
-        boolean isAdmin = (isLogged && session.getAttribute("tipo").equals("admin"));
         
-        if(isAdmin){
-            System.out.println("is admin");
-            chain.doFilter(request, response);
+        if(!isLogged){
+            System.out.println("Path: "+request.getRequestURI());
+            Cookie[] cookies = request.getCookies();
+            if(cookies != null) {
+                for(Cookie c : cookies) {
+                    if(c.getName().equals("rememberUser")) {
+                        String uid = c.getValue();
+                        UserDao udao = new UserDao();
+                        UserBean user = udao.getSingleUserByCookie(uid);
+                        
+                        System.out.println("RememberFilter: found cookie for user: " + user.getEmail()+" | "+user.getTypology());
+                        
+                        session = request.getSession();
+                        session.setAttribute("email", user.getEmail());
+                        session.setAttribute("tipo", user.getTypology());
+                    }
+                }
+            }
         }
-        else{
-            response.sendRedirect("accessDenied.jsp");
-        }
+        chain.doFilter(request, response);
         
-        /**************************************************************/
+        
+        /****************************************************************/
+        
         
         
         /*Throwable problem = null;
@@ -136,8 +153,8 @@ public class AdminFilter implements Filter {
             problem = t;
             t.printStackTrace();
         }*/
-
-        //doAfterProcessing(request, response);
+        
+        doAfterProcessing(request, response);
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
@@ -171,17 +188,17 @@ public class AdminFilter implements Filter {
     /**
      * Destroy method for this filter
      */
-    public void destroy() {
+    public void destroy() {        
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {
+    public void init(FilterConfig filterConfig) {        
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {
-                log("AdminFilter:Initializing filter");
+            if (debug) {                
+                log("RememberFilter:Initializing filter");
             }
         }
     }
@@ -192,27 +209,27 @@ public class AdminFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AdminFilter()");
+            return ("RememberFilter()");
         }
-        StringBuffer sb = new StringBuffer("AdminFilter(");
+        StringBuffer sb = new StringBuffer("RememberFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
     }
-
+    
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);
-
+        String stackTrace = getStackTrace(t);        
+        
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);
+                PrintWriter pw = new PrintWriter(ps);                
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
-                pw.print(stackTrace);
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
+                pw.print(stackTrace);                
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -229,7 +246,7 @@ public class AdminFilter implements Filter {
             }
         }
     }
-
+    
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -243,9 +260,9 @@ public class AdminFilter implements Filter {
         }
         return stackTrace;
     }
-
+    
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);
+        filterConfig.getServletContext().log(msg);        
     }
-
+    
 }
