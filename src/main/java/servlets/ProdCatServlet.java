@@ -98,13 +98,13 @@ public class ProdCatServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("image/png");
         String nome = request.getParameter("nome");
-        String filename=ProdCatDao.getImage(nome);
+        String filename=ProdCatDao.getLogo(nome);
         if(!filename.equals("")) {
             InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
             Properties properties = new Properties();
             properties.load(is);
-            System.out.println(properties.getProperty("location")+"/prodcat/"+filename);
-            File file = new File(properties.getProperty("location")+"/prodcat/", filename);
+            System.out.println(properties.getProperty("logoLocation")+"/prodcat/"+filename);
+            File file = new File(properties.getProperty("logoLocation")+"/prodcat/", filename);
             byte[] fileContent = FileUtils.readFileToByteArray(file);
             String encodedString = Base64.getEncoder().encodeToString(fileContent);                              
             try(PrintWriter out = response.getWriter()) {

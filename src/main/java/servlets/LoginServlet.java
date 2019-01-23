@@ -6,6 +6,8 @@
 package servlets;
 
 import dao.LoginDao;
+import dao.UserDao;
+import entities.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.util.Objects.hash;
@@ -57,10 +59,18 @@ public class LoginServlet extends HttpServlet {
 
         } else {
             HttpSession session = request.getSession();
-
+            
+            UserBean user = UserDao.getSingleUser(email);
+            
+            session.setAttribute("user", user);
+            request.setAttribute("email", email);
+            
+            //da cancellare quando non serviranno più
             session.setAttribute("email", email);
             session.setAttribute("tipo", result);
-            request.setAttribute("email", email);
+            
+            
+            
 
             if (remember.equals("on")) {
                 
