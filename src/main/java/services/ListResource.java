@@ -160,7 +160,13 @@ public class ListResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void postListJson(@FormDataParam("name") String name, @FormDataParam("catName") String catName, @FormDataParam("description") String description, @FormDataParam("products") List<String> products, @FormDataParam("file") InputStream file, @FormDataParam("ownerEmail") String ownerEmail, @FormDataParam("mod") boolean mod) throws IOException {
+    public void postListJson(@FormDataParam("name") String name, 
+            @FormDataParam("catName") String catName, 
+            @FormDataParam("description") String description, 
+            @FormDataParam("products") List<String> products, 
+            @FormDataParam("file") InputStream file, 
+            @FormDataParam("ownerEmail") String ownerEmail, 
+            @FormDataParam("mod") boolean mod) throws IOException {
 
         String fileName = "";
 

@@ -214,7 +214,7 @@ public class ListDao {
             Connection conn = DbConnect.getConnection();
             
             if(mod){
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO ListCategory (Name, CatName, Description, Image, OwnerEmail) VALUES (?, ?, ?, ?, ?)");
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO List (Name, CatName, Description, Image, OwnerEmail) VALUES (?, ?, ?, ?, ?)");
                 ps.setString(1, name);
                 ps.setString(2, catName);
                 ps.setString(3, description);
@@ -223,7 +223,7 @@ public class ListDao {
 
                 status = ps.executeUpdate() > 0;
             }else{
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO ListCategory (Name, CatName, Description, OwnerEmail) VALUES (?, ?, ?, ?)");
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO List (Name, CatName, Description, OwnerEmail) VALUES (?, ?, ?, ?)");
                 ps.setString(1, name);
                 ps.setString(2, catName);
                 ps.setString(3, description);
@@ -236,7 +236,7 @@ public class ListDao {
             conn.close();
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + "è qui l'errore");
         }
         return status;
     }
