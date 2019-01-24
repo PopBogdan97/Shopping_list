@@ -144,7 +144,7 @@ public class LoggedFilter implements Filter {
         
         if(isUnlogged){ //NOT LOGGED
             System.out.println("is UNlogged");
-            if(URI.equals(resetPassword) || URI.equals(adminPanel) || URI.equals(logoutServlet) || URI.equals(resetServlet)){   //not accessible
+            if(URI.equals(adminPanel) || URI.equals(logoutServlet)){   //not accessible
                 response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible
@@ -162,7 +162,7 @@ public class LoggedFilter implements Filter {
                     response.sendRedirect("accessDenied.jsp");
                 }
             }
-            else if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet)){  //not accessible
+            else if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet) || URI.equals(resetServlet) || URI.equals(resetPassword)){  //not accessible
                response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible

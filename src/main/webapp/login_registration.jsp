@@ -130,9 +130,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-login">
+            <div class="row" style="justify-content: center;">
+                <!--<div class="col-md-6 col-md-offset-3">-->
+                    <div class="panel panel-login" style="min-width: 50%;">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-6">
@@ -174,20 +174,20 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" style="border-color: #007bff; color: #007bff;" class="form-control btn btn-outline-primary" value="Log In"  onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #007bff; color: white;'" onmouseout="style='border-color: #007bff; color: #007bff;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" style="border-color: #007bff; color: #007bff; max-width: 50%;" class="form-control btn btn-outline-primary" value="Log In"  onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #007bff; color: white; max-width: 50%;'" onmouseout="style='border-color: #007bff; color: #007bff; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
 
                                     <form id="reset-form-login" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: none;'" : "style='display: block;'" %>>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="reset" name="reset-login" id="reset-login" tabindex="4" style="border-color: #dc3545; color: #dc3545;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white;'" onmouseout="style='border-color: #dc3545; color: #dc3545;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="reset" name="reset-login" id="reset-login" tabindex="4" style="border-color: #dc3545; color: #dc3545; max-width: 50%;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white; max-width: 50%;'" onmouseout="style='border-color: #dc3545; color: #dc3545; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
@@ -224,19 +224,19 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" style="border-color: #28a745; color: #28a745;" class="form-control btn btn-outline-success" value="Register Now" onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #28a745; color: white;'" onmouseout="style='border-color: #28a745; color: #28a745;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" style="border-color: #28a745; color: #28a745; max-width: 50%;" class="form-control btn btn-outline-success" value="Register Now" onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #28a745; color: white; max-width: 50%;'" onmouseout="style='border-color: #28a745; color: #28a745; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
                                     <form id="reset-form-register" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: block;'" : "style='display: none;'" %>>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="reset" name="reset-register" id="reset-register" tabindex="4" style="border-color: #dc3545; color: #dc3545;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white;'" onmouseout="style='border-color: #dc3545; color: #dc3545;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="reset" name="reset-register" id="reset-register" tabindex="4" style="border-color: #dc3545; color: #dc3545; max-width: 50%;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white; max-width: 50%;'" onmouseout="style='border-color: #dc3545; color: #dc3545; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
@@ -244,7 +244,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                <!--</div>-->
             </div>
         </div>     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>

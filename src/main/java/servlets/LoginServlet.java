@@ -70,8 +70,6 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("tipo", result);
             
             
-            
-
             if (remember.equals("on")) {
                 
                 String uniqueID = UUID.randomUUID().toString();

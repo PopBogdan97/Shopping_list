@@ -37,13 +37,13 @@ public class RequestResetServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         if(ResetPasswordMailer.sendMail(request.getParameter("email"))){
             try (PrintWriter out = response.getWriter()) {
-            out.print("Check your mail!");
-        }
+                out.print("Check your mail!");
+            }
         }
         else{
             try (PrintWriter out = response.getWriter()) {
-            out.print("Email not found!");
-        }            
+                out.print("Email not found!");
+            }            
         }
 
     }
