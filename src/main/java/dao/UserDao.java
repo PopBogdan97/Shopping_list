@@ -21,6 +21,7 @@ import servlets.DbConnect;
  *
  * @author bogdan
  */
+
 public class UserDao {
 
     public static ElementList getAllUsers(String str, String limit) {

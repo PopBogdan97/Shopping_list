@@ -7,7 +7,6 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import servlets.DbConnect;
 
 /**
@@ -15,25 +14,26 @@ import servlets.DbConnect;
  * @author Emiliano
  */
 public class ImageDao {
-    
-        public static boolean setimage(String email, String path){  
-    boolean status=false;  
-    try{  
-        
-        Connection conn=DbConnect.getConnection();
-          
-        PreparedStatement ps=conn.prepareStatement(  
-"UPDATE User SET Image=? WHERE Email=?");  
-ps.setString(1,path);  
-ps.setString(2,email);  
 
-    status=(ps.executeUpdate()>0);
-    
+    public static boolean setimage(String email, String path) {
+        boolean status = false;
+        try {
 
-        conn.close();
+            Connection conn = DbConnect.getConnection();
 
-    }catch(Exception e){System.out.println(e);}  
-    return status;  
-    }  
-    
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE User SET Image=? WHERE Email=?");
+            ps.setString(1, path);
+            ps.setString(2, email);
+
+            status = (ps.executeUpdate() > 0);
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
 }

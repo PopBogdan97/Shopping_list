@@ -7,11 +7,7 @@ package servlets;
 
 import services.UploadImage;
 import dao.ImageDao;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -21,14 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
-                 maxFileSize=1024*1024*10,      // 10MB
-                 maxRequestSize=1024*1024*50)   // 50MB
 /**
  *
  * @author Emiliano
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 @WebServlet(name = "ImageUploadServlet", urlPatterns = {"/ImageUploadServlet"})
+
 public class ImageUploadServlet extends HttpServlet {
 
     /**
@@ -40,7 +37,6 @@ public class ImageUploadServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -66,28 +62,26 @@ public class ImageUploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String email=request.getParameter("email");
-        
-            Part part=request.getPart("file");
-            
-            String fileName=email+".png";
-       
-            UploadImage.upload(part.getInputStream(), fileName, "users");
 
+        String email = request.getParameter("email");
 
-    if(ImageDao.setimage(email, fileName)){  
-        request.setAttribute("email", email);
-        RequestDispatcher rd=request.getRequestDispatcher("login_registration.jsp");  
-        rd.forward(request,response);  
-    }  
-    else{ 
-        request.setAttribute("error", "Image not set!");
-        RequestDispatcher rd=request.getRequestDispatcher("setimage.jsp");
-        rd.forward(request,response);  
+        Part part = request.getPart("file");
 
-    }  
-    
+        String fileName = email + ".png";
+
+        UploadImage.upload(part.getInputStream(), fileName, "users");
+
+        if (ImageDao.setimage(email, fileName)) {
+            request.setAttribute("email", email);
+            RequestDispatcher rd = request.getRequestDispatcher("login_registration.jsp");
+            rd.forward(request, response);
+        } else {
+            request.setAttribute("error", "Image not set!");
+            RequestDispatcher rd = request.getRequestDispatcher("setimage.jsp");
+            rd.forward(request, response);
+
+        }
+
     }
 
     /**
