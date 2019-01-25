@@ -134,11 +134,13 @@ public class LoggedFilter implements Filter {
         String setImage = request.getContextPath() + "/setimage.jsp";
         
         //Servlets URIs
+        String activateServlet = request.getContextPath() + "/ActivateServlet";
         
         String loginServlet = request.getContextPath() + "/LoginServlet";
         String logoutServlet = request.getContextPath() + "/LogoutServlet";
         //String reSendServlet = request.getContextPath() + "/ReSendServlet";
         String registrationServlet = request.getContextPath() + "/RegistrationServlet";
+        String requestResetServlet = request.getContextPath() + "/RequestResetServlet";
         String resetServlet = request.getContextPath() + "/ResetServlet";
         String setPasswordServlet = request.getContextPath() + "/SetPasswordServlet";
         
@@ -163,7 +165,7 @@ public class LoggedFilter implements Filter {
                     response.sendRedirect("accessDenied.jsp");
                 }
             }
-            else if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet) || URI.equals(resetServlet) || URI.equals(resetPassword)){  //not accessible
+            else if(URI.equals(login) || URI.equals(setImage) || URI.equals(activateServlet) || URI.equals(loginServlet) || URI.equals(registrationServlet) || URI.equals(requestResetServlet) || URI.equals(resetServlet) || URI.equals(resetPassword)/* || URI.equals(reSendServlet)*/){  //not accessible
                response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible
