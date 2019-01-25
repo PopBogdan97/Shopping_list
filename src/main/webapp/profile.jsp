@@ -5,6 +5,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    response.setHeader("Cache-Control", "no-store"); //HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); //HTTP 1.0
+    response.setDateHeader("Expires", 0); //prevents caching at the proxy server
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,7 +63,7 @@
                                     + " <ul class=\"navbar-nav ml-auto\">"
                                     + "     <li class=\"nav-item\">"
                                     + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left;\" width=\"30\" height=\"30\">"
-                                    + "         <a class=\"btn btn-outline-primary\" href=\"adminPanel.jsp\" style=\"float: left;\">Pannello amministratore</a>"
+                                    + "         <a class=\"btn btn-outline-primary\" href=\"adminPanel.jsp\" style=\"float: left; margin-left: 10px;\">Pannello amministratore</a>"
                                     + "     </li>"
                                     + "     <li class=\"nav-item\">"
                                     + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"

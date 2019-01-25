@@ -130,21 +130,22 @@ public class LoggedFilter implements Filter {
         String adminPanel = request.getContextPath() + "/adminPanel.jsp";
         String index = request.getContextPath() + "/index.jsp";
         String login = request.getContextPath() + "/login_registration.jsp";
+        String profile = request.getContextPath() + "/profile.jsp";
         String setImage = request.getContextPath() + "/setimage.jsp";
         
         //Servlets URIs
         
-        String loginServlet = request.getContextPath() + "LoginServlet";
-        String logoutServlet = request.getContextPath() + "LogoutServlet";
-        //String reSendServlet = request.getContextPath() + "ReSendServlet";
-        String registrationServlet = request.getContextPath() + "RegistrationServlet";
-        String resetServlet = request.getContextPath() + "ResetServlet";
-        String setPasswordServlet = request.getContextPath() + "SetPasswordServlet";
+        String loginServlet = request.getContextPath() + "/LoginServlet";
+        String logoutServlet = request.getContextPath() + "/LogoutServlet";
+        //String reSendServlet = request.getContextPath() + "/ReSendServlet";
+        String registrationServlet = request.getContextPath() + "/RegistrationServlet";
+        String resetServlet = request.getContextPath() + "/ResetServlet";
+        String setPasswordServlet = request.getContextPath() + "/SetPasswordServlet";
         
         
         if(isUnlogged){ //NOT LOGGED
             System.out.println("is UNlogged");
-            if(URI.equals(adminPanel) || URI.equals(logoutServlet)){   //not accessible
+            if(URI.equals(adminPanel) || URI.equals(logoutServlet) || URI.equals(profile) || URI.equals(setImage)){   //not accessible
                 response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible
