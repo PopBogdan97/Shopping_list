@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <%
     response.setHeader("Cache-Control", "no-store"); //HTTP 1.1
@@ -103,9 +105,10 @@
             </div>
         </nav>     
         <br><br><br><br>
-        <img src="img/02-full.jpg" id="myImg" class="rounded-circle mx-auto d-block" width="300" height="300" data-toggle="modal" data-target="#searchModal" >
+        <c:set var = "email" scope = "session" value = "${user.getEmail()}" />
+        <img src=<c:out value="${UserResource.getImage(email)}"/>  id="myImg" class="rounded-circle mx-auto d-block" width="300" height="300" data-toggle="modal" data-target="#searchModal" >
         <br><br>
-        <h1 class="text-center">Gianluca Pirrera</h1>
+        <h1 class="text-center"><c:out value="${user.getFirstName()} ${user.getLastName()}"/></h1>
         <!-- The Modal -->
         <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 10000 !important;">
             <div class="modal-dialog modal-dialog-centered" role="document">

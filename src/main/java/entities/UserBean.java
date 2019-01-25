@@ -11,6 +11,7 @@ import java.util.ArrayList;
  *
  * @author bogdan
  */
+
 public class UserBean {
     
     private String Email;
