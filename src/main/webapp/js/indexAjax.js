@@ -56,7 +56,7 @@ $(function () {
                         });
                     });
                     $(this).next(".product-list").append('<br>');
-                    $(this).next(".product-list").append('<div><select><option></option></select><div><button><img></button></div></div>');
+                    $(this).next(".product-list").append('<div><div><button><img></button></div><select><option></option></select><div><button><img></button></div></div>');
                     $(this).next(".product-list").children("div").attr({
                         "class": "input-group mb-3"
                     });
@@ -65,20 +65,40 @@ $(function () {
                         "name": "state"
                     });
                     $(this).next(".product-list").children("div").children("div").attr({
-                        "class": "search-container"
+                        "class": "input-group-prepend"
                     });
                     $(this).next(".product-list").children("div").children("div").children("button").attr({
                         "type": "button",
-                        "class": "btn btn-outline-primary"
-                    })
+                        "class": "btn btn-outline-secondary my-search-button",
+                        "data-toggle": "modal",
+                        "data-target": "#productModal"
+                    });
                     $(this).next(".product-list").children("div").children("div").children("button").children("img").attr({
+                        "src": "img/search.png",
+                        "style": "height:22px; width:22px;"
+                    });
+
+                    $(this).next(".product-list").children("div").children("select").attr({
+                        "class": "custom-select my-select2"
+                    });
+                    //second button
+                    $(this).next(".product-list").children("div").children("select").next("div").attr({
+                        "class": "my-chat-button",
+                        "style": "margin-left: 5px"
+                    });
+                    $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
+                        "type": "button",
+                        "class": "btn btn-outline-primary"
+                    });
+                    $(this).next(".product-list").children("div").children(".my-chat-button").children("button").children("img").attr({
                         "src": "img/chat.png",
                         "style": "height:22px; width:22px;"
-                    })
+                    });
 
 
                     content.style.maxHeight = content.scrollHeight + "px";
                     executeSelect2();
+                    executeClickButton();
 
                 }
 
@@ -87,11 +107,12 @@ $(function () {
     });
 });
 
- function executeSelect2() {
-    $('.js-example-basic-single').select2({
+function executeSelect2() {
+    $('.my-select2').select2({
         placeholder: 'Search products...',
         allowClear: true,
         theme: "bootstrap",
+        tags: true,
         ajax: {
             url: 'http://localhost:8080/ShoppingList/services/product?limit=5',
             type: 'get',
@@ -105,12 +126,16 @@ $(function () {
                     return "<a  id='tmp-name' data-toggle='modal' data-target='#productModal' href='javascript:void();' onClick='setProductTitle()'>Aggiungi</a>";
                 } else {
                     return "No results";
-                }
-            }
-        },
-        escapeMarkup: function (markup) {
-            return markup;
         }
+    });
+}
+;
+function executeClickButton() {
+    $(".my-search-button").click(function () {
+        var input = $(this).parent().next("select").find(':selected').val();
+        
+    });
+}
     });
 };
 
