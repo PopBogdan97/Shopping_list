@@ -56,24 +56,29 @@ $(function () {
                         });
                     });
                     $(this).next(".product-list").append('<br>');
-                    $(this).next(".product-list").append('<div><img><input></div>');
+                    $(this).next(".product-list").append('<div><select><option></option></select><div><button><img></button></div></div>');
                     $(this).next(".product-list").children("div").attr({
-                        "class": "form-group"
+                        "class": "input-group mb-3"
                     });
-                    $(this).next(".product-list").children("div").children("img").attr({
-                        "class": "form-image",
-                        "src": "img/search.png"
+                    $(this).next(".product-list").children("div").children("select").attr({
+                        "class": "js-example-basic-single custom-select",
+                        "name": "state"
                     });
-                    $(this).next(".product-list").children("div").children("input").attr({
-                        "class": "form-control",
-                        "tabindex": "2",
-                        "type": "text",
-                        "style": "height:45px; padding-left:50px",
-                        "placeholder": "Search..."
+                    $(this).next(".product-list").children("div").children("div").attr({
+                        "class": "search-container"
                     });
+                    $(this).next(".product-list").children("div").children("div").children("button").attr({
+                        "type": "button",
+                        "class": "btn btn-outline-primary"
+                    })
+                    $(this).next(".product-list").children("div").children("div").children("button").children("img").attr({
+                        "src": "img/chat.png",
+                        "style": "height:22px; width:22px;"
+                    })
+
 
                     content.style.maxHeight = content.scrollHeight + "px";
-
+                    executeSelect2();
 
                 }
 
@@ -82,3 +87,35 @@ $(function () {
     });
 });
 
+ function executeSelect2() {
+    $('.js-example-basic-single').select2({
+        placeholder: 'Search products...',
+        allowClear: true,
+        theme: "bootstrap",
+        ajax: {
+            url: 'http://localhost:8080/ShoppingList/services/product?limit=5',
+            type: 'get',
+            dataType: 'json',
+            delay: 250,
+            cache: true
+        },
+        language: {
+            noResults: () =>  {
+                if (($(this).data("select2").dropdown.$search.val()).length >= 3) {
+                    return "<a  id='tmp-name' data-toggle='modal' data-target='#productModal' href='javascript:void();' onClick='setProductTitle()'>Aggiungi</a>";
+                } else {
+                    return "No results";
+                }
+            }
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+    });
+};
+
+function setProductTitle() {
+    nome = $(".select2-search__field").text();
+
+    $('#productModalLabel').text('Edita prodotto: ' + nome);
+}

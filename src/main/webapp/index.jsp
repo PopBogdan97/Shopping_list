@@ -33,7 +33,9 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/login_registration.css">
-        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" rel="stylesheet" />
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -42,6 +44,7 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
 
         <script src="js/indexAjax.js"></script>
         <script type="text/javascript" src="js/login_registration.js"></script>
@@ -190,6 +193,35 @@
                             <a href="#" class="menu-item lightblue"> <i class="fa fa-comments"></i> </a>
                         </nav>
                         <!--<input type="image" class="mr-3" onclick="showHamburgerMenu()" src="img/more.png" alt="Ok" width="35" height="35"/>-->
+                    </div>
+
+                    <!-- ADD PRODUCT MODAL -->
+                    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000 !important;" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="productModalLabel">Modal title</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <label>Descrizione</label>
+                                    <br>
+                                    <input type="text" id="descrizione-product" style="width:500px"/>
+                                    <br>
+                                    <br>
+                                    <label>Immagine</label>
+                                    <input type="file" id="file-product" accept="image/*"/>
+                                    <img id="img-product" src="#" alt="Immagine non settata" width="200px"/>
+                                    <button id="removeimage-product" style="display:none;">Rimuovi immagine</button>
+                                    <br>
+                                    <br>
+                                    <select class="form-control" style="width:500px" id="prodcat-product" name="prodcat-product"></select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="closebutton-product" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="savebutton-product" type="button" class="btn btn-primary" disabled="disabled">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
