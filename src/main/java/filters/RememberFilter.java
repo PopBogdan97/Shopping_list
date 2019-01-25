@@ -5,6 +5,8 @@
  */
 package filters;
 
+import dao.UserDao;
+import entities.UserBean;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -15,6 +17,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,7 +26,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Luca
  */
-public class LoggedFilter implements Filter {
+public class RememberFilter implements Filter {
     
     private static final boolean debug = true;
 
@@ -32,13 +35,13 @@ public class LoggedFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public LoggedFilter() {
+    public RememberFilter() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("LoggedFilter:DoBeforeProcessing");
+            log("RememberFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -66,7 +69,7 @@ public class LoggedFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("LoggedFilter:DoAfterProcessing");
+            log("RememberFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -98,83 +101,72 @@ public class LoggedFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        
         if (debug) {
-            log("LoggedFilter:doFilter()");
+            log("RememberFilter:doFilter()");
         }
         
         doBeforeProcessing(req, res);
         
-        
-        System.out.println("Filtro Login");
-        
-        
-        /************************ Logged Filer ************************/
-        
+        /************************ Remember Filter ************************/
+        System.out.println("RememberFilter");
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         
         HttpSession session = request.getSession(false);
         
-        System.out.println(request.getServletPath());
-        
-        boolean isUnlogged = (session == null || session.getAttribute("email") == null);
         boolean isLogged = (session != null && session.getAttribute("email") != null);
-        boolean isAdmin = (isLogged && session.getAttribute("tipo").equals("admin"));
         
-        
-        String URI = request.getRequestURI();
-        
-        //JSP files URIs
-        String resetPassword = request.getContextPath() + "/ResetPassword.jsp";
-        String accessDenied = request.getContextPath() + "/accessDenied.jsp";
-        String adminPanel = request.getContextPath() + "/adminPanel.jsp";
-        String index = request.getContextPath() + "/index.jsp";
-        String login = request.getContextPath() + "/login_registration.jsp";
-        String setImage = request.getContextPath() + "/setimage.jsp";
-        
-        //Servlets URIs
-        
-        String loginServlet = request.getContextPath() + "LoginServlet";
-        String logoutServlet = request.getContextPath() + "LogoutServlet";
-        //String reSendServlet = request.getContextPath() + "ReSendServlet";
-        String registrationServlet = request.getContextPath() + "RegistrationServlet";
-        String resetServlet = request.getContextPath() + "ResetServlet";
-        String setPasswordServlet = request.getContextPath() + "SetPasswordServlet";
-        
-        
-        if(isUnlogged){ //NOT LOGGED
-            System.out.println("is UNlogged");
-            if(URI.equals(adminPanel) || URI.equals(logoutServlet)){   //not accessible
-                response.sendRedirect("accessDenied.jsp");
-            }
-            else{   //accessible
-                chain.doFilter(req, res);
+        if(!isLogged){
+            System.out.println("Path: "+request.getRequestURI());
+            Cookie[] cookies = request.getCookies();
+            if(cookies != null) {
+                for(Cookie c : cookies) {
+                    if(c.getName().equals("rememberUser")) {
+                        String uid = c.getValue();
+                        UserDao udao = new UserDao();
+                        UserBean user = udao.getSingleUserByCookie(uid);
+                        
+                        System.out.println("RememberFilter: found cookie for user: " + user.getEmail()+" | "+user.getTypology());
+                        
+                        session = request.getSession();
+                        session.setAttribute("email", user.getEmail());
+                        session.setAttribute("tipo", user.getTypology());
+                    }
+                }
             }
         }
-        else if(isLogged){   //LOGGED
-            System.out.println("is logged");
-            
-            if(URI.equals(adminPanel)){   //not accessible
-                if(isAdmin){    //accessible
-                    chain.doFilter(req, res);
-                }
-                else{   //not accessible
-                    response.sendRedirect("accessDenied.jsp");
-                }
-            }
-            else if(URI.equals(login) || URI.equals(setImage) || URI.equals(loginServlet) || URI.equals(registrationServlet) || URI.equals(resetServlet) || URI.equals(resetPassword)){  //not accessible
-               response.sendRedirect("accessDenied.jsp");
-            }
-            else{   //accessible
-                chain.doFilter(req, res);
-            }
-            
-        }        
-        
-        /**************************************************************/
+        chain.doFilter(request, response);
         
         
-        doAfterProcessing(req, res);
+        /****************************************************************/
+        
+        
+        
+        /*Throwable problem = null;
+        try {
+            chain.doFilter(request, response);
+        } catch (Throwable t) {
+            // If an exception is thrown somewhere down the filter chain,
+            // we still want to execute our after processing, and then
+            // rethrow the problem after that.
+            problem = t;
+            t.printStackTrace();
+        }*/
+        
+        doAfterProcessing(request, response);
+
+        // If there was a problem, we want to rethrow it if it is
+        // a known type, otherwise log it.
+        /*if (problem != null) {
+            if (problem instanceof ServletException) {
+                throw (ServletException) problem;
+            }
+            if (problem instanceof IOException) {
+                throw (IOException) problem;
+            }
+            sendProcessingError(problem, response);
+        }*/
     }
 
     /**
@@ -206,7 +198,7 @@ public class LoggedFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("LoggedFilter:Initializing filter");
+                log("RememberFilter:Initializing filter");
             }
         }
     }
@@ -217,9 +209,9 @@ public class LoggedFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("LoggedFilter()");
+            return ("RememberFilter()");
         }
-        StringBuffer sb = new StringBuffer("LoggedFilter(");
+        StringBuffer sb = new StringBuffer("RememberFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

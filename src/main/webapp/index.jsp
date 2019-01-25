@@ -32,7 +32,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
+        <link rel="stylesheet" type="text/css" href="css/login_registration.css">
+        
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -43,6 +44,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <script src="js/indexAjax.js"></script>
+        <script type="text/javascript" src="js/login_registration.js"></script>
     </head>
 
     <body class="bg-success">
@@ -56,14 +58,13 @@
                 <%
                     if (session == null || session.getAttribute("email") == null) {
                         out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
-                                    + " <ul class=\"navbar-nav ml-auto\">"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <a class=\"btn btn-outline-primary\" href=\"login_registration.jsp\">Accedi</a>"
-                                    + "     </li>"
-                                    + " </ul>"
-                                    + "</div>");
-                    }
-                    else if(session != null && session.getAttribute("email") != null && session.getAttribute("tipo").equals("admin")){
+                                + " <ul class=\"navbar-nav ml-auto\">"
+                                + "     <li class=\"nav-item\">"
+                                + "         <a class=\"btn btn-outline-primary\" href=\"login_registration.jsp\">Accedi</a>"
+                                + "     </li>"
+                                + " </ul>"
+                                + "</div>");
+                    } else if (session != null && session.getAttribute("email") != null && session.getAttribute("tipo").equals("admin")) {
                         out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
                                 + " <ul class=\"navbar-nav ml-auto\">"
                                 + "     <li class=\"nav-item\">"
@@ -77,16 +78,16 @@
                                 + "</div>");
                     } else {
                         out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
-                                    + " <ul class=\"navbar-nav ml-auto\">"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <a href=\"profile.jsp\"><img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\"></a>"
-                                    + "         <b>"+session.getAttribute("email")+"</b>"
-                                    + "     </li>"
-                                    + "     <li class=\"nav-item\">"
-                                    + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
-                                    + "     </li>"
-                                    + " </ul>"
-                                    + "</div>");
+                                + " <ul class=\"navbar-nav ml-auto\">"
+                                + "     <li class=\"nav-item\">"
+                                + "         <a href=\"profile.jsp\"><img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\"></a>"
+                                + "         <b>" + session.getAttribute("email") + "</b>"
+                                + "     </li>"
+                                + "     <li class=\"nav-item\">"
+                                + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
+                                + "     </li>"
+                                + " </ul>"
+                                + "</div>");
                     }
                 %>
                 <!--

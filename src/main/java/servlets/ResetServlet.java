@@ -38,20 +38,21 @@ public class ResetServlet extends HttpServlet {
         
             PrintWriter out = response.getWriter();  
           
-    String email=request.getParameter("email");  
-    String cod=request.getParameter("cod");  
-          
-    if(ResetDao.reset(email, cod)){  
-        request.setAttribute("email", email);
-        request.setAttribute("cod", cod);
-        RequestDispatcher rd=request.getRequestDispatcher("ResetPassword.jsp");
-        rd.forward(request,response);  
-    }  
-    else{ 
-        out.append("Link not valid!");
-    }  
-          
-    out.close();  
+            String email=request.getParameter("email");  
+            String cod=request.getParameter("cod");  
+
+            if(ResetDao.reset(email, cod)){  
+                request.setAttribute("email", email);
+                request.setAttribute("cod", cod);
+                
+                RequestDispatcher rd=request.getRequestDispatcher("ResetPassword.jsp");
+                rd.forward(request,response);
+            }  
+            else{ 
+                out.append("Link not valid!");
+            }  
+
+            out.close();  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

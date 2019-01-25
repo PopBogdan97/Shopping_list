@@ -113,9 +113,9 @@ public class ListFilter implements Filter {
 
         doBeforeProcessing(req, res);
 
-        /**
-         * ********************** Logged Filer ***********************
-         */
+        System.out.println("ListFilter");
+        
+        /************************ List Filter ************************/
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 

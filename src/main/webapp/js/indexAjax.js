@@ -45,7 +45,7 @@ $(function () {
                     $(this).children(".badge").text(data.results.length);
                     $(this).next(".product-list").html('');
                     $.each(data.results, (i, obj) => {
-                        
+
                         this.classList.toggle("active");
                         $(this).next(".product-list").append('<br><li>' + obj.text + '</li>');
                         $(this).next(".product-list").children("li").attr({
@@ -56,7 +56,21 @@ $(function () {
                         });
                     });
                     $(this).next(".product-list").append('<br>');
-
+                    $(this).next(".product-list").append('<div><img><input></div>');
+                    $(this).next(".product-list").children("div").attr({
+                        "class": "form-group"
+                    });
+                    $(this).next(".product-list").children("div").children("img").attr({
+                        "class": "form-image",
+                        "src": "img/search.png"
+                    });
+                    $(this).next(".product-list").children("div").children("input").attr({
+                        "class": "form-control",
+                        "tabindex": "2",
+                        "type": "text",
+                        "style": "height:45px; padding-left:50px",
+                        "placeholder": "Search..."
+                    });
 
                     content.style.maxHeight = content.scrollHeight + "px";
 

@@ -108,6 +108,36 @@ public class UserDao {
         }
         return list;
     }
+    
+    
+    public static UserBean getSingleUserByCookie(String cookie) {
+        UserBean list = new UserBean();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM User WHERE Cookie=?");
+            ps.setString(1, cookie);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                list.setEmail(rs.getString("Email"));
+                list.setFirstName(rs.getString("FirstName"));
+                list.setLastName(rs.getString("LastName"));
+                list.setTypology(rs.getString("Typology"));
+                list.setValid(rs.getBoolean("Valid"));
+                list.setCod(rs.getString("Cod"));
+            }
+            
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
 
     public static boolean delete(String email) {
         boolean status = true;
@@ -190,7 +220,32 @@ public class UserDao {
         }
         return cookie;
     }
+    
+    public static boolean deleteCookie(String cookieUID){
+        boolean success = false;
+        
+        try {
+            Connection conn = DbConnect.getConnection();
 
+            PreparedStatement ps = conn.prepareStatement("UPDATE User SET Cookie='NULL' WHERE Cookie=?");
+            ps.setString(1, cookieUID);
+            
+            int rs = ps.executeUpdate();
+            
+            if(rs == 1){
+                success = true;
+            }
+            
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return success;
+    }
+
+    
     public static boolean modify(String email, String firstName, String lastName, String typology, String cod, String image, boolean mod) {
         boolean status = false;
         try {
