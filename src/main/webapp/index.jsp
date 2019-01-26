@@ -37,16 +37,14 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/index.css">
 
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
-
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
-
         <script src="js/indexAjax.js"></script>
         <script type="text/javascript" src="js/login_registration.js"></script>
     </head>
@@ -175,6 +173,7 @@
                         <p></p>
                         <p></p>
                         <p></p>
+                        <a data-toggle="modal" data-target="#productModal">utilizza questo</a>
                         <p></p>
                         <p></p>
                         <p></p>
@@ -194,25 +193,38 @@
                     </div>
 
                     <!-- ADD PRODUCT MODAL -->
-                    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000 !important;" data-keyboard="false" data-backdrop="static">
+                    <div class="modal fade" id="productModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h3 class="modal-title" id="productModalLabel">Modal title</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <label>Descrizione</label>
-                                    <br>
-                                    <input type="text" id="descrizione-product" style="width:500px"/>
-                                    <br>
-                                    <br>
-                                    <label>Immagine</label>
-                                    <input type="file" id="file-product" accept="image/*"/>
-                                    <img id="img-product" src="#" alt="Immagine non settata" width="200px"/>
-                                    <button id="removeimage-product" style="display:none;">Rimuovi immagine</button>
-                                    <br>
-                                    <br>
-                                    <select class="form-control" style="width:500px" id="prodcat-product" name="prodcat-product"></select>
+
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput">Description</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="E.g. 'Country of origin'">
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customImage" accept="image/*">
+                                            <label class="custom-file-label" for="customImage">Choose Image</label>
+                                        </div>
+                                        <img id="product-image" src="#" width="125px" alt="Image not set">
+                                        <button type="button" id="remove-product-image" class="btn btn-danger" style="display:none;"><img src="img/cestino.png"></button>
+                                        
+                                        <div class="custom-file" style="margin-top:10px">
+                                            <input type="file" class="custom-file-input" id="customLogo" accept="image/*">
+                                            <label class="custom-file-label" for="customLogo">Choose Logo</label>
+                                        </div>
+                                        <img id="product-logo" src="#" width="125px" alt="Logo not set">
+                                        <button type="button" id="remove-product-logo" class="btn btn-danger" style="display:none;"><img src="img/cestino.png"></button>
+
+                                        <div class="form-group" style="margin-top:10px">
+                                            <label for="formGroupExampleInput2">Product Category</label>
+                                            <select class="custom-select product-cat-select" id="product-cat-select"><option></option></select>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button id="closebutton-product" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
