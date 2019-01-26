@@ -36,19 +36,18 @@ public class SetPasswordServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();  
           
-    String email=request.getParameter("email");  
-    String cod=request.getParameter("cod");  
-    String password=request.getParameter("password");  
-          
-    if(SetPasswordDao.set(email, cod, password)){
-        RequestDispatcher rd=request.getRequestDispatcher("index.jsp");  
-        rd.forward(request,response);  
-    }  
-    else{ 
-        out.append("Error!");
-    }  
-          
-    out.close();  
+            String email=request.getParameter("email");  
+            String cod=request.getParameter("cod");  
+            String password=request.getParameter("password");  
+
+            if(SetPasswordDao.set(email, cod, password)){
+                response.sendRedirect("index.jsp");
+            }  
+            else{ 
+                out.append("Error!");
+            }  
+
+            out.close();  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

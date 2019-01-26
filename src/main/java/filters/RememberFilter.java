@@ -109,7 +109,7 @@ public class RememberFilter implements Filter {
         doBeforeProcessing(req, res);
         
         /************************ Remember Filter ************************/
-        
+        System.out.println("RememberFilter");
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         

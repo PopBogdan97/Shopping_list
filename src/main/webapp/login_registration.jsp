@@ -22,21 +22,16 @@
         <!-- including the stylesheet file -->
         <link rel="stylesheet" type="text/css" href="css/login_registration.css">
         
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-        
-        
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!-- including the bootstrap tamplate -->
-        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
-        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
         <!-- javascript function for switching from login to registration form and vice versa -->
         <script type="text/javascript" src="js/login_registration.js"></script>
     </head>
@@ -104,35 +99,30 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10000 !important;">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <h5 class="modal-title" id="exampleModalLabel">Inserisci la tua email per recuperare la password</h5>
                         </div>
                         <div class="modal-body">
                             <form>
-                                <div>
-                                    <input type="email" name="emailrecover" id="emailrecover" tabindex="1" class="form-control" placeholder="Email Address" value="" onChange="changeWrongText(this)">
-                                    <input type="button" id="reset_btn" value="Send Email">
-                                </div>
+                                <input type="email" name="emailrecover" id="emailrecover" tabindex="1" <!--class="form-control"--> placeholder="Email Address" value="" onChange="changeWrongText(this)">
+                                <input type="button" class="btn btn-primary" id="reset_btn" value="Send Email">
                             </form>
                             <div>
                                 <div id="result"></div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-login">
+            <div class="row" style="justify-content: center;">
+                <!--<div class="col-md-6 col-md-offset-3">-->
+                    <div class="panel panel-login" style="min-width: 50%;">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-6">
@@ -174,20 +164,20 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" style="border-color: #007bff; color: #007bff;" class="form-control btn btn-outline-primary" value="Log In"  onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #007bff; color: white;'" onmouseout="style='border-color: #007bff; color: #007bff;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="submit" name="login-submit" id="login-submit" tabindex="4" style="border-color: #007bff; color: #007bff; max-width: 50%;" class="form-control btn btn-outline-primary" value="Log In"  onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #007bff; color: white; max-width: 50%;'" onmouseout="style='border-color: #007bff; color: #007bff; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
 
                                     <form id="reset-form-login" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: none;'" : "style='display: block;'" %>>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="reset" name="reset-login" id="reset-login" tabindex="4" style="border-color: #dc3545; color: #dc3545;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white;'" onmouseout="style='border-color: #dc3545; color: #dc3545;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="reset" name="reset-login" id="reset-login" tabindex="4" style="border-color: #dc3545; color: #dc3545; max-width: 50%;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white; max-width: 50%;'" onmouseout="style='border-color: #dc3545; color: #dc3545; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
@@ -224,19 +214,19 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" style="border-color: #28a745; color: #28a745;" class="form-control btn btn-outline-success" value="Register Now" onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #28a745; color: white;'" onmouseout="style='border-color: #28a745; color: #28a745;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" style="border-color: #28a745; color: #28a745; max-width: 50%;" class="form-control btn btn-outline-success" value="Register Now" onClick="disappearAlert(pageMessages)" onmouseover="style='border-color: #28a745; color: white; max-width: 50%;'" onmouseout="style='border-color: #28a745; color: #28a745; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
                                     <form id="reset-form-register" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: block;'" : "style='display: none;'" %>>
                                         <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-6 col-sm-offset-3">
-                                                    <input type="reset" name="reset-register" id="reset-register" tabindex="4" style="border-color: #dc3545; color: #dc3545;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white;'" onmouseout="style='border-color: #dc3545; color: #dc3545;'">
-                                                </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <!--<div class="col-sm-6 col-sm-offset-3">-->
+                                                    <input type="reset" name="reset-register" id="reset-register" tabindex="4" style="border-color: #dc3545; color: #dc3545; max-width: 50%;" class="form-control btn btn-outline-danger" value="Return" onClick="javascript:history.back()" onmouseover="style='border-color: #dc3545; color: white; max-width: 50%;'" onmouseout="style='border-color: #dc3545; color: #dc3545; max-width: 50%;'">
+                                                <!--</div>-->
                                             </div>
                                         </div>
                                     </form>
@@ -244,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                <!--</div>-->
             </div>
         </div>     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/1.0/zxcvbn.min.js"></script>

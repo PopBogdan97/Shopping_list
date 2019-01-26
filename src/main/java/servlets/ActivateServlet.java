@@ -37,19 +37,19 @@ public class ActivateServlet extends HttpServlet {
         
             PrintWriter out = response.getWriter();  
           
-    String email=request.getParameter("email");  
-    String cod=request.getParameter("cod");  
+            String email=request.getParameter("email");  
+            String cod=request.getParameter("cod");  
+
+            if(ActivateDao.validate(email, cod)){  
+                request.setAttribute("email", email);
+                RequestDispatcher rd=request.getRequestDispatcher("setimage.jsp");  
+                rd.forward(request,response);  
+            }  
+            else{ 
+                out.append("Link not valid or account already activated!");
+            }
           
-    if(ActivateDao.validate(email, cod)){  
-        request.setAttribute("email", email);
-        RequestDispatcher rd=request.getRequestDispatcher("setimage.jsp");  
-        rd.forward(request,response);  
-    }  
-    else{ 
-        out.append("Link not valid or account already activated!");
-    }  
-          
-    out.close();  
+            out.close();  
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
