@@ -126,10 +126,10 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <a href="#" id="login-form-link" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "class=''" : "class='active'" %>>Login</a>
+                                    <a href="#" id="login-form-link" <%= (request.getParameter("error")!=null && (request.getParameter("error").equals("regError") || request.getParameter("error").equals("registration"))) ? "class=''" : "class='active'" %>>Login</a>
                                 </div>
                                 <div class="col-xs-6">
-                                    <a href="#" id="register-form-link" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "class='active'" : "class=''" %>>Register</a>
+                                    <a href="#" id="register-form-link" <%= (request.getParameter("error")!=null && (request.getParameter("error").equals("regError") || request.getParameter("error").equals("registration"))) ? "class='active'" : "class=''" %>>Register</a>
                                 </div>
                             </div>
                             <hr>
@@ -139,7 +139,7 @@
                                 <div class="col-lg-12">
                                     
                                     <!-- LOGIN FORM -->
-                                    <form id="login-form" action="LoginServlet" method="POST" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: none;'" : "style='display: block;'" %> onSubmit="return controlLoginFields()">
+                                    <form id="login-form" action="LoginServlet" method="POST" role="form" <%= (request.getParameter("error")!=null && (request.getParameter("error").equals("regError") || request.getParameter("error").equals("registration"))) ? "style='display: none;'" : "style='display: block;'" %> onSubmit="return controlLoginFields()">
                                         <div class="form-group">
                                             <img src="img/email.png" class="form-image">
                                             <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="" onChange="changeWrongText(this)">
@@ -172,7 +172,7 @@
                                         </div>
                                     </form>
 
-                                    <form id="reset-form-login" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: none;'" : "style='display: block;'" %>>
+                                    <form id="reset-form-login" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && (request.getParameter("error").equals("regError") || request.getParameter("error").equals("registration"))) ? "style='display: none;'" : "style='display: block;'" %>>
                                         <div class="form-group">
                                             <div class="row" style="justify-content: center;">
                                                 <!--<div class="col-sm-6 col-sm-offset-3">-->
@@ -183,7 +183,7 @@
                                     </form>
 
                                     <!-- REGISTER FORM -->
-                                    <form id="register-form" action="RegistrationServlet" method="POST" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: block;'" : "style='display: none;'" %> onSubmit='return controlRegisterFields()'>
+                                    <form id="register-form" action="RegistrationServlet" method="POST" role="form" <%= (request.getParameter("error")!=null && (request.getParameter("error").equals("regError") || request.getParameter("error").equals("registration"))) ? "style='display: block;'" : "style='display: none;'" %> onSubmit='return controlRegisterFields()'>
                                         <div class="form-group">
                                             <img src="img/username.png" class="form-image">
                                             <input type="text" name="name" id="name" tabindex="1" class="form-control" placeholder="Name" value="" onChange="changeWrongText(this)">
@@ -221,7 +221,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <form id="reset-form-register" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && request.getParameter("error").equals("regError")) ? "style='display: block;'" : "style='display: none;'" %>>
+                                    <form id="reset-form-register" action=".." method="post" role="form" <%= (request.getParameter("error")!=null && (request.getParameter("error").equals("regError") || request.getParameter("error").equals("registration"))) ? "style='display: block;'" : "style='display: none;'" %>>
                                         <div class="form-group">
                                             <div class="row" style="justify-content: center;">
                                                 <!--<div class="col-sm-6 col-sm-offset-3">-->

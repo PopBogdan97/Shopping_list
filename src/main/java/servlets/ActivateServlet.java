@@ -46,7 +46,25 @@ public class ActivateServlet extends HttpServlet {
                 rd.forward(request,response);
             }  
             else{ 
-                out.append("Link not valid or account already activated!");
+                out.append("<html>"
+                        + "     <head>"
+                        + "         <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\">\n"
+                        + "         <link rel=\"stylesheet\" href=\"css/style.css\">"
+                        + "     </head>"
+                        + "     <body>"
+                        + "         <nav class=\"navbar navbar-expand-lg navbar-light bg-light fixed-top\">"
+                        + "             <div style=\"width: 1150px; margin: 0 auto;\">"
+                        + "                 <a class=\"navbar-brand\" href=\"index.jsp\">Shopping List</a>"
+                        + "             </div>"
+                        + "         </nav>"
+                        + "         <div class=\"container\" style=\"margin-top: 150px;\">"
+                        + "             <center><div>"
+                        + "                 <h2>Link not valid or account already activated!</h2>"
+                        + "             </div></center>"
+                        + "             <center><a href='login_registration.jsp?error=registration' class=\"btn btn-outline-primary\" style=\"margin-top: 30px;\">Registration</a></center>"
+                        + "         </div>"
+                        + "     </body>"
+                        + "</html>");
             }
           
             out.close();  
