@@ -119,11 +119,16 @@
                 <div class="col-lg-6 portfolio-item ft-text">
                     <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
-                            <input type="image" class="mr-3" src="img/search.png" alt="Ok" width="27" height="27" data-toggle="modal" data-target="#searchModal"/>
                             <h6 class="mb-0 mx-auto text-dark lh-100">Prodotti</h6>
                         </div>
+                        
+                        <p></p>                      
+                        <div class="input-group mb-3">
+                            <img src="img/search.png" style="height:28px; width:28px;">
+                            <select class="custom-select all-products"><option></option></select>
+                        </div>        
                         <p></p>
-
+                        
                         <c:forEach var="shoppingList" items="${shoppingLists}">
                             <button class="collapsible"><span class="badge badge-primary badge-pill">${shoppingList.counter}</span> ${shoppingList.nome}</button>
                             <ul class="content list-unstyled">
@@ -293,6 +298,38 @@
             </div>
         </c:forEach>
 
+                    <div class="modal fade" id="search-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 10000 !important;">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img class="img-fluid rounded mx-auto d-block" src="img/02-full.jpg">
+                            <br><br>
+                            <div>Descrizione: </div>
+                            <br><br>
+
+                            <div class="counter">
+                                <div class='btn-group'>
+                                    <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
+                                    <input type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
+                                    <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                            <button type="button" class="btn btn-primary">Aggiungi prodotto</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                            
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;
@@ -363,6 +400,9 @@
             }
             counter('.field');
         </script>
+        
+        <script src="js/all_products.js"></script>
+
 
         <!--<footer class="py-4 bg-light">
             <div class="container">
