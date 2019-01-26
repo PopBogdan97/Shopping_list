@@ -147,7 +147,7 @@ public class LoggedFilter implements Filter {
         
         if(isUnlogged){ //NOT LOGGED
             System.out.println("is UNlogged");
-            if(URI.equals(adminPanel) || URI.equals(logoutServlet) || URI.equals(profile) || URI.equals(setImage)){   //not accessible
+            if(URI.equals(adminPanel) || URI.equals(logoutServlet) || URI.equals(profile)){   //not accessible
                 response.sendRedirect("accessDenied.jsp");
             }
             else{   //accessible

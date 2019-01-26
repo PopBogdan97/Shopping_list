@@ -34,10 +34,14 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <br><br>
-        <img src="img/utente.jpg" id="myImg" class="rounded-circle mx-auto d-block" width="300" height="300" data-toggle="modal" data-target="#searchModal" >
-        <br><br>
-        <h1 class="text-center">Ciao <b><%=request.getAttribute("email")%></b></h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div style="width: 1150px; margin: 0 auto;">
+                <a class="navbar-brand" href="index.jsp">Shopping List</a>
+            </div>
+        </nav>
+        
+        <img src="img/utente.jpg" id="myImg" class="rounded-circle mx-auto d-block" width="300" height="300" data-toggle="modal" data-target="#searchModal" style="margin-top: 60px; cursor: pointer;">
+        <h1 class="text-center" style="margin-top: 20px;">Ciao <b><%=request.getAttribute("email")%></b></h1>
         <!-- The Modal -->
         <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 10000 !important;">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -67,7 +71,7 @@
             <input type="submit" />
         </form>
         <span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span>-->
-        <br>
-        <p class="text-center">Clicca sull'immagine per poterla cambiare oppure <a href="login_registration.jsp">clicca qui</a> per continuare senza un'immagine profilo</p>
+        
+        <p class="text-center" style="margin-top: 20px;">Clicca sull'immagine per poterla cambiare oppure <a href="login_registration.jsp" style="text-decoration: underline;">clicca qui</a> per continuare senza un'immagine profilo</p>
     </body>
 </html>

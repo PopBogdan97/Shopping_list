@@ -43,7 +43,7 @@ public class ActivateServlet extends HttpServlet {
             if(ActivateDao.validate(email, cod)){  
                 request.setAttribute("email", email);
                 RequestDispatcher rd=request.getRequestDispatcher("setimage.jsp");  
-                rd.forward(request,response);  
+                rd.forward(request,response);
             }  
             else{ 
                 out.append("Link not valid or account already activated!");
