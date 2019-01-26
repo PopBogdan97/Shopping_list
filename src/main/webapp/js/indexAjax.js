@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+var productName;
+
 $(function () {
     $(".list-button").each(function () {
         $.ajax({
@@ -60,10 +62,6 @@ $(function () {
                     $(this).next(".product-list").children("div").attr({
                         "class": "input-group mb-3"
                     });
-                    $(this).next(".product-list").children("div").children("select").attr({
-                        "class": "js-example-basic-single custom-select",
-                        "name": "state"
-                    });
                     $(this).next(".product-list").children("div").children("div").attr({
                         "class": "input-group-prepend"
                     });
@@ -95,7 +93,6 @@ $(function () {
                         "style": "height:22px; width:22px;"
                     });
 
-
                     content.style.maxHeight = content.scrollHeight + "px";
                     executeSelect2();
                     executeClickButton();
@@ -119,28 +116,165 @@ function executeSelect2() {
             dataType: 'json',
             delay: 250,
             cache: true
-        },
-        language: {
-            noResults: () =>  {
-                if (($(this).data("select2").dropdown.$search.val()).length >= 3) {
-                    return "<a  id='tmp-name' data-toggle='modal' data-target='#productModal' href='javascript:void();' onClick='setProductTitle()'>Aggiungi</a>";
-                } else {
-                    return "No results";
         }
     });
 }
 ;
 function executeClickButton() {
     $(".my-search-button").click(function () {
-        var input = $(this).parent().next("select").find(':selected').val();
-        
+        productName = $(this).parent().next("select").find(':selected').val();
+        $('#productModalLabel').text('Edit product: ' + productName);
     });
 }
+
+
+
+        //Product modal management
+$(document).ready(function () {
+    $("#customImage").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#product-image').attr('src', e.target.result);
+                $('#remove-product-image').show();
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        }
     });
-};
 
-function setProductTitle() {
-    nome = $(".select2-search__field").text();
 
-    $('#productModalLabel').text('Edita prodotto: ' + nome);
+    $('#remove-product-image').click(function () {
+        $('#customImage').val('');
+        $('#product-image').attr('src', "");
+        $('#remove-product-image').hide();
+    });
+
+    $("#customLogo").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#product-logo').attr('src', e.target.result);
+                $('#remove-product-logo').show();
+            };
+
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    $('#remove-product-logo').click(function () {
+        $('#customLogo').val('');
+        $('#product-logo').attr('src', "");
+        $('#remove-product-logo').hide();
+    });
+
+    $('.product-cat-select').select2({
+        placeholder: 'Search products...',
+        allowClear: true,
+        theme: "bootstrap",
+        ajax: {
+            url: 'http://localhost:8080/ShoppingList/services/productCat?limit=5',
+            type: 'get',
+            dataType: 'json',
+            delay: 250,
+            cache: true
+        }
+    });
+
+    $("#product-cat-select").change(function () {
+        if (($('#product-cat-select option:selected').val())) {
+            $('#savebutton-product').prop("disabled", false);
+        } else {
+            $('#savebutton-product').prop("disabled", true);
+        }
+
+    });
+
+    $('#savebutton-product').click(function () {
+        var mode = "new";
+        if (mode === "modify") {
+            var formData = new FormData();
+            if ($('#file-catlist').val()) {
+                formData.append('file', $('#file-catlist')[0].files[0]);
+            }
+            if ($('#removeimage-catlist').is(':visible')) {
+                formData.append('mod', 'false');
+            } else {
+                formData.append('mod', 'true');
+
+            }
+            formData.append('description', $('#descrizione-catlist').val());
+
+            $.ajax({
+                type: 'PUT',
+                url: 'http://localhost:8080/ShoppingList/services/listcat/' + $('.str-catlist :selected').text(),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    console.log("success");
+                    clearcatlist();
+                    $('#closebutton-catlist').click();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        } else {
+
+            var formData = new FormData();
+            if ($('#customImage').val()) {
+                formData.append('fileImage', $('#customImage')[0].files[0]);
+            }
+            if ($('#customLogo').val()) {
+                formData.append('fileLogo', $('#customLogo')[0].files[0]);
+            }
+            formData.append('name', productName);
+            formData.append('description', $('#formGroupExampleInput').val());
+            formData.append('catName', $('#product-cat-select option:selected').text());
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/ShoppingList/services/product/',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    console.log("success");
+                    clearProductModal();
+                    $('#closebutton-product').click();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        }
+    });
+    
+    $('#closebutton-product').click(function () {
+
+    mode = "";
+    clearProductModal();
+});
+    
+    function clearProductModal() {
+    $('#formGroupExampleInput').val('');
+    $('#customImage').val('');
+    $('#customLogo').val('');
+    $('#product-image').attr('src', "");
+    $('#product-logo').attr('src', "");
+    $('#remove-product-image').hide();
+    $('#remove-product-logo').hide();
+    $('#productModal').modal('hide')
+    $('#product-cat-select').empty();
+    $('#product-cat-select').append("<option></option>").trigger('change');
+    $("#product-cat-select").prop("disabled", false);
+
 }
+});
+
+
