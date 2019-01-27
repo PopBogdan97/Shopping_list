@@ -12,11 +12,20 @@ import java.util.ArrayList;
  */
 public class ListBean {
     
+    private String Id;
     private String Name;
     private String CatName;
     private String Description;
     private String OwnerEmail;
     private ArrayList<String> Products;
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String Id) {
+        this.Id = Id;
+    }
 
     public String getName() {
         return Name;
