@@ -261,12 +261,12 @@ public class ListDao {
 
             Connection conn = DbConnect.getConnection();
 
-            for (Integer p : products) {
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO List_Product (ListId, ProductId) VALUES (?, ?)");
-                ps.setInt(1, id);
-                ps.setInt(2, p);
-                status = status && (ps.executeUpdate() > 0);
-            }
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO List_Product (ListId, ProductId, Quantity) VALUES (?, ?, ?)");
+            ps.setInt(1, id);
+            ps.setInt(2, products[0]);
+            ps.setInt(3, products[1]);
+            status = status && (ps.executeUpdate() > 0);
+
             conn.close();
 
         } catch (Exception e) {
