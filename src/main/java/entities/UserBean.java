@@ -20,7 +20,7 @@ public class UserBean {
     private String Typology;
     private boolean Valid;
     private String Cod;
-    private ArrayList<String> Lists;
+    private ArrayList<Element> Lists;
 
     /**
      *
@@ -122,7 +122,7 @@ public class UserBean {
      *
      * @return
      */
-    public ArrayList<String> getLists() {
+    public ArrayList<Element> getLists() {
         return Lists;
     }
 
@@ -130,7 +130,7 @@ public class UserBean {
      *
      * @param Lists
      */
-    public void setLists(ArrayList<String> Lists) {
+    public void setLists(ArrayList<Element> Lists) {
         this.Lists = Lists;
     }
 }

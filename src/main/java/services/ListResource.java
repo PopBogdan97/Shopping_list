@@ -65,39 +65,39 @@ public class ListResource {
     }
     
     @GET
-    @Path("/{name}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSingleListJson(@PathParam("name") String name) {
-        ListBean list = ListDao.getSingleList(name);
+    public String getSingleListJson(@PathParam("id") Integer id) {
+        ListBean list = ListDao.getSingleList(id);
         return new Gson().toJson(list);
     }
     
     @GET
-    @Path("/{name}/products")
+    @Path("/{id}/products")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSingleListProductsJson(@PathParam("name") String name) {
-        ListBean list = ListDao.getSingleList(name);
+    public String getSingleListProductsJson(@PathParam("id") Integer id) {
+        ListBean list = ListDao.getSingleList(id);
         ElementList el = new ElementList();
-        ArrayList<Element> listProducts = new ArrayList<>();
-        
-        int i = 0;
-        for(String s : list.getProducts()){
-            Element e = new Element();
-            e.setId(i +"");
-            e.setText(s);
-            listProducts.add(e);
-            i++;
-        }
-        el.setResults(listProducts);
+//        ArrayList<Element> listProducts = new ArrayList<>();
+//        
+//        int i = 0;
+//        for(String s : list.getProducts()){
+//            Element e = new Element();
+//            e.setId(i +"");
+//            e.setText(s);
+//            listProducts.add(e);
+//            i++;
+//        }
+        el.setResults(list.getProducts());
         return new Gson().toJson(el);
     }
     
     @GET
-    @Path("/image/{name}")
+    @Path("/image/{id}")
     @Produces("image/png")
-    public String getImage(@PathParam("name") String name) throws IOException {
+    public String getImage(@PathParam("id") Integer id) throws IOException {
 
-        String filename = ListDao.getImage(name);
+        String filename = ListDao.getImage(id);
 
         if (!filename.equals("")) {
 
@@ -128,32 +128,37 @@ public class ListResource {
      * @param content representation for the resource
      */
     @PUT
-    @Path("/{name}")
+    @Path("/{id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void putListJson(@PathParam("name") String name, @FormDataParam("catName") String catName, @FormDataParam("description") String description, @FormDataParam("file") InputStream file, @FormDataParam("mod") boolean mod) throws IOException {
+    public void putListJson(@PathParam("id") Integer id,
+            @FormDataParam("name") String name,
+            @FormDataParam("catName") String catName, 
+            @FormDataParam("description") String description, 
+            @FormDataParam("file") InputStream file, 
+            @FormDataParam("mod") boolean mod) throws IOException {
 
         String fileName = "";
 
         if (file != null) {
 
-            fileName = name + ".png";
+            fileName = id + ".png";
 
             System.out.println(fileName);
 
             UploadImage.upload(file, fileName, "list");
         }
 
-        if (ListDao.modify(name, catName, description, fileName, (mod || file != null))) {
+        if (ListDao.modify(id, name, catName, description, fileName, (mod || file != null))) {
             System.out.println("ok");
         }
     }
     
     @PUT
-    @Path("/{name}/products")
+    @Path("/{id}/products")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void putListProductsJson(@PathParam("name") String name, @FormDataParam("products") List<String> products) throws IOException {
+    public void putListProductsJson(@PathParam("id") Integer id, @FormDataParam("products") List<Integer> products) throws IOException {
         
-        if (ListDao.setProducts(name, products.toArray(new String[products.size()]))){
+        if (ListDao.setProducts(id, products.toArray(new Integer[products.size()]))){
             System.out.println("ok");
         }
     }
@@ -163,14 +168,15 @@ public class ListResource {
     public void postListJson(@FormDataParam("name") String name, 
             @FormDataParam("catName") String catName, 
             @FormDataParam("description") String description, 
-            @FormDataParam("products") List<String> products, 
+            @FormDataParam("products") List<Integer> products, 
             @FormDataParam("file") InputStream file, 
             @FormDataParam("ownerEmail") String ownerEmail, 
             @FormDataParam("mod") boolean mod) throws IOException {
 
         String fileName = "";
-
-        if (file != null) {
+        Integer id = ListDao.initialize(name, catName, description, fileName, ownerEmail, (mod || file != null));
+        
+        if (file != null && (id>0)) {
 
             fileName = name + ".png";
 
@@ -179,8 +185,8 @@ public class ListResource {
             UploadImage.upload(file, fileName, "list");
         }
 
-        if (ListDao.initialize(name, catName, description, fileName, ownerEmail, (mod || file != null))) {
-            if (ListDao.setProducts(name, products.toArray(new String[products.size()]))) {
+        if (id > 0) {
+            if (ListDao.setProducts(id, products.toArray(new Integer[products.size()]))) {
                 System.out.println("ok");
             }
         }
@@ -188,11 +194,11 @@ public class ListResource {
     }
     
     @DELETE
-    @Path("/{name}")
-    public void deleteListJson(@PathParam("name") String name) {
+    @Path("/{id}")
+    public void deleteListJson(@PathParam("id") Integer id) {
         
-        ListDao.delete(name);
-        System.out.println(name);
+        ListDao.delete(id);
+        System.out.println(id);
     }
 
 }

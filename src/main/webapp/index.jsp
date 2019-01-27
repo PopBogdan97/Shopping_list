@@ -165,8 +165,8 @@
                         <c:forEach var="List" items="${user.getLists()}">
                             <button class="collapsible list-button">
                                 <span class="badge badge-primary badge-pill" id="product-number-span"></span>
-                                <span class="list-span">
-                                    ${List}
+                                <span class="list-span" id="${List.getId()}">
+                                    ${List.getText()}
                                 </span>
                             </button>
                             <ul class="content list-unstyled product-list">

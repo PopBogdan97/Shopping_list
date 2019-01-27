@@ -12,18 +12,18 @@ import java.util.ArrayList;
  */
 public class ListBean {
     
-    private String Id;
+    private int Id;
     private String Name;
     private String CatName;
     private String Description;
     private String OwnerEmail;
-    private ArrayList<String> Products;
+    private ArrayList<Element> Products;
 
-    public String getId() {
+    public int getId() {
         return Id;
     }
 
-    public void setId(String Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 
@@ -59,11 +59,11 @@ public class ListBean {
         this.OwnerEmail = OwnerEmail;
     }
 
-    public ArrayList<String> getProducts() {
+    public ArrayList<Element> getProducts() {
         return Products;
     }
 
-    public void setProducts(ArrayList<String> Products) {
+    public void setProducts(ArrayList<Element> Products) {
         this.Products = Products;
     }
     

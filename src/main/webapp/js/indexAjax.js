@@ -8,9 +8,10 @@ var productName;
 
 $(function () {
     $(".list-button").each(function () {
+        var listId= $(this).children(".list-span").id;
         $.ajax({
 
-            url: 'http://localhost:8080/ShoppingList/services/list/' + ltrim($(this).text()) + '/products',
+            url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/products',
             type: 'GET',
             dataType: 'json',
             error: function (that, e) {
@@ -35,8 +36,9 @@ $(function () {
     $(".list-button").click(function () {
         var content = this.nextElementSibling;
         if (content.style.maxHeight) {
+            var listId= $(this).children(".list-span").id;
             $.ajax({
-                url: 'http://localhost:8080/ShoppingList/services/list/' + ltrim($(this).children(".list-span").text()) + '/products',
+                url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/products',
                 type: 'GET',
                 dataType: 'json',
                 error: function (that, e) {
@@ -44,6 +46,7 @@ $(function () {
                     console.log(e);
                 },
                 success: (data) => {
+                    console.log(data);
                     $(this).children(".badge").text(data.results.length);
                     $(this).next(".product-list").html('');
                     $.each(data.results, (i, obj) => {
@@ -193,6 +196,7 @@ $(document).ready(function () {
     });
 
     $('#savebutton-product').click(function () {
+        //bisogna mettere apposto
         var mode = "new";
         if (mode === "modify") {
             var formData = new FormData();

@@ -11,6 +11,7 @@ import entities.ListBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import servlets.DbConnect;
 
@@ -19,7 +20,7 @@ import servlets.DbConnect;
  * @author bogdan
  */
 public class ListDao {
-    
+
     public static ElementList getAllList(String str, String limit) {
 
         ElementList el = new ElementList();
@@ -54,60 +55,64 @@ public class ListDao {
 
         return el;
     }
-    
-    public static ListBean getSingleList(String name) {
+
+    public static ListBean getSingleList(Integer id) {
         ListBean list = new ListBean();
 
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM List WHERE Name=?");
-            ps.setString(1, name);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM List WHERE Id=?");
+            ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                list.setName(rs.getString("Name"));
                 list.setCatName(rs.getString("CatName"));
                 list.setDescription(rs.getString("Description"));
                 list.setOwnerEmail(rs.getString("OwnerEmail"));
             }
 
-            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM List_Product WHERE ListName=?");
-            ps1.setString(1, name);
+            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM List_Product WHERE ListId=?");
+            ps1.setInt(1, id);
 
             ResultSet rs1 = ps1.executeQuery();
 
-            ArrayList<String> products = new ArrayList<>();
+            ArrayList<Element> products = new ArrayList<>();
+            Element tmpEl = new Element();
 
             while (rs1.next()) {
-                products.add(rs1.getString("ProductName"));
+                tmpEl.setId(rs1.getInt("Id") + "");
+                tmpEl.setText(rs1.getString("Name"));
+                products.add(tmpEl);
             }
 
             list.setProducts(products);
             conn.close();
 
-            list.setName(name);
+            list.setId(id);
 
         } catch (Exception e) {
             System.out.println(e);
         }
         return list;
     }
-    
-    public static boolean delete(String name) {
+
+    public static boolean delete(Integer id) {
         boolean status = true;
         try {
 
             Connection conn = DbConnect.getConnection();
 
             PreparedStatement ps1 = conn.prepareStatement(
-                    "DELETE FROM List_Product WHERE List_Name=?");
-            ps1.setString(1, name);
-            
+                    "DELETE FROM List_Product WHERE ListId=?");
+            ps1.setInt(1, id);
+
             PreparedStatement ps = conn.prepareStatement(
-                    "DELETE FROM List WHERE Name=?");
-            ps.setString(1, name);
-            
+                    "DELETE FROM List WHERE Id=?");
+            ps.setInt(1, id);
+
             status = status && (ps1.executeUpdate() > 0);
             status = (ps.executeUpdate() > 0) && status;
 
@@ -118,7 +123,7 @@ public class ListDao {
         }
         return status;
     }
-    
+
     public static boolean deleteByCat(String catName) {
         boolean status = true;
         try {
@@ -126,20 +131,20 @@ public class ListDao {
             PreparedStatement ps = conn.prepareStatement(
                     "DELETE FROM List WHERE CatName=?");
             ps.setString(1, catName);
-            
+
             PreparedStatement ps1 = conn.prepareStatement(""
-                    + "SELECT Name FROM List WHERE CatName=?");
-            ps.setString(1, catName);
+                    + "SELECT * FROM List WHERE CatName=?");
+            ps1.setString(1, catName);
 
             ResultSet rs = ps1.executeQuery();
-            
+
             if (rs.next()) {
                 PreparedStatement ps2 = conn.prepareStatement(
-                    "DELETE FROM List_Product WHERE ListName=?");
-                ps2.setString(1, rs.getString("Name"));
+                        "DELETE FROM List_Product WHERE ListId=?");
+                ps2.setInt(1, rs.getInt("Id"));
                 status = (ps2.executeUpdate() > 0) && status;
             }
-            
+
             status = (ps.executeUpdate() > 0) && status;
             conn.close();
         } catch (Exception e) {
@@ -147,16 +152,16 @@ public class ListDao {
         }
         return status;
     }
-    
-    public static String getImage(String name) {
+
+    public static String getImage(Integer id) {
 
         String file = "";
 
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM List WHERE Name=?");
-            ps.setString(1, name);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM List WHERE Id=?");
+            ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
 
@@ -173,8 +178,8 @@ public class ListDao {
         }
         return file;
     }
-    
-    public static boolean modify(String name, String catName, String description, String image, boolean mod) {
+
+    public static boolean modify(Integer id, String name, String catName, String description, String image, boolean mod) {
         boolean status = false;
         try {
 
@@ -182,18 +187,20 @@ public class ListDao {
 
             if (mod) {
 
-                PreparedStatement ps = conn.prepareStatement("UPDATE List SET Description=?, Image=?, CatName=? WHERE Name=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE List SET Description=?, Image=?, CatName=?, Name=? WHERE Id=?");
                 ps.setString(1, description);
                 ps.setString(2, image);
                 ps.setString(3, catName);
                 ps.setString(4, name);
+                ps.setInt(5, id);
 
                 status = ps.executeUpdate() > 0;
             } else {
-                PreparedStatement ps = conn.prepareStatement("UPDATE List SET Description=?, CatName=? WHERE Name=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE List SET Description=?, CatName=?, Name=? WHERE Id=?");
                 ps.setString(1, description);
                 ps.setString(2, catName);
                 ps.setString(3, name);
+                ps.setInt(4, id);
 
                 status = ps.executeUpdate() > 0;
             }
@@ -204,53 +211,60 @@ public class ListDao {
             System.out.println(e);
         }
         return status;
-    
+
     }
-    
-    public static boolean initialize(String name, String catName, String description, String image, String ownerEmail, boolean mod) {
-        boolean status = false;
+
+    public static int initialize(String name, String catName, String description, String image, String ownerEmail, boolean mod) {
+        int id = 0;
         try {
 
             Connection conn = DbConnect.getConnection();
-            
-            if(mod){
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO List (Name, CatName, Description, Image, OwnerEmail) VALUES (?, ?, ?, ?, ?)");
+
+            if (mod) {
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO List (Name, CatName, Description, Image, OwnerEmail) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, name);
                 ps.setString(2, catName);
                 ps.setString(3, description);
                 ps.setString(4, image);
                 ps.setString(5, ownerEmail);
 
-                status = ps.executeUpdate() > 0;
-            }else{
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO List (Name, CatName, Description, OwnerEmail) VALUES (?, ?, ?, ?)");
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                System.out.println(rs.getInt(1));
+            } else {
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO List (Name, CatName, Description, OwnerEmail) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, name);
                 ps.setString(2, catName);
                 ps.setString(3, description);
                 ps.setString(4, ownerEmail);
 
-                status = ps.executeUpdate() > 0;
+                ps.executeUpdate();
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                System.out.println(rs.getInt(1));
             }
-            
 
             conn.close();
 
         } catch (Exception e) {
             System.out.println(e + "è qui l'errore");
         }
-        return status;
+        return id;
     }
 
-    public static boolean setProducts(String list, String[] products) {
+    public static boolean setProducts(Integer id, Integer[] products) {
         boolean status = true;
         try {
 
             Connection conn = DbConnect.getConnection();
 
-            for (String p : products) {
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO List_Product (ListName, ProductName) VALUES (?, ?)");
-                ps.setString(1, list);
-                ps.setString(2, p);
+            for (Integer p : products) {
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO List_Product (ListId, ProductId) VALUES (?, ?)");
+                ps.setInt(1, id);
+                ps.setInt(2, p);
                 status = status && (ps.executeUpdate() > 0);
             }
             conn.close();
@@ -260,4 +274,4 @@ public class ListDao {
         }
         return status;
     }
-}   
+}
