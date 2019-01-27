@@ -11,7 +11,7 @@ package entities;
  */
 public class ProductBean {
     
-    private String Id;
+    private Integer Id;
     private String Name;
     private String CatName;
     private String Description;
@@ -32,11 +32,11 @@ public class ProductBean {
         this.Name = Name;
     }
     
-    public String getId() {
+    public int getId() {
         return Id;
     }
 
-    public void setId(String Id) {
+    public void setId(int Id) {
         this.Id = Id;
     }
 

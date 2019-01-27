@@ -12,6 +12,7 @@ import entities.ProductBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;
@@ -48,6 +49,31 @@ public class ProductDao {
         return array;
     }
 
+     public static boolean modify(String name, String catName, String description, String image, boolean mod) {
+        boolean status = false;
+        try {
+            Connection conn = DbConnect.getConnection();
+            if (mod) {
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=? WHERE Name=? AND CatName=?");
+                ps.setString(1, description);
+                ps.setString(2, image);
+                ps.setString(3, name);
+                ps.setString(4, catName);
+                status = ps.executeUpdate() > 0;
+            } else {
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=? WHERE Name=? AND CatName=?");
+                ps.setString(1, description);
+                ps.setString(2, name);
+                ps.setString(3, catName);
+                status = ps.executeUpdate() > 0;
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+    
     public static List getProd() {
         List products = new ArrayList<>();
         try {
@@ -124,25 +150,26 @@ public class ProductDao {
         return el;
     }
 
-    public static ProductBean getSingleProduct(String name) {
+    public static ProductBean getSingleProduct(Integer id) {
         ProductBean list = new ProductBean();
 
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=?");
-            ps.setString(1, name);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Id=?");
+            ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                list.setName(rs.getString("Name"));
                 list.setCatName(rs.getString("CatName"));
                 list.setDescription(rs.getString("Description"));
             }
 
             conn.close();
 
-            list.setName(name);
+            list.setId(id);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -168,24 +195,29 @@ public class ProductDao {
         return status;
     }
 
-    public static boolean initialize(String name, String catName, String description, String image, String logo) {
-        boolean status = false;
+    public static int initialize(String name, String catName, String description, String image, String logo) {
+        int id = 0;
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO Product (Name, CatName, Description, Image, Logo) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Product (Name, CatName, Description, Image, Logo) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, name);
             ps.setString(2, catName);
             ps.setString(3, description);
             ps.setString(4, image);
             ps.setString(5, logo);
-            status = ps.executeUpdate() > 0;
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+            id = rs.getInt(1);
+            System.out.println(rs.getInt(1));
             conn.close();
         } catch (Exception e) {
             System.out.println(e);
         }
-        return status;
+        return id;
     }
 
+    //vedere se viene utilizzata da qualche parte emiliano
     public static boolean delete(String name, String catName) {
         boolean status = false;
         try {
@@ -216,37 +248,38 @@ public class ProductDao {
             ps.setString(1, catName);
 
             PreparedStatement ps1 = conn.prepareStatement(""
-                    + "SELECT Name FROM Product WHERE CatName=?");
-            ps.setString(1, catName);
+                    + "SELECT * FROM Product WHERE CatName=?");
+            ps1.setString(1, catName);
 
             ResultSet rs = ps1.executeQuery();
 
             if (rs.next()) {
                 PreparedStatement ps2 = conn.prepareStatement(
-                        "DELETE FROM List_Product WHERE ProductName=?");
-                ps2.setString(1, rs.getString("Name"));
+                        "DELETE FROM List_Product WHERE ProductId=?");
+                ps2.setInt(1, rs.getInt("Id"));
+                System.out.println(rs.getInt("Id"));
                 status = (ps2.executeUpdate() > 0) && status;
             }
 
             status = (ps.executeUpdate() > 0) && status;
             conn.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + "qui");
         }
         return status;
     }
 
-    public static boolean deleteByName(String name) {
+    public static boolean deleteById(Integer id) {
         boolean status = true;
         try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement(
-                    "DELETE FROM Product WHERE Name=?");
-            ps.setString(1, name);
+                    "DELETE FROM Product WHERE Id=?");
+            ps.setInt(1, id);
 
             PreparedStatement ps1 = conn.prepareStatement(
-                    "DELETE FROM List_Product WHERE ProductName=?");
-            ps1.setString(1, name);
+                    "DELETE FROM List_Product WHERE ProductId=?");
+            ps1.setInt(1, id);
 
             status = status && (ps1.executeUpdate() > 0);
             status = (ps.executeUpdate() > 0) && status;
@@ -257,6 +290,7 @@ public class ProductDao {
         return status;
     }
 
+    //vedere se serve se no da cancellare
     public static String getImage(String name, String catName) {
         String file = "";
         try {
@@ -276,12 +310,12 @@ public class ProductDao {
         return file;
     }
 
-    public static String getImage(String name) {
+    public static String getImage(Integer id) {
         String file = "";
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=?");
-            ps.setString(1, name);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Id=?");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 file = rs.getString("Image");
@@ -294,12 +328,12 @@ public class ProductDao {
         return file;
     }
     
-    public static String getLogo(String name) {
+    public static String getLogo(Integer id) {
         String file = "";
         try {
             Connection conn = DbConnect.getConnection();
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Name=?");
-            ps.setString(1, name);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Product WHERE Id=?");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 file = rs.getString("Logo");
@@ -312,22 +346,24 @@ public class ProductDao {
         return file;
     }
 
-    public static boolean modify(String name, String catName, String description, String image, boolean mod) {
+    public static boolean modify(Integer id, String name, String catName, String description, String image, boolean mod) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
             if (mod) {
-                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=? WHERE Name=? AND CatName=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=?, Name=?, CatName=? WHERE Id=?");
                 ps.setString(1, description);
                 ps.setString(2, image);
                 ps.setString(3, name);
                 ps.setString(4, catName);
+                ps.setInt(5, id);
                 status = ps.executeUpdate() > 0;
             } else {
-                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=? WHERE Name=? AND CatName=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Name=?, CatName=? WHERE Id=?");
                 ps.setString(1, description);
                 ps.setString(2, name);
                 ps.setString(3, catName);
+                ps.setInt(4, id);
                 status = ps.executeUpdate() > 0;
             }
             conn.close();
@@ -337,24 +373,26 @@ public class ProductDao {
         return status;
     }
 
-    public static boolean modify(String name, String catName, String description, String logo, String image, boolean mod) {
+    public static boolean modify(Integer id, String name, String catName, String description, String logo, String image, boolean mod) {
         boolean status = false;
         try {
             Connection conn = DbConnect.getConnection();
             if (mod) {
-                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=?, Logo=? WHERE Name=? AND CatName=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Image=?, Logo=?, Name=?, CatName=? WHERE Id=?");
                 ps.setString(1, description);
                 ps.setString(2, image);
                 ps.setString(3, logo);
                 ps.setString(4, name);
                 ps.setString(5, catName);
+                ps.setInt(6, id);
                 status = ps.executeUpdate() > 0;
             } else {
-                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Logo=? WHERE Name=? AND CatName=?");
+                PreparedStatement ps = conn.prepareStatement("UPDATE Product SET Description=?, Logo=?, Name=?, CatName=? WHERE Id=?");
                 ps.setString(1, description);
                 ps.setString(2, logo);
                 ps.setString(3, name);
                 ps.setString(4, catName);
+                ps.setInt(5, id);
                 status = ps.executeUpdate() > 0;
             }
             conn.close();

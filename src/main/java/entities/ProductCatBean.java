@@ -15,7 +15,7 @@ public class ProductCatBean {
     
     private String Name;
     private String Description;
-    private ArrayList<String> Products;
+    private ArrayList<Integer> Products;
     private ArrayList<String> Lists;
 
     /**
@@ -70,7 +70,7 @@ public class ProductCatBean {
      *
      * @return
      */
-    public ArrayList<String> getProducts() {
+    public ArrayList<Integer> getProducts() {
         return Products;
     }
 
@@ -78,7 +78,7 @@ public class ProductCatBean {
      *
      * @param Products
      */
-    public void setProducts(ArrayList<String> Products) {
+    public void setProducts(ArrayList<Integer> Products) {
         this.Products = Products;
     }
 }

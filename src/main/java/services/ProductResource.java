@@ -62,19 +62,19 @@ public class ProductResource {
     }
 
     @GET
-    @Path("/{name}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSingleProductJson(@PathParam("name") String name) {
-        ProductBean product = ProductDao.getSingleProduct(name);
+    public String getSingleProductJson(@PathParam("id") Integer id) {
+        ProductBean product = ProductDao.getSingleProduct(id);
         return new Gson().toJson(product);
     }
 
     @GET
-    @Path("/image/{name}")
+    @Path("/image/{id}")
     @Produces("image/png")
-    public String getImage(@PathParam("name") String name) throws IOException {
+    public String getImage(@PathParam("id") Integer id) throws IOException {
 
-        String filename = ProductDao.getImage(name);
+        String filename = ProductDao.getImage(id);
 
         if (!filename.equals("")) {
 
@@ -99,11 +99,11 @@ public class ProductResource {
     }
     
     @GET
-    @Path("/logo/{name}")
+    @Path("/logo/{id}")
     @Produces("logo/png")
-    public String getLogo(@PathParam("name") String name) throws IOException {
+    public String getLogo(@PathParam("id") Integer id) throws IOException {
 
-        String filename = ProductDao.getLogo(name);
+        String filename = ProductDao.getLogo(id);
 
         if (!filename.equals("")) {
 
@@ -133,9 +133,10 @@ public class ProductResource {
      * @param content representation for the resource
      */
     @PUT
-    @Path("/{name}")
+    @Path("/{id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void putProductJson(@PathParam("name") String name,
+    public void putProductJson(@PathParam("id") Integer id,
+            @FormDataParam("name") String name,
             @FormDataParam("catName") String catName,
             @FormDataParam("description") String description,
             @FormDataParam("fileImage") InputStream fileImage,
@@ -147,7 +148,7 @@ public class ProductResource {
 
         if (fileImage != null) {
 
-            fileNameImage = name + ".png";
+            fileNameImage = id + ".png";
 
             System.out.println(fileNameImage);
 
@@ -156,7 +157,7 @@ public class ProductResource {
 
         if (fileLogo != null) {
 
-            fileNameLogo = name + ".png";
+            fileNameLogo = id + ".png";
 
             System.out.println(fileNameLogo);
 
@@ -164,11 +165,11 @@ public class ProductResource {
         }
 
         if (fileLogo != null) {
-            if (ProductDao.modify(name, catName, description, fileNameLogo, fileNameImage, (mod || fileImage != null))) {
+            if (ProductDao.modify(id, name, catName, description, fileNameLogo, fileNameImage, (mod || fileImage != null))) {
                 System.out.println("ok");
             }
         } else {
-            if (ProductDao.modify(name, catName, description, fileNameImage, (mod || fileImage != null))) {
+            if (ProductDao.modify(id, name, catName, description, fileNameImage, (mod || fileImage != null))) {
                 System.out.println("ok");
             }
         }
@@ -185,36 +186,37 @@ public class ProductResource {
 
         String fileNameImage = "";
         String fileNameLogo= "";
+        
+        Integer id = ProductDao.initialize(name, catName, description, fileNameImage, fileNameLogo);
+        if (fileImage != null && (id>0)) {
 
-        if (fileImage != null) {
-
-            fileNameImage = name + ".png";
+            fileNameImage = id + ".png";
 
             System.out.println(fileNameImage);
 
             UploadImage.upload(fileImage, fileNameImage, "product");
         }
 
-        if (fileLogo != null) {
+        if (fileLogo != null && (id>0)) {
 
-            fileNameLogo = name + ".png";
+            fileNameLogo = id + ".png";
 
             System.out.println(fileNameLogo);
 
             UploadImage.uploadLogo(fileLogo, fileNameLogo, "product");
         }
-
-        if (ProductDao.initialize(name, catName, description, fileNameImage, fileNameLogo)) {
-            
+        
+        if (id > 0) {
+            ProductDao.modify(id, name, catName, description, fileNameLogo, fileNameImage, true);
             System.out.println("ok");
         }
     }
     
     @DELETE
-    @Path("/{name}")
-    public void deleteProductJson(@PathParam("name") String name) {
+    @Path("/{id}")
+    public void deleteProductJson(@PathParam("id") Integer id) {
         
-        ProductDao.deleteByName(name);
-        System.out.println(name);
+        ProductDao.deleteById(id);
+        System.out.println(id);
     }
 }
