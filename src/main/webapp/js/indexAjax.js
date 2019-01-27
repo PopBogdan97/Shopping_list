@@ -69,7 +69,7 @@ $(function () {
                         "type": "button",
                         "class": "btn btn-outline-secondary my-search-button",
                         "data-toggle": "modal",
-                        "data-target": "#productModal"
+                        "data-target": "#resultModal"
                     });
                     $(this).next(".product-list").children("div").children("div").children("button").children("img").attr({
                         "src": "img/search.png",
