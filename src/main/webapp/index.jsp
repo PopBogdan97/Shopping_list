@@ -215,7 +215,7 @@
                                         </div>
                                         <img id="product-image" src="#" width="125px" alt="Image not set">
                                         <button type="button" id="remove-product-image" class="btn btn-danger" style="display:none;"><img src="img/cestino.png"></button>
-                                        
+
                                         <div class="custom-file" style="margin-top:10px">
                                             <input type="file" class="custom-file-input" id="customLogo" accept="image/*">
                                             <label class="custom-file-label" for="customLogo">Choose Logo</label>
@@ -236,6 +236,39 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- RESULT MODAL-->
+                    <div class="modal fade" id="resultModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="resultModalTitle">Modal title</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons"style="margin-bottom: 10px; float: right;">
+                                        <label class="btn btn-outline-primary active">
+                                            <input type="radio" name="options" id="name-order" autocomplete="off" checked>Order by Name
+                                        </label>
+                                        <label class="btn btn-outline-primary">
+                                            <input type="radio" name="options" id="cat-order" autocomplete="off">Order by Category
+                                        </label>
+                                    </div>
+                                    <span class="clearfix"></span>
+                                    <div class="list-group" >
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="close-result" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
