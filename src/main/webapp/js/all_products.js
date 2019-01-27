@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-
+$(function (){
 $('.all-products').select2({
     placeholder: 'Search for a product',
     allowClear: true,
@@ -19,16 +19,29 @@ $('.all-products').select2({
 
 $('.all-products').on("select2:selecting", function(e) {
     
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/product/'+$('.all-products option:selected').text(),
+        datatype: 'json',
+        cache: false,
+        success: function (data) {
+            console.log("success");
+            $('#search-product-title').text($('.all-products :selected').text());
+            $('#search-product-description').val(data['description']);
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
     
         $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/ShoppingList/services/listcat/image/'+$('.str-catlist option:selected').text(),
+        url: 'http://localhost:8080/ShoppingList/services/product/image/'+$('.all-products option:selected').text(),
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
-
-                $('#img-catlist').attr('src', 'data:image/png;base64,' + data);
-                $('#removeimage-catlist').show();
+                $('#search-product-image').attr('src', 'data:image/png;base64,' + data);
             }
 
         },
@@ -36,4 +49,15 @@ $('.all-products').on("select2:selecting", function(e) {
             console.log("error");
         }
     });
+});
+
+$(".all-products").change(function () {
+    if (($('.all-products option:selected').val())) {
+    $('#search-product-button').attr("disabled", false);
+    } else {
+    $('#search-product-button').attr("disabled", true);
+    }
+
+});
+
 });

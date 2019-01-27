@@ -17,6 +17,11 @@ and open the template in the editor.
     height: 38px;
 }
 
+.select2-container .select2-selection--single{
+    height: 40px;
+    line-height: 40px;
+}
+
 .input-group > .select2-hidden-accessible:not(:first-child) + .select2-container--bootstrap:not(:last-child) > .selection > .select2-selection, .input-group > .select2-hidden-accessible:not(:first-child) + .select2-container--bootstrap:not(:last-child) > .selection > .select2-selection.form-control{
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
