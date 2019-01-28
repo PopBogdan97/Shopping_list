@@ -122,7 +122,7 @@ $('#delete-product').click(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/ShoppingList/services/product/'+$('.str-product option:selected').text(),
+            url: 'http://localhost:8080/ShoppingList/services/product/'+$('.str-product option:selected').id(),
             cache: false,
             success: function () {
                 console.log("success");
@@ -237,7 +237,7 @@ $('#modify-product').click(function () {
     
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/ShoppingList/services/product/'+$('.str-product option:selected').text(),
+        url: 'http://localhost:8080/ShoppingList/services/product/'+$('.str-product option:selected').id(),
         datatype: 'json',
         cache: false,
         success: function (data) {
@@ -258,7 +258,7 @@ $('#modify-product').click(function () {
 
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/ShoppingList/services/product/image/'+$('.str-product option:selected').text(),
+        url: 'http://localhost:8080/ShoppingList/services/product/image/'+$('.str-product option:selected').id(),
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
@@ -487,13 +487,11 @@ $('#savebutton-product').click(function () {
             formData.append('mod', 'true');
 
         }
-        formData.append('nome', ($('.str-product option:selected').text()).split("-")[0]);
-        formData.append('descrizione', $('#descrizione-product').val());
-        formData.append('catprod', ($('.str-product option:selected').text()).split("-")[1]);
-
+        formData.append('description', $('#descrizione-product').val());
+        
         $.ajax({
-            type: 'POST',
-            url: 'ProductServlet',
+            type: 'PUT',
+            url: 'http://localhost:8080/ShoppingList/services/product/'+$('.str-product :selected').id(),
             data: formData,
             cache: false,
             contentType: false,
@@ -509,20 +507,16 @@ $('#savebutton-product').click(function () {
         });
     } else {
         var formData = new FormData();
-        formData.append('action', 'new');
         if ($('#file-product').val()) {
             formData.append('file', $('#file-product')[0].files[0]);
-            formData.append('ok', 'true');
-        } else {
-            formData.append('ok', 'false');
         }
-        formData.append('nome', nome);
-        formData.append('descrizione', $('#descrizione-product').val());
+        formData.append('name', nome);
+        formData.append('description', $('#descrizione-product').val());
         formData.append('catprod', $("#prodcat-product").select2("data")[0].text);
 
         $.ajax({
             type: 'POST',
-            url: 'ProductServlet',
+            url: 'http://localhost:8080/ShoppingList/services/product/',
             data: formData,
             cache: false,
             contentType: false,

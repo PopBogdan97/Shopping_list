@@ -128,17 +128,16 @@ public class ProductDao {
 
             ResultSet rs = ps.executeQuery();
 
-            int i = 0;
             while (rs.next()) {
                 Element e = new Element();
                 String name = rs.getString("Name");
-                e.setId(i + "");
+                String id = rs.getString("Id");
+                e.setId(id);
                 e.setText(name);
                 listlist.add(e);
-                i++;
             }
             conn.close();
-
+            
             System.out.println(listlist);
 
         } catch (Exception e) {
