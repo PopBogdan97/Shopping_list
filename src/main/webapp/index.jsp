@@ -194,7 +194,7 @@
                         <p></p>
                         <p></p>
                         <p></p>
-                        <a data-toggle="modal" data-target="#productModal">utilizza questo</a>
+                        <a data-toggle="modal" data-target="#chatModal">utilizza questo</a>
                         <p></p>
                         <p></p>
                         <p></p>
@@ -327,6 +327,36 @@
                 </div>
             </div>
         </div>
+        
+        <!-- CHAT MODAL -->
+        <div class="modal fade" id="chatModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="resultModalTitle">Chat lista N</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="chatPart" style="float:left; background-color: #e0ffff; width:50%; height:100%;">
+                            Messaggi
+                        </div>
+                        <div  id="messagePart" style="float:left; background-color: #ffe4e1; width:50%; height:100%;">
+                            <div>Predefined Messages</div>
+                            <button id="messageOne" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">St&oacute; andando a fare la spesa, manca qualcosa?</button>
+                            <button id="messageTwo" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Lista modificata. Guarda cosa ho aggiunto</button>
+                            <button id="messageThree" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Spesa fatta. Ti puoi rilassare</button>
+                            <button id="messageFour" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">E' ora di fare la spesa. Chi va?</button>
+                            <button id="messageFive" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Vado io a fare la spesa!</button>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button id="closebutton-product" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
 
         <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
