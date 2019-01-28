@@ -63,7 +63,7 @@ public class ListResource {
 
         return new Gson().toJson(el);
     }
-    
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,7 +71,7 @@ public class ListResource {
         ListBean list = ListDao.getSingleList(id);
         return new Gson().toJson(list);
     }
-    
+
     @GET
     @Path("/{id}/products")
     @Produces(MediaType.APPLICATION_JSON)
@@ -91,7 +91,7 @@ public class ListResource {
         el.setResults(list.getProducts());
         return new Gson().toJson(el);
     }
-    
+
     @GET
     @Path("/{id}/catProducts")
     @Produces(MediaType.APPLICATION_JSON)
@@ -99,7 +99,7 @@ public class ListResource {
         ElementList catProducts = ListDao.getCatProducts(id, q == null ? "" : q, limit == 0 ? "" : "LIMIT " + limit);
         return new Gson().toJson(catProducts);
     }
-    
+
     @GET
     @Path("/image/{id}")
     @Produces("image/png")
@@ -129,7 +129,6 @@ public class ListResource {
         }
     }
 
-
     /**
      * PUT method for updating or creating an instance of ListResource
      *
@@ -140,9 +139,9 @@ public class ListResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void putListJson(@PathParam("id") Integer id,
             @FormDataParam("name") String name,
-            @FormDataParam("catName") String catName, 
-            @FormDataParam("description") String description, 
-            @FormDataParam("file") InputStream file, 
+            @FormDataParam("catName") String catName,
+            @FormDataParam("description") String description,
+            @FormDataParam("file") InputStream file,
             @FormDataParam("mod") boolean mod) throws IOException {
 
         String fileName = "";
@@ -160,31 +159,33 @@ public class ListResource {
             System.out.println("ok");
         }
     }
-    
+
+    //add a single element per HTTP req, products is: 
     @PUT
     @Path("/{id}/products")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void putListProductsJson(@PathParam("id") Integer id, @FormDataParam("products") List<Integer> products) throws IOException {
-        
-        if (ListDao.setProducts(id, products.toArray(new Integer[products.size()]))){
+    public void putListProductsJson(@PathParam("id") Integer id,
+            @FormDataParam("product") Integer product,
+            @FormDataParam("quantity") Integer quantity) throws IOException {
+
+        if (ListDao.setProducts(id, product, quantity)) {
             System.out.println("ok");
         }
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void postListJson(@FormDataParam("name") String name, 
-            @FormDataParam("catName") String catName, 
-            @FormDataParam("description") String description, 
-            @FormDataParam("products") List<Integer> products, 
-            @FormDataParam("file") InputStream file, 
-            @FormDataParam("ownerEmail") String ownerEmail, 
+    public void postListJson(@FormDataParam("name") String name,
+            @FormDataParam("catName") String catName,
+            @FormDataParam("description") String description,
+            @FormDataParam("file") InputStream file,
+            @FormDataParam("ownerEmail") String ownerEmail,
             @FormDataParam("mod") boolean mod) throws IOException {
 
         String fileName = "";
         Integer id = ListDao.initialize(name, catName, description, fileName, ownerEmail, (mod || file != null));
-        
-        if (file != null && (id>0)) {
+
+        if (file != null && (id > 0)) {
 
             fileName = name + ".png";
 
@@ -194,17 +195,17 @@ public class ListResource {
         }
 
         if (id > 0) {
-            if (ListDao.setProducts(id, products.toArray(new Integer[products.size()]))) {
-                System.out.println("ok");
-            }
+
+            System.out.println("ok");
+
         }
 
     }
-    
+
     @DELETE
     @Path("/{id}")
     public void deleteListJson(@PathParam("id") Integer id) {
-        
+
         ListDao.delete(id);
         System.out.println(id);
     }

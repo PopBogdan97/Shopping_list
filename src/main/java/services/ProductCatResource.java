@@ -137,7 +137,10 @@ public class ProductCatResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void postProductCatJson(@FormDataParam("name") String name, @FormDataParam("description") String description, @FormDataParam("listcat") List<String> listcat, @FormDataParam("file") InputStream file) throws IOException {
+    public void postProductCatJson(@FormDataParam("name") String name, 
+            @FormDataParam("description") String description, 
+            @FormDataParam("listcat") List<String> listcat, 
+            @FormDataParam("file") InputStream file) throws IOException {
 
         String fileName = "";
 

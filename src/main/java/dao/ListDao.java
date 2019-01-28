@@ -260,7 +260,7 @@ public class ListDao {
         return id;
     }
 
-    public static boolean setProducts(Integer id, Integer[] products) {
+    public static boolean setProducts(Integer id, Integer products, Integer quantity) {
         boolean status = true;
         try {
 
@@ -268,8 +268,8 @@ public class ListDao {
 
             PreparedStatement ps = conn.prepareStatement("INSERT INTO List_Product (ListId, ProductId, Quantity) VALUES (?, ?, ?)");
             ps.setInt(1, id);
-            ps.setInt(2, products[0]);
-            ps.setInt(3, products[1]);
+            ps.setInt(2, products);
+            ps.setInt(3, quantity);
             status = status && (ps.executeUpdate() > 0);
 
             conn.close();
