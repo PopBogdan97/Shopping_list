@@ -33,16 +33,18 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/login_registration.css">
-        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
-
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
         <script src="js/indexAjax.js"></script>
         <script type="text/javascript" src="js/login_registration.js"></script>
     </head>
@@ -162,10 +164,13 @@
                         <p></p>
 
                         <c:forEach var="List" items="${user.getLists()}">
+                            <c:set var="id" value="${List.getId()}"/> 
+                            <c:set var="name" value="${List.getText()}"/> 
+                            <% System.out.println("id: " + pageContext.findAttribute("id") + " name: " + pageContext.findAttribute("name"));%>
                             <button class="collapsible list-button">
                                 <span class="badge badge-primary badge-pill" id="product-number-span"></span>
-                                <span class="list-span">
-                                    ${List}
+                                <span class="list-span" id="${List.getId()}">
+                                    ${List.getText()}
                                 </span>
                             </button>
                             <ul class="content list-unstyled product-list">
@@ -175,6 +180,7 @@
                         <p></p>
                         <p></p>
                         <p></p>
+                        <a data-toggle="modal" data-target="#productModal">utilizza questo</a>
                         <p></p>
                         <p></p>
                         <p></p>
@@ -192,6 +198,81 @@
                         </nav>
                         <!--<input type="image" class="mr-3" onclick="showHamburgerMenu()" src="img/more.png" alt="Ok" width="35" height="35"/>-->
                     </div>
+
+                    <!-- ADD PRODUCT MODAL -->
+                    <div class="modal fade" id="productModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="productModalLabel">Modal title</h3>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="formGroupExampleInput">Description</label>
+                                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="E.g. 'Country of origin'">
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customImage" accept="image/*">
+                                            <label class="custom-file-label" for="customImage">Choose Image</label>
+                                        </div>
+                                        <img id="product-image" src="#" width="125px" alt="Image not set">
+                                        <button type="button" id="remove-product-image" class="btn btn-danger" style="display:none;"><img src="img/cestino.png"></button>
+
+                                        <div class="custom-file" style="margin-top:10px">
+                                            <input type="file" class="custom-file-input" id="customLogo" accept="image/*">
+                                            <label class="custom-file-label" for="customLogo">Choose Logo</label>
+                                        </div>
+                                        <img id="product-logo" src="#" width="125px" alt="Logo not set">
+                                        <button type="button" id="remove-product-logo" class="btn btn-danger" style="display:none;"><img src="img/cestino.png"></button>
+
+                                        <div class="form-group" style="margin-top:10px">
+                                            <label for="formGroupExampleInput2">Product Category</label>
+                                            <select class="custom-select product-cat-select" id="product-cat-select"><option></option></select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="closebutton-product" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="savebutton-product" type="button" class="btn btn-primary" disabled="disabled">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RESULT MODAL-->
+                    <div class="modal fade" id="resultModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="resultModalTitle">Modal title</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons"style="margin-bottom: 10px; float: right;">
+                                        <label class="btn btn-outline-primary active">
+                                            <input type="radio" name="options" id="name-order" autocomplete="off" checked>Order by Name
+                                        </label>
+                                        <label class="btn btn-outline-primary">
+                                            <input type="radio" name="options" id="cat-order" autocomplete="off">Order by Category
+                                        </label>
+                                    </div>
+                                    <span class="clearfix"></span>
+                                    <div class="list-group" >
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="close-result" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

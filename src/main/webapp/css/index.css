@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25-gen-2019, 16.06.43
+    Author     : bogdan
+*/
+
+.input-group > .select2-container--bootstrap{
+    display: block;
+    flex: 1;
+}
+
+.select2-container--bootstrap .select2-selection--single{
+    height: 38px;
+}
+
+.input-group > .select2-hidden-accessible:not(:first-child) + .select2-container--bootstrap:not(:last-child) > .selection > .select2-selection, .input-group > .select2-hidden-accessible:not(:first-child) + .select2-container--bootstrap:not(:last-child) > .selection > .select2-selection.form-control{
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    border-color: #6c757d;
+}
+
+.select2-container--bootstrap .select2-selection{
+    font-size: 16px;
+}
+
+.select2-container--bootstrap .select2-selection--single .select2-selection__rendered{
+    padding-top: 3px;
+}
+
+.active:after {
+    content: "";
+}

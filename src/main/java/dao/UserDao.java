@@ -60,7 +60,7 @@ public class UserDao {
     }
 
     public static UserBean getSingleUser(String email) {
-        UserBean list = new UserBean();
+        UserBean user = new UserBean();
 
         try {
             Connection conn = DbConnect.getConnection();
@@ -71,11 +71,11 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                list.setFirstName(rs.getString("FirstName"));
-                list.setLastName(rs.getString("LastName"));
-                list.setTypology(rs.getString("Typology"));
-                list.setValid(rs.getBoolean("Valid"));
-                list.setCod(rs.getString("Cod"));
+                user.setFirstName(rs.getString("FirstName"));
+                user.setLastName(rs.getString("LastName"));
+                user.setTypology(rs.getString("Typology"));
+                user.setValid(rs.getBoolean("Valid"));
+                user.setCod(rs.getString("Cod"));
             }
 
             PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM List WHERE OwnerEmail=?");
@@ -83,11 +83,20 @@ public class UserDao {
 
             ResultSet rs1 = ps1.executeQuery();
 
-            ArrayList<String> lists = new ArrayList<>();
+            ArrayList<Element> lists = new ArrayList<>();
 
             while (rs1.next()) {
-                lists.add(rs1.getString("Name"));
+                Element tmpEl = new Element();
+                String tmp = rs1.getInt("Id")+"";
+                tmpEl.setId(tmp);
+                tmp =rs1.getString("Name");
+                tmpEl.setText(tmp);
+                lists.add(tmpEl);
             }
+            
+//            for(Element e : lists){
+//                System.out.println("name: " + e.getText());
+//            }
             
             PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
             ps2.setString(1, email);
@@ -95,18 +104,21 @@ public class UserDao {
             ResultSet rs2 = ps2.executeQuery();
 
             while (rs2.next()) {
-                lists.add(rs2.getString("ListName"));
+                Element tmpEl = new Element();
+                tmpEl.setId(rs1.getInt("ListId")+"");
+                tmpEl.setText(rs1.getString("ListName"));
+                lists.add(tmpEl);
             }
 
-            list.setLists(lists);
+            user.setLists(lists);
             conn.close();
 
-            list.setEmail(email);
+            user.setEmail(email);
 
         } catch (Exception e) {
             System.out.println(e + "single user");
         }
-        return list;
+        return user;
     }
     
     
@@ -156,7 +168,7 @@ public class UserDao {
             ResultSet rs = ps1.executeQuery();
 
             if (rs.next()) {
-                status = ListDao.delete(rs.getString("Name")) && status;
+                status = ListDao.delete(rs.getInt("Id")) && status;
             }
 
             status = (ps.executeUpdate() > 0) && status;

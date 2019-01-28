@@ -70,6 +70,17 @@ public class ProductCatResource {
     }
     
     @GET
+    @Path("/{name}/products")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getProductsJson(@PathParam("name") String name) {
+        ProductCatBean productCat = ProdCatDao.getSingleProductCat(name);
+        ElementList el = new ElementList();
+        el.setResults(productCat.getProducts());
+        
+        return new Gson().toJson(el);
+    }
+    
+    @GET
     @Path("/logo/{name}")
     @Produces("logo/png")
     public String getImage(@PathParam("name") String name) throws IOException {
@@ -126,7 +137,10 @@ public class ProductCatResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void postProductCatJson(@FormDataParam("name") String name, @FormDataParam("description") String description, @FormDataParam("listcat") List<String> listcat, @FormDataParam("file") InputStream file) throws IOException {
+    public void postProductCatJson(@FormDataParam("name") String name, 
+            @FormDataParam("description") String description, 
+            @FormDataParam("listcat") List<String> listcat, 
+            @FormDataParam("file") InputStream file) throws IOException {
 
         String fileName = "";
 
