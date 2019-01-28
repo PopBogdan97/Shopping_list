@@ -93,6 +93,14 @@ public class ListResource {
     }
     
     @GET
+    @Path("/{id}/catProducts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSingleListCatProductsJson(@PathParam("id") Integer id, @QueryParam("q") String q, @QueryParam("limit") int limit) {
+        ElementList catProducts = ListDao.getCatProducts(id, q == null ? "" : q, limit == 0 ? "" : "LIMIT " + limit);
+        return new Gson().toJson(catProducts);
+    }
+    
+    @GET
     @Path("/image/{id}")
     @Produces("image/png")
     public String getImage(@PathParam("id") Integer id) throws IOException {

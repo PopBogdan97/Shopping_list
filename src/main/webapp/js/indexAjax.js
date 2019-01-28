@@ -8,7 +8,7 @@ var productName;
 
 $(function () {
     $(".list-button").each(function () {
-        var listId= $(this).children(".list-span").attr('id');
+        var listId = $(this).children(".list-span").attr('id');
         console.log(listId);
         $.ajax({
 
@@ -28,16 +28,22 @@ $(function () {
 });
 
 function ltrim(str) {
-    if (str == null)
+    if (str === null)
         return str;
     return str.replace(/^\s+/g, '');
+}
+
+function getNum(str) {
+    if (str === null)
+        return str;
+    return str.replace('list-', '');
 }
 
 $(function () {
     $(".list-button").click(function () {
         var content = this.nextElementSibling;
         if (content.style.maxHeight) {
-            var listId= $(this).children(".list-span").attr('id');
+            var listId = $(this).children(".list-span").attr('id');
             $.ajax({
                 url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/products',
                 type: 'GET',
@@ -59,7 +65,7 @@ $(function () {
                             "style": "cursor:pointer;",
                             "data-toggle": "modal",
                             "href": "#Latte",
-                            "id": "product-"+obj.id
+                            "id": "product-" + obj.id
                         });
                     });
                     $(this).next(".product-list").append('<br>');
@@ -82,7 +88,8 @@ $(function () {
                     });
 
                     $(this).next(".product-list").children("div").children("select").attr({
-                        "class": "custom-select my-select2"
+                        "class": "custom-select my-select2",
+                        "id": "list-" + listId
                     });
                     //second button
                     $(this).next(".product-list").children("div").children("select").next("div").attr({
@@ -110,18 +117,21 @@ $(function () {
 });
 
 function executeSelect2() {
-    $('.my-select2').select2({
-        placeholder: 'Search products...',
-        allowClear: true,
-        theme: "bootstrap",
-        tags: true,
-        ajax: {
-            url: 'http://localhost:8080/ShoppingList/services/product?limit=5',
-            type: 'get',
-            dataType: 'json',
-            delay: 250,
-            cache: true
-        }
+    $('.my-select2').each(function () {
+        var listId = getNum($(this).attr('id'));
+        $(this).select2({
+            placeholder: 'Search products...',
+            allowClear: true,
+            theme: "bootstrap",
+            tags: true,
+            ajax: {
+                url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/catProducts?limit=5',
+                type: 'get',
+                dataType: 'json',
+                delay: 250,
+                cache: true
+            }
+        });
     });
 }
 ;
@@ -134,7 +144,7 @@ function executeClickButton() {
 
 
 
-        //Product modal management
+//Product modal management
 $(document).ready(function () {
     $("#customImage").change(function () {
         if (this.files && this.files[0]) {
@@ -260,27 +270,27 @@ $(document).ready(function () {
             });
         }
     });
-    
+
     $('#closebutton-product').click(function () {
 
-    mode = "";
-    clearProductModal();
-});
-    
-    function clearProductModal() {
-    $('#formGroupExampleInput').val('');
-    $('#customImage').val('');
-    $('#customLogo').val('');
-    $('#product-image').attr('src', "");
-    $('#product-logo').attr('src', "");
-    $('#remove-product-image').hide();
-    $('#remove-product-logo').hide();
-    $('#productModal').modal('hide')
-    $('#product-cat-select').empty();
-    $('#product-cat-select').append("<option></option>").trigger('change');
-    $("#product-cat-select").prop("disabled", false);
+        mode = "";
+        clearProductModal();
+    });
 
-}
+    function clearProductModal() {
+        $('#formGroupExampleInput').val('');
+        $('#customImage').val('');
+        $('#customLogo').val('');
+        $('#product-image').attr('src', "");
+        $('#product-logo').attr('src', "");
+        $('#remove-product-image').hide();
+        $('#remove-product-logo').hide();
+        $('#productModal').modal('hide')
+        $('#product-cat-select').empty();
+        $('#product-cat-select').append("<option></option>").trigger('change');
+        $("#product-cat-select").prop("disabled", false);
+
+    }
 });
 
 

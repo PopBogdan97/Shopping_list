@@ -279,4 +279,38 @@ public class ListDao {
         }
         return status;
     }
+    
+    public static ElementList getCatProducts(Integer id, String str, String limit){
+        ElementList el = new ElementList();
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT Product.Id, Product.Name FROM Product WHERE Product.CatName IN (SELECT ProductCat_ListCat.ProductCatName FROM ProductCat_ListCat WHERE ProductCat_ListCat.ListCatName IN (SELECT List.CatName FROM List WHERE List.Id =?)) AND Product.Name LIKE '%" + str + "%' " + limit);
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<Element> products = new ArrayList<>();
+            
+
+            while (rs.next()) {
+                Element tmpEl = new Element();
+                System.out.println("name by cat: " + rs.getString("Name"));
+                tmpEl.setId(rs.getInt("Id") + "");
+                tmpEl.setText(rs.getString("Name"));
+                products.add(tmpEl);
+            }
+            
+            for(Element e : products){
+                System.out.println("name by cat: " + e.getText());
+            }
+
+            el.setResults(products);
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e + " qua");
+        }
+        return el;
+    }
 }
