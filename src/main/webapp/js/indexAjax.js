@@ -6,6 +6,7 @@
 
 var productName;
 
+//set bedge with product quantity on lists
 $(function () {
     $(".list-button").each(function () {
         var listId = $(this).children(".list-span").attr('id');
@@ -27,6 +28,7 @@ $(function () {
     });
 });
 
+//replece withe spaces
 function ltrim(str) {
     if (str === null)
         return str;
@@ -39,6 +41,7 @@ function getNum(str) {
     return str.replace('list-', '');
 }
 
+//create dinamically the lists after the button whith the list is clicked
 $(function () {
     $(".list-button").click(function () {
         var content = this.nextElementSibling;
@@ -59,13 +62,12 @@ $(function () {
                     $.each(data.results, (i, obj) => {
 
                         this.classList.toggle("active");
-                        $(this).next(".product-list").append('<br><li>' + obj.text + '</li>');
+                        $(this).next(".product-list").append('<br>').append($('<li>').text(obj.text).attr("id", "product-" + obj.id));
                         $(this).next(".product-list").children("li").attr({
-                            "class": "portfolio-link",
+                            "class": "portfolio-link modify-list-product",
                             "style": "cursor:pointer;",
                             "data-toggle": "modal",
-                            "href": "#Latte",
-                            "id": "product-" + obj.id
+                            "data-target": "#modify-list-product-modal"
                         });
                     });
                     $(this).next(".product-list").append('<br>');
@@ -74,9 +76,9 @@ $(function () {
                         "class": "input-group mb-3"
                     });
                     $(this).next(".product-list").children("div").children("div").attr({
-                        "class": "input-group-prepend"
+                        "class": "input-group-prepend my-search-button-div"
                     });
-                    $(this).next(".product-list").children("div").children("div").children("button").attr({
+                    $(this).next(".product-list").children("div").children(".my-search-button-div").children("button").attr({
                         "type": "button",
                         "class": "btn btn-outline-secondary my-search-button",
                         "data-toggle": "modal",
@@ -116,6 +118,8 @@ $(function () {
     });
 });
 
+
+//select2 for searching the product in the right category of the list
 function executeSelect2() {
     $('.my-select2').each(function () {
         var listId = getNum($(this).attr('id'));
@@ -135,10 +139,18 @@ function executeSelect2() {
     });
 }
 ;
+
+//open modify modal
 function executeClickButton() {
     $(".my-search-button").click(function () {
         productName = $(this).parent().next("select").find(':selected').val();
         $('#productModalLabel').text('Edit product: ' + productName);
+    });
+
+
+//create dinamically the modal for updating the products in the list
+    $('.modify-list-product').click(function () {
+
     });
 }
 
@@ -197,6 +209,8 @@ $(document).ready(function () {
             cache: true
         }
     });
+
+    $(".product-cat-select").prop("disabled", true);
 
     $("#product-cat-select").change(function () {
         if (($('#product-cat-select option:selected').val())) {

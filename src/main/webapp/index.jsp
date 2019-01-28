@@ -126,9 +126,9 @@
                         </div>
 
                         <p></p>
-                        
-                        
-                        
+
+
+
                         <div class="input-group" id="div-select2-products">
                             <div class="input-group-prepend">
                                 <img src="img/search.png" width="40px" height="40px">
@@ -244,7 +244,7 @@
 
                                         <div class="form-group" style="margin-top:10px">
                                             <label for="formGroupExampleInput2">Product Category</label>
-                                            <select class="custom-select product-cat-select" id="product-cat-select"><option></option></select>
+                                            <select class="custom-select product-cat-select" id="product-cat-select"><option selected="selected">User Products</option></select>
                                         </div>
                                     </form>
                                 </div>
@@ -283,6 +283,41 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button id="close-result" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- MODIFY LIST PRODUCTS MODAL-->
+                    <div class="modal fade" id="modify-list-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <img id="modify-list-product-logo" src="#" width="50px" alt="Logo">
+                                    <h5 class="modal-title" id="product-title-name"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="img-fluid rounded mx-auto d-block" src="#" alt="Image not set">
+                                    <br><br>
+                                    <div id="modify-list-product-description"></div>
+                                    <br><br>
+
+                                    <div class="counter">
+                                        <div class='btn-group'>
+                                            <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
+                                            <input id="modify-list-product-quantity" type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
+                                            <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="moidfy-list-product-update" type="button" class="btn btn-primary">Update product</button>
                                 </div>
                             </div>
                         </div>
