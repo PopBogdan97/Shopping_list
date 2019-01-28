@@ -70,6 +70,17 @@ public class ProductCatResource {
     }
     
     @GET
+    @Path("/{name}/products")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getProductsJson(@PathParam("name") String name) {
+        ProductCatBean productCat = ProdCatDao.getSingleProductCat(name);
+        ElementList el = new ElementList();
+        el.setResults(productCat.getProducts());
+        
+        return new Gson().toJson(el);
+    }
+    
+    @GET
     @Path("/logo/{name}")
     @Produces("logo/png")
     public String getImage(@PathParam("name") String name) throws IOException {

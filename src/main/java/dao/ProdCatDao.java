@@ -157,17 +157,22 @@ public class ProdCatDao {
                 lists.add(rs1.getString("ListCatName"));
             }
 
-            prodcat.setLists(lists);
+            prodcat.setCatLists(lists);
 
             PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Product WHERE CatName=?");
-            ps1.setString(1, name);
+            ps2.setString(1, name);
 
             ResultSet rs2 = ps2.executeQuery();
 
-            ArrayList<Integer> products = new ArrayList<>();
+            ArrayList<Element> products = new ArrayList<>();
 
             while (rs2.next()) {
-                products.add(rs1.getInt("Id"));
+                Element tmpEl = new Element();
+                String tmp = rs2.getInt("Id")+"";
+                tmpEl.setId(tmp);
+                tmp =rs2.getString("Name");
+                tmpEl.setText(tmp);
+                products.add(tmpEl);
             }
 
             prodcat.setProducts(products);

@@ -15,25 +15,18 @@ public class ProductCatBean {
     
     private String Name;
     private String Description;
-    private ArrayList<Integer> Products;
-    private ArrayList<String> Lists;
+    private ArrayList<Element> Products;
+    private ArrayList<String> CatLists;
 
-    /**
-     *
-     * @return
-     */
-    public ArrayList<String> getLists() {
-        return Lists;
+    public ArrayList<String> getCatLists() {
+        return CatLists;
     }
 
-    /**
-     *
-     * @param Lists
-     */
-    public void setLists(ArrayList<String> Lists) {
-        this.Lists = Lists;
+    public void setCatLists(ArrayList<String> CatLists) {
+        this.CatLists = CatLists;
     }
-
+    
+    
     /**
      *
      * @return
@@ -70,7 +63,7 @@ public class ProductCatBean {
      *
      * @return
      */
-    public ArrayList<Integer> getProducts() {
+    public ArrayList<Element> getProducts() {
         return Products;
     }
 
@@ -78,7 +71,7 @@ public class ProductCatBean {
      *
      * @param Products
      */
-    public void setProducts(ArrayList<Integer> Products) {
+    public void setProducts(ArrayList<Element> Products) {
         this.Products = Products;
     }
 }
