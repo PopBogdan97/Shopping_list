@@ -74,18 +74,23 @@ public class ListDao {
                 list.setOwnerEmail(rs.getString("OwnerEmail"));
             }
 
-            PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM List_Product WHERE ListId=?");
+            PreparedStatement ps1 = conn.prepareStatement("SELECT List_Product.ProductId, Name FROM List_Product INNER JOIN Product P ON List_Product.ProductId = P.Id WHERE ListId=?;");
             ps1.setInt(1, id);
 
             ResultSet rs1 = ps1.executeQuery();
 
             ArrayList<Element> products = new ArrayList<>();
-            Element tmpEl = new Element();
+            
 
             while (rs1.next()) {
-                tmpEl.setId(rs1.getInt("Id") + "");
+                Element tmpEl = new Element();
+                tmpEl.setId(rs1.getInt("ProductId") + "");
                 tmpEl.setText(rs1.getString("Name"));
                 products.add(tmpEl);
+            }
+            
+            for(Element e : products){
+                System.out.println("name: " + e.getText());
             }
 
             list.setProducts(products);
@@ -94,7 +99,7 @@ public class ListDao {
             list.setId(id);
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + "qua");
         }
         return list;
     }

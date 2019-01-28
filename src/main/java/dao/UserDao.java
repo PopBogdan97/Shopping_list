@@ -84,13 +84,19 @@ public class UserDao {
             ResultSet rs1 = ps1.executeQuery();
 
             ArrayList<Element> lists = new ArrayList<>();
-            Element tmpEl = new Element();
 
             while (rs1.next()) {
-                tmpEl.setId(rs1.getInt("Id")+"");
-                tmpEl.setText(rs1.getString("Name"));
+                Element tmpEl = new Element();
+                String tmp = rs1.getInt("Id")+"";
+                tmpEl.setId(tmp);
+                tmp =rs1.getString("Name");
+                tmpEl.setText(tmp);
                 lists.add(tmpEl);
             }
+            
+//            for(Element e : lists){
+//                System.out.println("name: " + e.getText());
+//            }
             
             PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
             ps2.setString(1, email);
@@ -98,6 +104,7 @@ public class UserDao {
             ResultSet rs2 = ps2.executeQuery();
 
             while (rs2.next()) {
+                Element tmpEl = new Element();
                 tmpEl.setId(rs1.getInt("ListId")+"");
                 tmpEl.setText(rs1.getString("ListName"));
                 lists.add(tmpEl);

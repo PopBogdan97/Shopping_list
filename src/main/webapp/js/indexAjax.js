@@ -8,7 +8,8 @@ var productName;
 
 $(function () {
     $(".list-button").each(function () {
-        var listId= $(this).children(".list-span").id;
+        var listId= $(this).children(".list-span").attr('id');
+        console.log(listId);
         $.ajax({
 
             url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/products',
@@ -36,7 +37,7 @@ $(function () {
     $(".list-button").click(function () {
         var content = this.nextElementSibling;
         if (content.style.maxHeight) {
-            var listId= $(this).children(".list-span").id;
+            var listId= $(this).children(".list-span").attr('id');
             $.ajax({
                 url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/products',
                 type: 'GET',
@@ -57,7 +58,8 @@ $(function () {
                             "class": "portfolio-link",
                             "style": "cursor:pointer;",
                             "data-toggle": "modal",
-                            "href": "#Latte"
+                            "href": "#Latte",
+                            "id": "product-"+obj.id
                         });
                     });
                     $(this).next(".product-list").append('<br>');

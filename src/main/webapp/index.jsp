@@ -163,6 +163,9 @@
                         <p></p>
 
                         <c:forEach var="List" items="${user.getLists()}">
+                            <c:set var="id" value="${List.getId()}"/> 
+                            <c:set var="name" value="${List.getText()}"/> 
+                            <% System.out.println("id: " + pageContext.findAttribute("id") + " name: " + pageContext.findAttribute("name"));%>
                             <button class="collapsible list-button">
                                 <span class="badge badge-primary badge-pill" id="product-number-span"></span>
                                 <span class="list-span" id="${List.getId()}">
