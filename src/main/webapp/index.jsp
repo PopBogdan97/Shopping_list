@@ -294,7 +294,7 @@
         
         <!-- CHAT MODAL -->
         <div class="modal fade" id="chatModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="max-width: 65em;"><!--modal-dialog-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title" id="resultModalTitle">Chat lista N</h3>
@@ -304,7 +304,7 @@
                             Messaggi
                         </div>
                         <div  id="messagePart" style="float:left; background-color: #ffe4e1; width:50%; height:100%;">
-                            <div>Predefined Messages</div>
+                            <div>Click to send message</div>
                             <button id="messageOne" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">St&oacute; andando a fare la spesa, manca qualcosa?</button>
                             <button id="messageTwo" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Lista modificata. Guarda cosa ho aggiunto</button>
                             <button id="messageThree" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Spesa fatta. Ti puoi rilassare</button>
