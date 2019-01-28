@@ -32,16 +32,10 @@ $('.str-catprod').select2({
     placeholder: 'Categorie di prodotto',
     allowClear: true,
     ajax: {
-        url: 'ProdCatServlet',
+        url: 'http://localhost:8080/ShoppingList/services/prodcat?limit=5',
         type: 'get',
         dataType: 'json',
         delay: 250,
-        processResults: function (data) {
-
-            return {
-                results: data
-            };
-        },
         cache: true
     },
     language: {
@@ -62,15 +56,10 @@ $('.str-product').select2({
     placeholder: 'Prodotti',
     allowClear: true,
     ajax: {
-        url: 'ProductServlet',
+        url: 'http://localhost:8080/ShoppingList/services/product?limit=5',
         type: 'get',
         dataType: 'json',
         delay: 250,
-        processResults: function (data) {
-            return {
-                results: data
-            };
-        },
         cache: true
     },
     language: {
@@ -110,19 +99,10 @@ $('#delete-catlist').click(function () {
 $('#delete-catprod').click(function () {
     if (confirm("Vuoi davvero eliminare la categoria di prodotto: " + $('.str-catprod option:selected').text() + "?\nI dati relativi ad esso verranno eliminati.")) {
 
-
-        var formData = new FormData();
-
-        formData.append('action', 'delete');
-        formData.append('nome', $('.str-catprod option:selected').text());
-
         $.ajax({
-            type: 'POST',
-            url: 'ProdCatServlet',
-            data: formData,
+            type: 'DELETE',
+            url: 'http://localhost:8080/ShoppingList/services/prodcat/'+$('.str-catprod option:selected').text(),
             cache: false,
-            contentType: false,
-            processData: false,
             success: function () {
                 console.log("success");
                 $('.str-catprod').empty();
@@ -140,19 +120,10 @@ $('#delete-product').click(function () {
             "Della categoria di prodotto: " + ($('.str-product option:selected').text()).split("-")[1] + "?\n" +
             "I dati relativi ad esso verranno eliminati.")) {
 
-        var formData = new FormData();
-
-        formData.append('action', 'delete');
-        formData.append('nome', ($('.str-product option:selected').text()).split("-")[0]);
-        formData.append('catprod', ($('.str-product option:selected').text()).split("-")[1]);
-
         $.ajax({
             type: 'POST',
-            url: 'ProductServlet',
-            data: formData,
+            url: 'http://localhost:8080/ShoppingList/services/product/'+$('.str-product option:selected').text(),
             cache: false,
-            contentType: false,
-            processData: false,
             success: function () {
                 console.log("success");
                 $('.str-product').empty();
@@ -220,41 +191,26 @@ $('#modify-catprod').click(function () {
     mode = "modify";
 
     $("#catprodModal").modal("toggle");
-    var formData = new FormData();
-
-    formData.append('action', 'getdata');
-    formData.append('nome', $('.str-catprod option:selected').text());
 
 
     $.ajax({
-        type: 'POST',
-        url: 'ProdCatServlet',
-        data: formData,
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/prodcat/'+$('.str-catprod option:selected').text(),
         datatype: 'json',
         cache: false,
-        contentType: false,
-        processData: false,
         success: function (data) {
             console.log("success");
             $('#catprodModalLabel').text('Edita categoria di prodotto: ' + $('.str-catprod :selected').text());
-            $('#descrizione-catprod').val(data['Descrizione']);
+            $('#descrizione-catprod').val(data['description']);
         },
         error: function () {
             console.log("error");
         }
     });
 
-    var formData1 = new FormData();
-
-    formData1.append('action', 'getimage');
-    formData1.append('nome', $('.str-catprod option:selected').text());
-
     $.ajax({
-        type: 'POST',
-        url: 'ProdCatServlet',
-        data: formData1,
-        contentType: false,
-        processData: false,
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/prodcat/image/'+$('.str-catprod option:selected').text(),
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
@@ -277,25 +233,17 @@ $('#modify-product').click(function () {
     mode = "modify";
 
     $("#productModal").modal("toggle");
-    var formData = new FormData();
-
-    formData.append('action', 'getdata');
-    formData.append('nome', ($('.str-product option:selected').text()).split("-")[0]);
-    formData.append('catprod', ($('.str-product option:selected').text()).split("-")[1]);
-
-
+    
+    
     $.ajax({
-        type: 'POST',
-        url: 'ProductServlet',
-        data: formData,
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/product/'+$('.str-product option:selected').text(),
         datatype: 'json',
         cache: false,
-        contentType: false,
-        processData: false,
         success: function (data) {
             console.log("success");
             $('#productModalLabel').text('Edita prodotto: ' + ($('.str-product option:selected').text()).split("-")[0]);
-            $('#descrizione-product').val(data['Descrizione']);
+            $('#descrizione-product').val(data['description']);
 
             $('#prodcat-product').append("<option selected='true' value='0'>" + ($('.str-product option:selected').text()).split("-")[1] + "</option>").trigger('change');
 
@@ -308,18 +256,9 @@ $('#modify-product').click(function () {
         }
     });
 
-    var formData1 = new FormData();
-
-    formData1.append('action', 'getimage');
-    formData1.append('nome', ($('.str-product option:selected').text()).split("-")[0]);
-    formData1.append('catprod', ($('.str-product option:selected').text()).split("-")[1]);
-
     $.ajax({
-        type: 'POST',
-        url: 'ProductServlet',
-        data: formData1,
-        contentType: false,
-        processData: false,
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/product/image/'+$('.str-product option:selected').text(),
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
@@ -341,7 +280,7 @@ $('#prodcat-catlist').select2({
     dropdownParent: $('#catlistModal'),
     placeholder: "Categorie di prodotto",
     ajax: {
-        url: 'ProdCatServlet',
+        url: 'http://localhost:8080/ShoppingList/services/prodcat',
         type: 'get',
         dataType: 'json',
         delay: 250,
@@ -359,7 +298,7 @@ $('#prodcat-product').select2({
     placeholder: "Categorie di prodotto",
     allowClear: true,
     ajax: {
-        url: 'ProdCatServlet',
+        url: 'http://localhost:8080/ShoppingList/services/prodcat',
         type: 'get',
         dataType: 'json',
         delay: 250,
@@ -479,12 +418,8 @@ $('#savebutton-catprod').click(function () {
 
     if (mode === "modify") {
         var formData = new FormData();
-        formData.append('action', 'modify');
         if ($('#file-catprod').val()) {
             formData.append('file', $('#file-catprod')[0].files[0]);
-            formData.append('ok', 'true');
-        } else {
-            formData.append('ok', 'false');
         }
         if ($('#removeimage-catprod').is(':visible')) {
             formData.append('mod', 'false');
@@ -492,12 +427,11 @@ $('#savebutton-catprod').click(function () {
             formData.append('mod', 'true');
 
         }
-        formData.append('nome', $('.str-catprod :selected').text());
-        formData.append('descrizione', $('#descrizione-catprod').val());
+        formData.append('description', $('#descrizione-catprod').val());
 
         $.ajax({
-            type: 'POST',
-            url: 'ProdCatServlet',
+            type: 'PUT',
+            url: 'http://localhost:8080/ShoppingList/services/prodcat/'+$('.str-catprod :selected').text(),
             data: formData,
             cache: false,
             contentType: false,
@@ -513,19 +447,15 @@ $('#savebutton-catprod').click(function () {
         });
     } else {
         var formData = new FormData();
-        formData.append('action', 'new');
         if ($('#file-catprod').val()) {
             formData.append('file', $('#file-catprod')[0].files[0]);
-            formData.append('ok', 'true');
-        } else {
-            formData.append('ok', 'false');
         }
-        formData.append('nome', nome);
-        formData.append('descrizione', $('#descrizione-catprod').val());
+        formData.append('name', nome);
+        formData.append('description', $('#descrizione-catprod').val());
 
         $.ajax({
             type: 'POST',
-            url: 'ProdCatServlet',
+            url: 'http://localhost:8080/ShoppingList/services/listcat/',
             data: formData,
             cache: false,
             contentType: false,
@@ -548,12 +478,8 @@ $('#savebutton-product').click(function () {
 
     if (mode === "modify") {
         var formData = new FormData();
-        formData.append('action', 'modify');
         if ($('#file-product').val()) {
             formData.append('file', $('#file-product')[0].files[0]);
-            formData.append('ok', 'true');
-        } else {
-            formData.append('ok', 'false');
         }
         if ($('#removeimage-catlist').is(':visible')) {
             formData.append('mod', 'false');

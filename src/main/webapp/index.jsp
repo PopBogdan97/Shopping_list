@@ -47,6 +47,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
         <script src="js/indexAjax.js"></script>
         <script type="text/javascript" src="js/login_registration.js"></script>
+        <script src="js/all_products.js"></script>
+
     </head>
 
     <body class="bg-success">
@@ -120,9 +122,22 @@
                 <div class="col-lg-6 portfolio-item ft-text">
                     <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
-                            <input type="image" class="mr-3" src="img/search.png" alt="Ok" width="27" height="27" data-toggle="modal" data-target="#searchModal"/>
                             <h6 class="mb-0 mx-auto text-dark lh-100">Prodotti</h6>
                         </div>
+
+                        <p></p>
+                        
+                        
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <img src="img/search.png" width="40px" height="40px">
+                            </div>
+                            <select class="custom-select all-products"><option></option></select>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" id="search-product-button" data-toggle="modal" data-target="#search-product-modal" disabled="disabled">Add</button>
+                            </div>
+                        </div>        
                         <p></p>
 
                         <c:forEach var="shoppingList" items="${shoppingLists}">
@@ -329,6 +344,38 @@
                 </div>
             </div>
         </c:forEach>
+
+        <div class="modal fade" id="search-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="search-product-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="img-fluid rounded mx-auto d-block" id="search-product-image">
+                        <br><br>
+                        <div id="search-product-description"></div>
+                        <br><br>
+
+                        <div class="counter">
+                            <div class='btn-group'>
+                                <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
+                                <input type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
+                                <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-primary">Aggiungi prodotto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script>
             var coll = document.getElementsByClassName("collapsible");
