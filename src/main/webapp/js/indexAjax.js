@@ -41,6 +41,12 @@ function getNum(str) {
     return str.replace('list-', '');
 }
 
+function getIdProd(str) {
+    if (str === null)
+        return str;
+    return str.replace('product-', '');
+}
+
 //create dinamically the lists after the button whith the list is clicked
 $(function () {
     $(".list-button").click(function () {
@@ -148,7 +154,58 @@ function executeClickButton() {
 
 //create dinamically the modal for updating the products in the list
     $('.modify-list-product').click(function () {
-        $('#modify-list-product-modal').modal('show');
+        var productId = getIdProd($(this).attr('id'));
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/ShoppingList/services/product/' + productId,
+            dataType: 'json',
+
+            success: (data) => {
+                console.log(data);
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/image/'+ productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-image').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/logo/'+ productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-logo').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                
+                $('#product-title-name').text(data.Name);
+                $('#modify-list-product-category').text('Product category: ' + data.CatName);
+                if (data.Description === '') {
+                    $('#modify-list-product-description').text('Description: none');
+                } else {
+                    $('#modify-list-product-description').text('Description: ' + data.Description);
+                }
+
+                $('#modify-list-product-modal').modal('show');
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+
     });
 }
 
