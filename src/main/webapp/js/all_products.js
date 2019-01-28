@@ -18,30 +18,31 @@ $('.all-products').select2({
     }
 });
 
-$('.all-products').on("select2:selecting", function(e) {
+$('#search-product-button').click(function(){
     
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/ShoppingList/services/product/'+$('.all-products option:selected').text(),
+        url: 'http://localhost:8080/ShoppingList/services/product/'+$('.all-products option:selected').attr("value"),
         datatype: 'json',
         cache: false,
         success: function (data) {
             console.log("success");
-            $('#search-product-title').text($('.all-products :selected').text());
-            $('#search-product-description').val(data['description']);
+            $('#search-product-title').text(($('.all-products option:selected').text()).split("-")[0]);
+            $('#search-product-description').text(data['Description']);
 
         },
         error: function () {
             console.log("error");
         }
     });
-    
-        $.ajax({
+
+    $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/ShoppingList/services/product/image/'+$('.all-products option:selected').text(),
+        url: 'http://localhost:8080/ShoppingList/services/product/image/'+$('.all-products option:selected').attr("value"),
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
+
                 $('#search-product-image').attr('src', 'data:image/png;base64,' + data);
             }
 
@@ -50,6 +51,23 @@ $('.all-products').on("select2:selecting", function(e) {
             console.log("error");
         }
     });
+
+   $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/product/logo/'+$('.all-products option:selected').attr("value"),
+        success: function (data) {
+            console.log("success");
+            if (data !== "{}") {
+
+                $('#search-product-logo').attr('src', 'data:image/png;base64,' + data);
+            }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+    
 });
 
 $(".all-products").change(function () {

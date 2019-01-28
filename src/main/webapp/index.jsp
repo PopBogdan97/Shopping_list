@@ -385,13 +385,14 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <img id="search-product-logo" src="#" width="50px" alt="Logo">
                         <h5 class="modal-title" id="search-product-title"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img class="img-fluid rounded mx-auto d-block" id="search-product-image">
+                        <img src="#" width="250px" alt="Image" id="search-product-image">
                         <br><br>
                         <div id="search-product-description"></div>
                         <br><br>

@@ -10,7 +10,7 @@ $('.str-catlist').select2({
     allowClear: true,
     theme: 'bootstrap',
     ajax: {
-        url: 'http://localhost:8080/ShoppingList/services/listcat?limit=5',
+        url: 'http://localhost:8080/ShoppingList/services/listcat',
         type: 'get',
         dataType: 'json',
         delay: 250,
@@ -35,7 +35,7 @@ $('.str-catprod').select2({
     allowClear: true,
     theme: 'bootstrap',
     ajax: {
-        url: 'http://localhost:8080/ShoppingList/services/productCat?limit=5',
+        url: 'http://localhost:8080/ShoppingList/services/productCat',
         type: 'get',
         dataType: 'json',
         delay: 250,
@@ -60,7 +60,7 @@ $('.str-product').select2({
     allowClear: true,
     theme: 'bootstrap',
     ajax: {
-        url: 'http://localhost:8080/ShoppingList/services/product?limit=5',
+        url: 'http://localhost:8080/ShoppingList/services/product',
         type: 'get',
         dataType: 'json',
         delay: 250,
