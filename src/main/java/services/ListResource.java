@@ -10,6 +10,7 @@ import dao.ListDao;
 import entities.Element;
 import entities.ElementList;
 import entities.ListBean;
+import entities.ProductBean;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,6 +92,15 @@ public class ListResource {
         el.setResults(list.getProducts());
         return new Gson().toJson(el);
     }
+    
+    @GET
+    @Path("/{id}/product/{productId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getProductsByListJson(@PathParam("id") Integer id, @PathParam("productId") Integer productId) {
+        ProductBean product = ListDao.getProductByList(id, productId);
+        
+        return new Gson().toJson(product);
+    }
 
     @GET
     @Path("/{id}/catProducts")
@@ -162,7 +172,7 @@ public class ListResource {
 
     //add a single element per HTTP req, products is: 
     @PUT
-    @Path("/{id}/products")
+    @Path("/{id}/product")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void putListProductsJson(@PathParam("id") Integer id,
             @FormDataParam("product") Integer product,

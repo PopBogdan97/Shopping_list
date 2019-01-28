@@ -15,6 +15,7 @@ public class ProductBean {
     private String Name;
     private String CatName;
     private String Description;
+    private String Quantity;
 
     /**
      *
@@ -32,11 +33,19 @@ public class ProductBean {
         this.Name = Name;
     }
     
-    public int getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(int Id) {
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String Quantity) {
+        this.Quantity = Quantity;
+    }
+
+    public void setId(Integer Id) {
         this.Id = Id;
     }
 
