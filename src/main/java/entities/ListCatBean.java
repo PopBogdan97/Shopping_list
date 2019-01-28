@@ -13,49 +13,49 @@ import java.util.ArrayList;
  */
 public class ListCatBean {
     
-    private String name;
-    private String description;
-    private ArrayList<String> categories; //product categories
+    private String Name;
+    private String Description;
+    private ArrayList<String> Categories; //product categories
 
     /**
-     * @return the name
+     * @return the Name
      */
     public String getName() {
-        return name;
+        return Name;
     }
 
     /**
-     * @param name the name to set
+     * @param Name the Name to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
     /**
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return Description;
     }
 
     /**
-     * @param description the description to set
+     * @param Description the Description to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
     
     /**
      * @return the categories
      */
     public ArrayList<String> getCategories() {
-        return categories;
+        return Categories;
     }
 
     /**
-     * @param categories the categories to set
+     * @param Categories the Categories to set
      */
-    public void setCategories(ArrayList<String> categories) {
-        this.categories = categories;
+    public void setCategories(ArrayList<String> Categories) {
+        this.Categories = Categories;
     }
 }

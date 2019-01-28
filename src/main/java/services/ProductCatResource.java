@@ -117,7 +117,7 @@ public class ProductCatResource {
     @Path("/{name}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void putProductCatJson(@PathParam("name") String name, @FormDataParam("description") String description, @FormDataParam("file") InputStream file, @FormDataParam("mod") boolean mod) throws IOException {
-
+        
         String fileName = "";
 
         if (file != null) {

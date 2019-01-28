@@ -136,12 +136,11 @@ public class ProductResource {
     @Path("/{id}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void putProductJson(@PathParam("id") Integer id,
-            @FormDataParam("name") String name,
-            @FormDataParam("catName") String catName,
             @FormDataParam("description") String description,
             @FormDataParam("fileImage") InputStream fileImage,
             @FormDataParam("fileLogo") InputStream fileLogo,
-            @FormDataParam("mod") boolean mod) throws IOException {
+            @FormDataParam("modi") boolean modi,
+            @FormDataParam("modl") boolean modl) throws IOException {
 
         String fileNameImage = "";
         String fileNameLogo = "";
@@ -163,15 +162,9 @@ public class ProductResource {
 
             UploadImage.uploadLogo(fileLogo, fileNameLogo, "product");
         }
-
-        if (fileLogo != null) {
-            if (ProductDao.modify(id, name, catName, description, fileNameLogo, fileNameImage, (mod || fileImage != null))) {
+        
+        if (ProductDao.modify(id, description, fileNameLogo, fileNameImage, (modl || fileLogo != null), (modi || fileImage != null))) {
                 System.out.println("ok");
-            }
-        } else {
-            if (ProductDao.modify(id, name, catName, description, fileNameImage, (mod || fileImage != null))) {
-                System.out.println("ok");
-            }
         }
 
     }
@@ -207,7 +200,7 @@ public class ProductResource {
         }
         
         if (id > 0) {
-            ProductDao.modify(id, name, catName, description, fileNameLogo, fileNameImage, true);
+            ProductDao.modify(id, description, fileNameLogo, fileNameImage, true, true);
             System.out.println("ok");
         }
     }
