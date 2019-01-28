@@ -65,9 +65,7 @@ $(function () {
                         $(this).next(".product-list").append('<br>').append($('<li>').text(obj.text).attr("id", "product-" + obj.id));
                         $(this).next(".product-list").children("li").attr({
                             "class": "portfolio-link modify-list-product",
-                            "style": "cursor:pointer;",
-                            "data-toggle": "modal",
-                            "data-target": "#modify-list-product-modal"
+                            "style": "cursor:pointer;"
                         });
                     });
                     $(this).next(".product-list").append('<br>');
@@ -150,7 +148,7 @@ function executeClickButton() {
 
 //create dinamically the modal for updating the products in the list
     $('.modify-list-product').click(function () {
-
+        $('#modify-list-product-modal').modal('show');
     });
 }
 
