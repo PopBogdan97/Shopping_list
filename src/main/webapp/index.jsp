@@ -129,7 +129,7 @@
                         
                         
                         
-                        <div class="input-group">
+                        <div class="input-group" id="div-select2-products">
                             <div class="input-group-prepend">
                                 <img src="img/search.png" width="40px" height="40px">
                             </div>

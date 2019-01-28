@@ -8,6 +8,7 @@ $(function (){
 $('.all-products').select2({
     placeholder: 'Search for a product',
     allowClear: true,
+    theme: 'bootstrap',
     ajax: {
         url: 'http://localhost:8080/ShoppingList/services/product?limit=5',
         type: 'get',
