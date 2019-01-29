@@ -25,7 +25,6 @@ import servlets.DbConnect;
  *
  * @author bogdan
  */
-
 public class UserDao {
 
     public static ElementList getAllUsers(String str, String limit) {
@@ -78,10 +77,13 @@ public class UserDao {
                 user.setFirstName(rs.getString("FirstName"));
                 user.setLastName(rs.getString("LastName"));
                 user.setTypology(rs.getString("Typology"));
-                user.setImagePath(getUserImagePath(email));
                 user.setValid(rs.getBoolean("Valid"));
                 user.setCod(rs.getString("Cod"));
             }
+
+            String imagepath = getUserImagePath(email);
+           
+            user.setImagePath(imagepath);            
 
             PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM List WHERE OwnerEmail=?");
             ps1.setString(1, email);
@@ -92,17 +94,16 @@ public class UserDao {
 
             while (rs1.next()) {
                 Element tmpEl = new Element();
-                String tmp = rs1.getInt("Id")+"";
+                String tmp = rs1.getInt("Id") + "";
                 tmpEl.setId(tmp);
-                tmp =rs1.getString("Name");
+                tmp = rs1.getString("Name");
                 tmpEl.setText(tmp);
                 lists.add(tmpEl);
             }
-            
+
 //            for(Element e : lists){
 //                System.out.println("name: " + e.getText());
 //            }
-            
             PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
             ps2.setString(1, email);
 
@@ -110,7 +111,7 @@ public class UserDao {
 
             while (rs2.next()) {
                 Element tmpEl = new Element();
-                tmpEl.setId(rs1.getInt("ListId")+"");
+                tmpEl.setId(rs1.getInt("ListId") + "");
                 tmpEl.setText(rs1.getString("ListName"));
                 lists.add(tmpEl);
             }
@@ -125,8 +126,7 @@ public class UserDao {
         }
         return user;
     }
-    
-    
+
     public static UserBean getSingleUserByCookie(String cookie) {
         UserBean list = new UserBean();
 
@@ -146,7 +146,7 @@ public class UserDao {
                 list.setValid(rs.getBoolean("Valid"));
                 list.setCod(rs.getString("Cod"));
             }
-            
+
             conn.close();
 
         } catch (Exception e) {
@@ -154,7 +154,6 @@ public class UserDao {
         }
         return list;
     }
-    
 
     public static boolean delete(String email) {
         boolean status = true;
@@ -237,32 +236,31 @@ public class UserDao {
         }
         return cookie;
     }
-    
-    public static boolean deleteCookie(String cookieUID){
+
+    public static boolean deleteCookie(String cookieUID) {
         boolean success = false;
-        
+
         try {
             Connection conn = DbConnect.getConnection();
 
             PreparedStatement ps = conn.prepareStatement("UPDATE User SET Cookie='NULL' WHERE Cookie=?");
             ps.setString(1, cookieUID);
-            
+
             int rs = ps.executeUpdate();
-            
-            if(rs == 1){
+
+            if (rs == 1) {
                 success = true;
             }
-            
+
             conn.close();
 
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         return success;
     }
 
-    
     public static boolean modify(String email, String firstName, String lastName, String typology, String cod, String image, boolean mod) {
         boolean status = false;
         try {
@@ -353,7 +351,7 @@ public class UserDao {
 
                 status = ps.executeUpdate() > 0;
             } else {
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, FirstName, LastName, Typology, Valid, Cod, Cookie) VALUES (?, ?, ?, ?, 0, ?, ?)");
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, FirstName, LastName, Typology, Valid, Cod, Cookie, Image) VALUES (?, ?, ?, ?, 0, ?, ?,'')");
                 ps.setString(1, email);
                 ps.setString(2, firstName);
                 ps.setString(3, lastName);
@@ -383,7 +381,7 @@ public class UserDao {
             date.setTime(ts.getTime());
             String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
 
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, Password, FirstName, LastName, Typology, Valid, Cookie) VALUES (?, PASSWORD(?), ?, ?, 'anonymous', 1, ?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, Password, FirstName, LastName, Typology, Valid, Cookie, Image) VALUES (?, PASSWORD(?), ?, ?, 'anonymous', 1, ?,'')");
             ps.setString(1, cookie);
             ps.setString(2, cookie);
             ps.setString(3, cookie);
@@ -399,7 +397,7 @@ public class UserDao {
         }
         return status;
     }
-    
+
     public static boolean updateAnonymous(String cookie) {
         boolean status = false;
         try {
@@ -491,7 +489,7 @@ public class UserDao {
         }
         return valid;
     }
-    
+
     public static String getUserImagePath(String email) throws IOException {
 
         String filename = UserDao.getImage(email);
