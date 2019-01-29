@@ -6,6 +6,7 @@
 
 var productName;
 
+//set bedge with product quantity on lists
 $(function () {
     $(".list-button").each(function () {
         var listId = $(this).children(".list-span").attr('id');
@@ -27,6 +28,7 @@ $(function () {
     });
 });
 
+//replece withe spaces
 function ltrim(str) {
     if (str === null)
         return str;
@@ -39,6 +41,19 @@ function getNum(str) {
     return str.replace('list-', '');
 }
 
+function getIdProd(str) {
+    if (str === null)
+        return str;
+    return str.replace('product-', '');
+}
+
+function getChatListId(str) {
+    if (str === null)
+        return str;
+    return str.replace('chat-list', '');
+}
+
+//create dinamically the lists after the button whith the list is clicked
 $(function () {
     $(".list-button").click(function () {
         var content = this.nextElementSibling;
@@ -59,13 +74,10 @@ $(function () {
                     $.each(data.results, (i, obj) => {
 
                         this.classList.toggle("active");
-                        $(this).next(".product-list").append('<br><li>' + obj.text + '</li>');
+                        $(this).next(".product-list").append('<br>').append($('<li>').text(obj.text).attr("id", "product-" + obj.id));
                         $(this).next(".product-list").children("li").attr({
-                            "class": "portfolio-link",
-                            "style": "cursor:pointer;",
-                            "data-toggle": "modal",
-                            "href": "#Latte",
-                            "id": "product-" + obj.id
+                            "class": "portfolio-link modify-list-product",
+                            "style": "cursor:pointer;"
                         });
                     });
                     $(this).next(".product-list").append('<br>');
@@ -74,13 +86,11 @@ $(function () {
                         "class": "input-group mb-3"
                     });
                     $(this).next(".product-list").children("div").children("div").attr({
-                        "class": "input-group-prepend"
+                        "class": "input-group-prepend my-search-button-div"
                     });
-                    $(this).next(".product-list").children("div").children("div").children("button").attr({
+                    $(this).next(".product-list").children("div").children(".my-search-button-div").children("button").attr({
                         "type": "button",
-                        "class": "btn btn-outline-secondary my-search-button",
-                        "data-toggle": "modal",
-                        "data-target": "#resultModal"
+                        "class": "btn btn-outline-secondary my-search-button"
                     });
                     $(this).next(".product-list").children("div").children("div").children("button").children("img").attr({
                         "src": "img/search.png",
@@ -98,7 +108,8 @@ $(function () {
                     });
                     $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
                         "type": "button",
-                        "class": "btn btn-outline-primary"
+                        "class": "btn btn-outline-primary chat-button",
+                        "id": "chat-list" + listId
                     });
                     $(this).next(".product-list").children("div").children(".my-chat-button").children("button").children("img").attr({
                         "src": "img/chat.png",
@@ -116,6 +127,8 @@ $(function () {
     });
 });
 
+
+//select2 for searching the product in the right category of the list
 function executeSelect2() {
     $('.my-select2').each(function () {
         var listId = getNum($(this).attr('id'));
@@ -135,10 +148,77 @@ function executeSelect2() {
     });
 }
 ;
+
+//open modify modal
 function executeClickButton() {
     $(".my-search-button").click(function () {
         productName = $(this).parent().next("select").find(':selected').val();
         $('#productModalLabel').text('Edit product: ' + productName);
+        $("#resultModal").modal("show");
+    });
+    
+    $(".chat-button").click(function () {
+        var listId = getChatListId($(this).attr('id'))
+        $("#chatModalTitle").text("Chat List: " + listId);
+        $("#chatModal").modal("show");
+    });
+    
+
+
+//create dinamically the modal for updating the products in the list
+    $('.modify-list-product').click(function () {
+        var productId = getIdProd($(this).attr('id'));
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/ShoppingList/services/product/' + productId,
+            dataType: 'json',
+
+            success: (data) => {
+                console.log(data);
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/image/'+ productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-image').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/logo/'+ productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-logo').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                
+                $('#product-title-name').text(data.Name);
+                $('#modify-list-product-category').text('Product category: ' + data.CatName);
+                if (data.Description === '') {
+                    $('#modify-list-product-description').text('Description: none');
+                } else {
+                    $('#modify-list-product-description').text('Description: ' + data.Description);
+                }
+
+                $('#modify-list-product-modal').modal('show');
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+
     });
 }
 
@@ -197,6 +277,8 @@ $(document).ready(function () {
             cache: true
         }
     });
+
+    $(".product-cat-select").prop("disabled", true);
 
     $("#product-cat-select").change(function () {
         if (($('#product-cat-select option:selected').val())) {

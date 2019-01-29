@@ -38,12 +38,11 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
 
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
         <script src="js/indexAjax.js"></script>
         <script type="text/javascript" src="js/login_registration.js"></script>
@@ -126,9 +125,9 @@
                         </div>
 
                         <p></p>
-                        
-                        
-                        
+
+
+
                         <div class="input-group" id="div-select2-products">
                             <div class="input-group-prepend">
                                 <img src="img/search.png" width="40px" height="40px">
@@ -244,7 +243,7 @@
 
                                         <div class="form-group" style="margin-top:10px">
                                             <label for="formGroupExampleInput2">Product Category</label>
-                                            <select class="custom-select product-cat-select" id="product-cat-select"><option></option></select>
+                                            <select class="custom-select product-cat-select" id="product-cat-select"><option selected="selected">User Products</option></select>
                                         </div>
                                     </form>
                                 </div>
@@ -288,6 +287,43 @@
                         </div>
                     </div>
 
+
+                    <!-- MODIFY LIST PRODUCTS MODAL-->
+                    <div class="modal fade" id="modify-list-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header align-items-center">
+                                    <img id="modify-list-product-logo" src="#" width="50px" alt="Logo">
+                                    <h5 class="modal-title" id="product-title-name" style="margin-left: 10px"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <img id="modify-list-product-image" class="img-fluid rounded mx-auto d-block" style="width: 350px" src="#" alt="Image not set">
+                                    <br><br>
+                                    <div id="modify-list-product-category"></div>
+                                    <br>
+                                    <div id="modify-list-product-description"></div>
+                                    <br><br>
+
+                                    <div class="counter">
+                                        <div class='btn-group'>
+                                            <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
+                                            <input id="modify-list-product-quantity" type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
+                                            <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="moidfy-list-product-close"type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="moidfy-list-product-update" type="button" class="btn btn-primary">Update product</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -297,7 +333,7 @@
             <div class="modal-dialog" role="document" style="max-width: 65em;"><!--modal-dialog-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="resultModalTitle">Chat lista N</h3>
+                        <h3 class="modal-title" id="chatModalTitle"></h3>
                     </div>
                     <div class="modal-body">
                         <div id="chatPart" style="float:left; background-color: #e0ffff; width:50%; height:100%;">
@@ -319,7 +355,6 @@
                 </div>
             </div>
         </div>
-        
         
 
         <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

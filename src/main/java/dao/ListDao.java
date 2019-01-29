@@ -8,6 +8,7 @@ package dao;
 import entities.Element;
 import entities.ElementList;
 import entities.ListBean;
+import entities.ProductBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,7 +81,6 @@ public class ListDao {
             ResultSet rs1 = ps1.executeQuery();
 
             ArrayList<Element> products = new ArrayList<>();
-            
 
             while (rs1.next()) {
                 Element tmpEl = new Element();
@@ -88,8 +88,8 @@ public class ListDao {
                 tmpEl.setText(rs1.getString("Name"));
                 products.add(tmpEl);
             }
-            
-            for(Element e : products){
+
+            for (Element e : products) {
                 System.out.println("name: " + e.getText());
             }
 
@@ -279,8 +279,8 @@ public class ListDao {
         }
         return status;
     }
-    
-    public static ElementList getCatProducts(Integer id, String str, String limit){
+
+    public static ElementList getCatProducts(Integer id, String str, String limit) {
         ElementList el = new ElementList();
         try {
             Connection conn = DbConnect.getConnection();
@@ -291,7 +291,6 @@ public class ListDao {
             ResultSet rs = ps.executeQuery();
 
             ArrayList<Element> products = new ArrayList<>();
-            
 
             while (rs.next()) {
                 Element tmpEl = new Element();
@@ -300,8 +299,8 @@ public class ListDao {
                 tmpEl.setText(rs.getString("Name"));
                 products.add(tmpEl);
             }
-            
-            for(Element e : products){
+
+            for (Element e : products) {
                 System.out.println("name by cat: " + e.getText());
             }
 
@@ -312,5 +311,36 @@ public class ListDao {
             System.out.println(e + " qua");
         }
         return el;
+    }
+
+    public static ProductBean getProductByList(Integer id, Integer productId) {
+        ProductBean product = new ProductBean();
+
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT Product.Id, Product.Name, Product.CatName, Product.Description, List_Product.Quantity FROM Product INNER JOIN List_Product  ON List_Product.ProductId = Product.Id WHERE List_Product.ListId=? AND Product.Id=?");
+            ps.setInt(1, id);
+            ps.setInt(2, productId);
+
+            System.out.println(ps);
+            System.out.println(productId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                product.setId(rs.getInt("Id"));
+                product.setName(rs.getString("Name"));
+                product.setCatName(rs.getString("CatName"));
+                product.setDescription(rs.getString("Description"));
+                product.setQuantity(rs.getString("Quantity"));
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return product;
     }
 }
