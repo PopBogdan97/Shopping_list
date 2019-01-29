@@ -240,10 +240,6 @@ function executeResultEvents() {
 
     });
 
-    $('#add-result-product').click(function () {
-        $('#resultModal').modal('hide');
-        $('#productModal').modal('show');
-    });
 }
 
 //open modify modal
@@ -364,35 +360,16 @@ function executeClickButton() {
 
     });
 
-    $('#remove-product-list').click(function () {
-        var idPar = $('#moidfy-list-product-update').parent().attr('id');
-        var listId = getIdListRemember(idPar);
-        var productId = getIdProductRemember(idPar);
-
-
-        $.ajax({
-            type: 'DELETE',
-            url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product/' + productId,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function () {
-                console.log("success");
-                clearProductUpdateModal();
-                $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
-                $('#moidfy-list-product-close').click();
-                $('#' + listId).parent().click();
-                $('#' + listId).parent().click();
-            },
-            error: function () {
-                console.log("error");
-            }
-        });
-    });
 }
+
 
 //product update modal management
 $(document).ready(function () {
+    $('#add-result-product').click(function () {
+        $('#resultModal').modal('hide');
+        $('#productModal').modal('show');
+    });
+    
     $('#moidfy-list-product-close').click(function () {
         $(this).parent().attr('id', 'remember-product-list');
 
@@ -471,6 +448,32 @@ function clearProductUpdateModal() {
 
 //Product modal management
 $(document).ready(function () {
+    $('#remove-product-list').click(function () {
+    var idPar = $('#moidfy-list-product-update').parent().attr('id');
+    var listId = getIdListRemember(idPar);
+    var productId = getIdProductRemember(idPar);
+
+
+    $.ajax({
+        type: 'DELETE',
+        url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product/' + productId,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function () {
+            console.log("success");
+            clearProductUpdateModal();
+            $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
+            $('#moidfy-list-product-close').click();
+            $('#' + listId).parent().click();
+            $('#' + listId).parent().click();
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+});
+    
     $("#customImage").change(function () {
         if (this.files && this.files[0]) {
             var reader = new FileReader();
