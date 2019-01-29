@@ -90,9 +90,7 @@ $(function () {
                     });
                     $(this).next(".product-list").children("div").children(".my-search-button-div").children("button").attr({
                         "type": "button",
-                        "class": "btn btn-outline-secondary my-search-button",
-                        "data-toggle": "modal",
-                        "data-target": "#resultModal"
+                        "class": "btn btn-outline-secondary my-search-button"
                     });
                     $(this).next(".product-list").children("div").children("div").children("button").children("img").attr({
                         "src": "img/search.png",
@@ -156,6 +154,7 @@ function executeClickButton() {
     $(".my-search-button").click(function () {
         productName = $(this).parent().next("select").find(':selected').val();
         $('#productModalLabel').text('Edit product: ' + productName);
+        $("#resultModal").modal("show");
     });
     
     $(".chat-button").click(function () {
