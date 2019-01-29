@@ -169,12 +169,25 @@ public class ListResource {
             System.out.println("ok");
         }
     }
-
-    //add a single element per HTTP req, products is: 
+    
+    
     @PUT
     @Path("/{id}/product")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void putListProductsJson(@PathParam("id") Integer id,
+            @FormDataParam("product") Integer product,
+            @FormDataParam("quantity") Integer quantity) throws IOException {
+
+        if (ListDao.updateProducts(id, product, quantity)) {
+            System.out.println("ok");
+        }
+    }
+
+    //add a single element per HTTP req, products is: 
+    @POST
+    @Path("/{id}/product")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void postListProductsJson(@PathParam("id") Integer id,
             @FormDataParam("product") Integer product,
             @FormDataParam("quantity") Integer quantity) throws IOException {
 

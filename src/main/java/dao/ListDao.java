@@ -279,6 +279,26 @@ public class ListDao {
         }
         return status;
     }
+    
+    public static boolean updateProducts(Integer id, Integer products, Integer quantity) {
+        boolean status = true;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE List_Product SET Quantity=? WHERE ListId=? AND ProductId=?");
+            ps.setInt(1, quantity);
+            ps.setInt(2, id);
+            ps.setInt(3, products);
+            status = status && (ps.executeUpdate() > 0);
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 
     public static ElementList getCatProducts(Integer id, String str, String limit) {
         ElementList el = new ElementList();

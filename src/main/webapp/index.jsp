@@ -181,7 +181,7 @@
                             <c:set var="id" value="${List.getId()}"/> 
                             <c:set var="name" value="${List.getText()}"/> 
                             <% System.out.println("id: " + pageContext.findAttribute("id") + " name: " + pageContext.findAttribute("name"));%>
-                            <button class="collapsible list-button">
+                            <button class="collapsible rounded list-button">
                                 <span class="badge badge-primary badge-pill" id="product-number-span"></span>
                                 <span class="list-span" id="${List.getId()}">
                                     ${List.getText()}
@@ -316,7 +316,7 @@
                                     </div>
 
                                 </div>
-                                <div class="modal-footer">
+                                <div id="remember-product-list" class="modal-footer">
                                     <button id="moidfy-list-product-close"type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <button id="moidfy-list-product-update" type="button" class="btn btn-primary">Update product</button>
                                 </div>
