@@ -24,8 +24,14 @@
         <url-pattern>/DbConnect</url-pattern>
     </servlet-mapping>
     
-    
-    
+    <servlet>
+        <servlet-name>ImageUploadServlet</servlet-name>
+        <servlet-class>servlets.ImageUploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImageUploadServlet</servlet-name>
+        <url-pattern>/ImageUploadServlet</url-pattern>
+    </servlet-mapping>
     
     
     
@@ -742,6 +748,7 @@
         <filter-name>ShoppingListsFilter</filter-name>
         <url-pattern>/index.jsp</url-pattern>
     </filter-mapping>
+    
     
     
     <session-config>
