@@ -65,6 +65,12 @@ function getIdProductRemember(str) {
     return str.split('-', )[2];
 }
 
+function getChatListId(str) {
+    if (str === null)
+        return str;
+    return str.replace('chat-list', '');
+}
+
 //create dinamically the lists after the button whith the list is clicked
 $(function () {
     $(".list-button").click(function () {
@@ -102,9 +108,7 @@ $(function () {
                     });
                     $(this).next(".product-list").children("div").children(".my-search-button-div").children("button").attr({
                         "type": "button",
-                        "class": "btn btn-outline-secondary my-search-button",
-                        "data-toggle": "modal",
-                        "data-target": "#resultModal"
+                        "class": "btn btn-outline-secondary my-search-button"
                     });
                     $(this).next(".product-list").children("div").children("div").children("button").children("img").attr({
                         "src": "img/search.png",
@@ -122,7 +126,8 @@ $(function () {
                     });
                     $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
                         "type": "button",
-                        "class": "btn btn-outline-primary"
+                        "class": "btn btn-outline-primary chat-button",
+                        "id": "chat-list" + listId
                     });
                     $(this).next(".product-list").children("div").children(".my-chat-button").children("button").children("img").attr({
                         "src": "img/chat.png",
@@ -167,7 +172,15 @@ function executeClickButton() {
     $(".my-search-button").click(function () {
         productName = $(this).parent().next("select").find(':selected').val();
         $('#productModalLabel').text('Edit product: ' + productName);
+        $("#resultModal").modal("show");
     });
+    
+    $(".chat-button").click(function () {
+        var listId = getChatListId($(this).attr('id'))
+        $("#chatModalTitle").text("Chat List: " + listId);
+        $("#chatModal").modal("show");
+    });
+    
 
 
 //create dinamically the modal for updating the products in the list
