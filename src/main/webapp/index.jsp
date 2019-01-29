@@ -333,7 +333,7 @@
             <div class="modal-dialog" role="document" style="max-width: 65em;"><!--modal-dialog-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="resultModalTitle">Chat lista N</h3>
+                        <h3 class="modal-title" id="chatModalTitle"></h3>
                     </div>
                     <div class="modal-body">
                         <div id="chatPart" style="float:left; background-color: #e0ffff; width:50%; height:100%;">
