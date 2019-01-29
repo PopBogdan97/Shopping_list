@@ -363,4 +363,25 @@ public class ListDao {
         }
         return product;
     }
+    
+    public static boolean deleteProduct(Integer id, Integer productId) {
+        boolean status = true;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM List_Product WHERE ListId=? AND ProductId=?");
+            ps1.setInt(1, id);
+            ps1.setInt(2, productId);
+            
+            status = (ps1.executeUpdate() > 0);
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
 }

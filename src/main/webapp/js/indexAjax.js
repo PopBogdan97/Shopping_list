@@ -229,6 +229,7 @@ function executeResultEvents() {
                 }
                 $('#remember-product-list').attr("id", "remember-product-" + productId + "-list-" + listId);
                 $('#modify-list-product-quantity').val(1);
+                $('#remove-product-list').hide();
                 $('#resultModal').modal('hide');
                 $('#modify-list-product-modal').modal('show');
             },
@@ -238,11 +239,11 @@ function executeResultEvents() {
         });
 
     });
-    
-    $('#add-result-product').click(function (){
-            $('#resultModal').modal('hide');
-            $('#productModal').modal('show');
-        });
+
+    $('#add-result-product').click(function () {
+        $('#resultModal').modal('hide');
+        $('#productModal').modal('show');
+    });
 }
 
 //open modify modal
@@ -292,13 +293,13 @@ function executeClickButton() {
         $('#productModalLabel').text('Edit product: ' + productName);
         $("#resultModal").modal("show");
     });
-    
+
     $(".chat-button").click(function () {
         var listId = getChatListId($(this).attr('id'))
         $("#chatModalTitle").text("Chat List: " + listId);
         $("#chatModal").modal("show");
     });
-    
+
 
 
 //create dinamically the modal for updating the products in the list
@@ -351,6 +352,7 @@ function executeClickButton() {
                     $('#modify-list-product-description').text('Description: ' + data.Description);
                 }
                 $('#modify-list-product-quantity').val(data.Quantity);
+                $('#remove-product-list').show();
                 $('#remember-product-list').attr("id", "remember-product-" + productId + "-list-" + listId);
 
                 $('#modify-list-product-modal').modal('show');
@@ -360,6 +362,32 @@ function executeClickButton() {
             }
         });
 
+    });
+
+    $('#remove-product-list').click(function () {
+        var idPar = $('#moidfy-list-product-update').parent().attr('id');
+        var listId = getIdListRemember(idPar);
+        var productId = getIdProductRemember(idPar);
+
+
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product/' + productId,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function () {
+                console.log("success");
+                clearProductUpdateModal();
+                $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
+                $('#moidfy-list-product-close').click();
+                $('#' + listId).parent().click();
+                $('#' + listId).parent().click();
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
     });
 }
 
@@ -397,8 +425,8 @@ $(document).ready(function () {
                     clearProductUpdateModal();
                     $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
                     $('#moidfy-list-product-close').click();
-                    $('#'+listId).parent().click();
-                    $('#'+listId).parent().click();
+                    $('#' + listId).parent().click();
+                    $('#' + listId).parent().click();
                 },
                 error: function () {
                     console.log("error");
@@ -428,18 +456,17 @@ $(document).ready(function () {
 
     });
 
-    function clearProductUpdateModal() {
-        $('#product-title-name').val('');
-        $('#modify-list-product-logo').attr('src', "");
-        $('#modify-list-product-image').attr('src', "");
-        $('#modify-list-product-modal').modal('hide');
-        $('#modify-list-product-category').val('');
-        $('#modify-list-product-description').val('');
-
-    }
-
 });
 
+function clearProductUpdateModal() {
+    $('#product-title-name').val('');
+    $('#modify-list-product-logo').attr('src', "");
+    $('#modify-list-product-image').attr('src', "");
+    $('#modify-list-product-modal').modal('hide');
+    $('#modify-list-product-category').val('');
+    $('#modify-list-product-description').val('');
+
+}
 
 
 //Product modal management
@@ -554,7 +581,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/ShoppingList/services/product/list/'+ addProductListId,
+                url: 'http://localhost:8080/ShoppingList/services/product/list/' + addProductListId,
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -563,15 +590,15 @@ $(document).ready(function () {
                     console.log("success");
                     clearProductModal();
                     $('#closebutton-product').click();
-                    $('#'+addProductListId).parent().click();
-                    $('#'+addProductListId).parent().click();
+                    $('#' + addProductListId).parent().click();
+                    $('#' + addProductListId).parent().click();
                     addProductListId = null;
                 },
                 error: function () {
                     console.log("error");
                 }
             });
-            
+
         }
     });
 

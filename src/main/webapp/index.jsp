@@ -310,6 +310,7 @@
                                             <input id="modify-list-product-quantity" type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
                                             <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
                                         </div>
+                                        <button type="button" id="remove-product-list" class="btn btn-outline-danger" style="display:none;"><img src="img/cestino.png"></button>
                                     </div>
 
                                 </div>
