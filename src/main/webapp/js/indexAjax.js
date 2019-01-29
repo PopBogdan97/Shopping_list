@@ -99,7 +99,7 @@ $(function () {
                     $(this).next(".product-list").html('');
                     $.each(data.results, (i, obj) => {
 
-                        this.classList.toggle("active");
+                        //this.classList.toggle("active");
                         $(this).next(".product-list").append('<br>').append($('<li>').text(obj.text).attr("id", "product-" + obj.id + "-list-" + listId));
                         $(this).next(".product-list").children("li").attr({
                             "class": "portfolio-link modify-list-product",
