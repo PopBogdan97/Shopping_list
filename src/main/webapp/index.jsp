@@ -260,7 +260,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title" id="resultModalTitle">Modal title</h3>
+                                    <h3 class="modal-title" id="result-ModalTitle">Modal title</h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons"style="margin-bottom: 10px; float: right;">
@@ -272,12 +272,8 @@
                                         </label>
                                     </div>
                                     <span class="clearfix"></span>
-                                    <div class="list-group" >
-                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
-                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
-                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
-                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
-                                        <a href="#productModal" class="list-group-item list-group-item-action">First result</a>
+                                    <div id="result-product-modal" class="list-group" >
+                                        <!-- elements-->
                                     </div>
                                 </div>
                                 <div class="modal-footer">
