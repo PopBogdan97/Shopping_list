@@ -334,14 +334,7 @@
                         <h3 class="modal-title" id="chatModalTitle" style="text-align: center;"></h3>
                     </div>
                     <div class="modal-body" style="background-color: #e0ffff;">
-                        <div id="chatPart" style="float:left;width:50%; height:100%; border-right: double gray;">
-                            
-                            <div style="background-color:#8cf5ff; border-radius:10px; margin:10px; margin-left:0;">
-                                <span style="display: block; padding-left: 10px; font-weight: bold; font-size: 1.1em;">admin@gmail.com</span>
-                                <span style="display: block; text-align: center; font-size: 1em;">Stò andando a fare la spesa, manca qualcosa?</span>
-                                <span style="display: block; text-align: right; padding-right: 10px; font-size: 0.8em; font-style: italic;">2019.01.29 at 01:00:00</span>
-                            </div>
-                            
+                        <div id="chatPart" style="float:left;width:50%; height:100%; border-right: double gray;">                    
                         </div>
                         <div  id="messagePart" style="float:left; width:50%; height:100%;">
                             <div style="text-align: center; font-style: italic; border-bottom: 1px solid gray;">Click to send message</div>

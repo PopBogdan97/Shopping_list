@@ -4,55 +4,68 @@
  * and open the template in the editor.
  */
 
-var listid=10;
+var email = "";
 
-var email="";
-
-var prebuildMessages=["Stò andando a fare la spesa, manca qualcosa?",
+var prebuildMessages = ["Stò andando a fare la spesa, manca qualcosa?",
     "Lista modificata. Guarda cosa ho aggiunto",
     "Spesa fatta. Ti puoi rilassare",
-    "E' ora di fare la spesa. Chi va?", 
+    "E' ora di fare la spesa. Chi va?",
     "Vado io a fare la spesa!"
-    ];
+];
 
-var lastmessage=[];
+var lastmessage = [];
 
-var message=0;
+var lastreadmessage = [];
 
-    function send(){   
-     var formData = new FormData();
-     formData.append('email', email);
-     formData.append('messageid', message);
-     
-     $.ajax({
+var message = 0;
+
+var listid;
+
+var lastcurrentmessage = 0;
+
+var timer;
+
+function send() {
+    var formData = new FormData();
+    formData.append('email', email);
+    formData.append('messageid', message);
+
+    $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/ShoppingList/services/chat/'+listid,
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-         success: function () {
+        url: 'http://localhost:8080/ShoppingList/services/chat/' + listid,
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function () {
             console.log("success");
         },
         error: function () {
             console.log("error");
         }
     });
-    };
+}
+;
 
-    function worker() {
-        $.ajax({
+function worker() {
+    $.ajax({
         type: 'GET',
-        url: 'http://localhost:8080/ShoppingList/services/chat/'+listid+'?last='+lastmessage,
+        url: 'http://localhost:8080/ShoppingList/services/chat/' + listid + '?last=' + lastcurrentmessage,
         success: function (data) {
             console.log("success");
-            if (JSON.stringify(data)!=='[]') {
-                var i=0;
-                for (i=0; i<data.length; i++){
-                    $("#chatPart").append("<div>"+data[i].Email+" - "+prebuildMessages[data[i].Message-1]+" - "+data[i].Date+"</div>");
+            if (JSON.stringify(data) !== '[]') {
+                var i = 0;
+                for (i = 0; i < data.length; i++) {
+
+                    $("#chatPart").append("<div style='background-color:#8cf5ff; border-radius:10px; margin:10px; margin-left:0;'>\n\
+<span style='display: block; padding-left: 10px; font-weight: bold; font-size: 1.1em;'>" + data[i].Email + "</span>\n\
+<span style='display: block; text-align: center; font-size: 1em;'>" + prebuildMessages[data[i].Message - 1] + "</span>\n\
+<span style='display: block; text-align: right; padding-right: 10px; font-size: 0.8em; font-style: italic;'>" + data[i].Date + "</span>\n\
+</div>"
+                            );
                 }
-                lastmessage=data[i-1].Id;
-                console.log("Lastmessage: "+lastmessage);
+                lastcurrentmessage = data[i - 1].Id;
+                console.log("Lastmessage: " + lastcurrentmessage);
             }
 
         },
@@ -60,72 +73,78 @@ var message=0;
             console.log("error");
         }
     });
-      setTimeout(worker, 1000);
-  }
-  
- 
+    timer=setTimeout(worker, 1000);
+}
+
+
 function slowworker() {
-    
-    for(var index=0; index<$('.list-span').length; index++){
-        console.log("jbh"+$('.list-span').attr('id'));
+
+    for (var index = 0; index < $('.list-span').length; index++) {
+        
         $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/ShoppingList/services/chat/'+$('.list-span')[index].attr('id')+'?last='+lastmessage[index],
-        success: function (data) {
-            console.log("success");
-            if (JSON.stringify(data)!=='[]') {
-                /*var i=0;
-                for (i=0; i<data.length; i++){
-                    $("#chatPart").append("<div>"+data[i].Email+" - "+prebuildMessages[data[i].Message-1]+" - "+data[i].Date+"</div>");
+            type: 'GET',
+            url: 'http://localhost:8080/ShoppingList/services/chat/' + $('.list-span').eq(index).attr('id') + '?last=' + lastmessage[index],
+            success: function (data) {
+                console.log("success");
+                if (JSON.stringify(data) !== '[]') {
+                    lastmessage[index] = data[data.length - 1].Id;
+                    console.log("Lastmessage: " + lastmessage[index]+ "New messages");
                 }
-                lastmessage[index]=data[i-1].Id;
-                console.log("Lastmessage: "+lastmessage[index]);*/
+
+            },
+            error: function () {
+                console.log("error");
             }
+        });
+    }
+    setTimeout(slowworker, 15000);
 
-        },
-        error: function () {
-            console.log("error");
-        }
-    });
-  }
-        setTimeout(slowworker, 15000);
+}
 
-  }
-  
-  
-$(function (){
-    //setTimeout(worker, 0);
-    //setTimeout(slowworker, 0);
-    
-    email=$('#useremail').text();
+
+$(function () {
+
+setTimeout(slowworker, 0);
+
+    email = $('#useremail').text();
     console.log(email);
 
-var a=0;
-    for(var i=0; i<$('.list-span').length; i++){
-        lastmessage[i]=0;
-        console.log("hbbiu"+ $('.list-span').attr('id'));
-        a++;
+    $("#messageOne").on("click", function () {
+        message = 1;
+        send();
+    });
+    $("#messageTwo").on("click", function () {
+        message = 2;
+        send();
+    });
+    $("#messageThree").on("click", function () {
+        message = 3;
+        send();
+    });
+    $("#messageFour").on("click", function () {
+        message = 4;
+        send();
+    });
+    $("#messageFive").on("click", function () {
+        message = 5;
+        send();
+    });
+
+    for (var i = 0; i < $('.list-span').length; i++) {
+        lastmessage[i] = 0;
     }
-    console.log(a);
-    
-    $("#messageOne").on("click", function(){
-        message=1;
-        send();
+
+    $('body').on('click', '.chat-button', function () {
+        listid = this.id.split("list")[1];
+        console.log(listid);
+        timer=setTimeout(worker, 0);
     });
-    $("#messageTwo").on("click", function(){
-        message=2;
-        send();
-    });    
-    $("#messageThree").on("click", function(){
-        message=3;
-        send();
+
+    $('body').on('click', "#closebutton-product", function () {
+        console.log("close");
+        clearTimeout(timer);
+        lastcurrentmessage = 0;
+        $('#chatPart').html("");
     });
-    $("#messageFour").on("click", function(){
-        message=4;
-        send();
-    });
-    $("#messageFive").on("click", function(){
-        message=5;
-        send();
-    });
+
 });
