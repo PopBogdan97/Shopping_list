@@ -5,6 +5,8 @@
  */
 
 var productName;
+var resultUpdate = 0;
+var addProductListId = null;
 
 //set bedge with product quantity on lists
 $(function () {
@@ -41,6 +43,12 @@ function getNum(str) {
     return str.replace('list-', '');
 }
 
+function getNumSearch(str) {
+    if (str === null)
+        return str;
+    return str.replace('search-list-', '');
+}
+
 function getIdProd(str) {
     if (str === null)
         return str;
@@ -55,13 +63,13 @@ function getIdList(str) {
 
 function getIdListRemember(str) {
     if (str === null)
-       return str;
+        return str;
     return str.split('-', )[4];
 }
 
 function getIdProductRemember(str) {
     if (str === null)
-       return str;
+        return str;
     return str.split('-', )[2];
 }
 
@@ -108,7 +116,8 @@ $(function () {
                     });
                     $(this).next(".product-list").children("div").children(".my-search-button-div").children("button").attr({
                         "type": "button",
-                        "class": "btn btn-outline-secondary my-search-button"
+                        "class": "btn btn-outline-secondary my-search-button",
+                        "id": "search-list-" + listId
                     });
                     $(this).next(".product-list").children("div").children("div").children("button").children("img").attr({
                         "src": "img/search.png",
@@ -167,10 +176,119 @@ function executeSelect2() {
 }
 ;
 
+function executeResultEvents() {
+    //get data for adding new product in the list
+    $('#result-product-modal').children("a").click(function () {
+        resultUpdate = 1;
+        var productId = getIdProd($(this).attr('id'));
+        var listId = getIdList($(this).attr('id'));
+        console.log(productId);
+        console.log(listId);
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/ShoppingList/services/product/' + productId,
+            dataType: 'json',
+
+            success: (data) => {
+                console.log(data);
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/image/' + productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-image').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/logo/' + productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-logo').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+
+                $('#product-title-name').text(data.Name);
+                $('#modify-list-product-category').text('Product category: ' + data.CatName);
+                if (data.Description === '') {
+                    $('#modify-list-product-description').text('Description: none');
+                } else {
+                    $('#modify-list-product-description').text('Description: ' + data.Description);
+                }
+                $('#remember-product-list').attr("id", "remember-product-" + productId + "-list-" + listId);
+                $('#modify-list-product-quantity').val(1);
+                $('#resultModal').modal('hide');
+                $('#modify-list-product-modal').modal('show');
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+
+    });
+    
+    $('#add-result-product').click(function (){
+            $('#resultModal').modal('hide');
+            $('#productModal').modal('show');
+        });
+}
+
 //open modify modal
 function executeClickButton() {
     $(".my-search-button").click(function () {
-        productName = $(this).parent().next("select").find(':selected').val();
+        productName = $(this).parent().next("select").find(':selected').text();
+        var listId = getNumSearch($(this).attr('id'));
+        var selected = $(this).parent().next("select").find(':selected').text();
+        $.ajax({
+            url: 'http://localhost:8080/ShoppingList/services/list/' + listId
+                    + '/catProducts?limit=5&q=' + selected,
+            type: 'get',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            success: function (data) {
+                console.log("success");
+                console.log(data);
+                $('#result-ModalTitle').text('Search: ' + selected);
+                if (data.results.length !== 0) {
+                    $('#result-product-modal').html("");
+                    $.each(data.results, (i, obj) => {
+                        $('#result-product-modal').append($('<a>').text(obj.text).attr('id', 'resultproduct-' + obj.id + '-list-' + listId));
+                    });
+                    $('#result-product-modal').children("a").attr({
+                        "class": "list-group-item list-group-item-action",
+                        "style": "cursor:pointer"
+                    });
+                } else {
+                    $('#result-product-modal').html("");
+                    $('#result-product-modal').append($('<h5>').text('No results'));
+                    $('#result-product-modal').append($('<button>').text('Add product').attr({
+                        "class": "btn btn-outline-success",
+                        "type": "button",
+                        "id": "add-result-product"
+                    }));
+                    addProductListId = listId;
+                }
+                executeResultEvents();
+                $('#resultModal').modal('show');
+            },
+            error: function () {
+                console.log("error");
+            }
+
+        });
         $('#productModalLabel').text('Edit product: ' + productName);
         $("#resultModal").modal("show");
     });
@@ -191,7 +309,7 @@ function executeClickButton() {
         console.log(listId);
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/ShoppingList/services/list/'+ listId+  '/product/' + productId,
+            url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product/' + productId,
             dataType: 'json',
 
             success: (data) => {
@@ -233,7 +351,7 @@ function executeClickButton() {
                     $('#modify-list-product-description').text('Description: ' + data.Description);
                 }
                 $('#modify-list-product-quantity').val(data.Quantity);
-                $('#remember-product-list').attr("id","remember-product-"+ productId + "-list-" + listId);
+                $('#remember-product-list').attr("id", "remember-product-" + productId + "-list-" + listId);
 
                 $('#modify-list-product-modal').modal('show');
             },
@@ -248,8 +366,8 @@ function executeClickButton() {
 //product update modal management
 $(document).ready(function () {
     $('#moidfy-list-product-close').click(function () {
-        $(this).parent().attr('id','remember-product-list');
-        
+        $(this).parent().attr('id', 'remember-product-list');
+
         clearProductUpdateModal();
     });
 
@@ -258,34 +376,56 @@ $(document).ready(function () {
         var formData = new FormData();
         var listId = getIdListRemember($(this).parent().attr('id'));
         var productId = getIdProductRemember($(this).parent().attr('id'));
-        
+
         console.log(listId + " remember");
         console.log(productId + " remember");
-        
+
         formData.append('product', productId);
         formData.append('quantity', $('#modify-list-product-quantity').val());
-        
+
         console.log($('#modify-list-product-quantity').val());
+        if (resultUpdate === 1) {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    console.log("success");
+                    clearProductUpdateModal();
+                    $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
+                    $('#moidfy-list-product-close').click();
+                    $('#'+listId).parent().click();
+                    $('#'+listId).parent().click();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+            resultUpdate = 0;
+        } else {
+            $.ajax({
+                type: 'PUT',
+                url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function () {
+                    console.log("success");
+                    clearProductUpdateModal();
+                    $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
+                    $('#moidfy-list-product-close').click();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        }
 
-        $.ajax({
-            type: 'PUT',
-            url: 'http://localhost:8080/ShoppingList/services/list/'+ listId +'/product',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function () {
-                console.log("success");
-                clearProductUpdateModal();
-                $('#moidfy-list-product-close').parent().attr('id','remember-product-list');
-                $('#moidfy-list-product-close').click();
-            },
-            error: function () {
-                console.log("error");
-            }
-        });
 
-        
     });
 
     function clearProductUpdateModal() {
@@ -414,7 +554,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/ShoppingList/services/product/',
+                url: 'http://localhost:8080/ShoppingList/services/product/list/'+ addProductListId,
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -423,11 +563,15 @@ $(document).ready(function () {
                     console.log("success");
                     clearProductModal();
                     $('#closebutton-product').click();
+                    $('#'+addProductListId).parent().click();
+                    $('#'+addProductListId).parent().click();
+                    addProductListId = null;
                 },
                 error: function () {
                     console.log("error");
                 }
             });
+            
         }
     });
 
@@ -445,11 +589,7 @@ $(document).ready(function () {
         $('#product-logo').attr('src', "");
         $('#remove-product-image').hide();
         $('#remove-product-logo').hide();
-        $('#productModal').modal('hide')
-        $('#product-cat-select').empty();
-        $('#product-cat-select').append("<option></option>").trigger('change');
-        $("#product-cat-select").prop("disabled", false);
-
+        $('#productModal').modal('hide');
     }
 });
 

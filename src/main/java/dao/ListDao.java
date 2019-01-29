@@ -275,7 +275,7 @@ public class ListDao {
             conn.close();
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + " è qui l'ecezzione");
         }
         return status;
     }
