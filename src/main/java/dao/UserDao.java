@@ -104,17 +104,17 @@ public class UserDao {
 //            for(Element e : lists){
 //                System.out.println("name: " + e.getText());
 //            }
-            PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
-            ps2.setString(1, email);
-
-            ResultSet rs2 = ps2.executeQuery();
-
-            while (rs2.next()) {
-                Element tmpEl = new Element();
-                tmpEl.setId(rs1.getInt("ListId") + "");
-                tmpEl.setText(rs1.getString("ListName"));
-                lists.add(tmpEl);
-            }
+//            PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
+//            ps2.setString(1, email);
+//
+//            ResultSet rs2 = ps2.executeQuery();
+//
+//            while (rs2.next()) {
+//                Element tmpEl = new Element();
+//                tmpEl.setId(rs1.getInt("ListId") + "");
+//                tmpEl.setText(rs1.getString("ListName"));
+//                lists.add(tmpEl);
+//            }
 
             user.setLists(lists);
             conn.close();
