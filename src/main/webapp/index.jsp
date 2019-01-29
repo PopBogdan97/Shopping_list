@@ -31,14 +31,14 @@
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/login_registration.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/index.css">
 
 
-        
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -89,7 +89,7 @@
                                 + " <ul class=\"navbar-nav ml-auto\">"
                                 + "     <li class=\"nav-item\">"
                                 + "         <a href=\"profile.jsp\"><img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
-                                + "         <b>" + session.getAttribute("email") + "</b></a>"
+                                + "         <b id=\"user-email\">" + session.getAttribute("email") + "</b></a>"
                                 + "     </li>"
                                 + "     <li class=\"nav-item\">"
                                 + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
@@ -192,10 +192,7 @@
                                 <br>
                             </ul>
                         </c:forEach>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <a data-toggle="modal" data-target="#chatModal">utilizza questo</a>
+                        <hr id="collaboratr-lists"/>
                         <p></p>
                         <p></p>
                         <p></p>
@@ -207,9 +204,9 @@
                                 <span class="lines line-2"></span>
                                 <span class="lines line-3"></span>
                             </label>
-                            <a href="#" class="menu-item lightblue"> <i class="fa fa-trash-alt"></i> </a>
-                            <a href="#" class="menu-item lightblue"> <i class="fa fa-share-alt"></i> </a>
-                            <a href="#" class="menu-item lightblue"> <i class="fa fa-comments"></i> </a>
+                            <a id="menu-trash" href="#" class="menu-item lightblue"> <i class="fa fa-trash-alt"></i> </a>
+                            <a id="menu-add" href="#" class="menu-item lightblue"> <i class="fa fa-plus"></i> </a>
+                            <a id="menu-share" href="#" class="menu-item lightblue"> <i class="fa fa-share-alt"></i> </a>
                         </nav>
                         <!--<input type="image" class="mr-3" onclick="showHamburgerMenu()" src="img/more.png" alt="Ok" width="35" height="35"/>-->
                     </div>
@@ -325,7 +322,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- CHAT MODAL -->
         <div class="modal fade" id="chatModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" role="document" style="max-width: 65em;">
@@ -336,8 +333,8 @@
                     <div class="modal-body" style="background-color: #e0ffff;">
                         <div id="chatPart" style="float:left;width:50%; height:100%;">
                             Messaggi
-                            
-                            
+
+
                         </div>
                         <div  id="messagePart" style="float:left; width:50%; height:100%; border-left: double gray;">
                             <div style="text-align: center; font-style: italic; border-bottom: 1px solid gray;">Click to send message</div>
@@ -348,14 +345,14 @@
                             <button id="messageFive" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">Vado io a fare la spesa!</button>
                         </div>
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button id="closebutton-product" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-        
+
 
         <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
