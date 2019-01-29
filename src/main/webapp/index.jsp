@@ -330,22 +330,22 @@
         
         <!-- CHAT MODAL -->
         <div class="modal fade" id="chatModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog" role="document" style="max-width: 65em;"><!--modal-dialog-->
+            <div class="modal-dialog" role="document" style="max-width: 65em;">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title" id="chatModalTitle"></h3>
+                    <div class="modal-header" style="justify-content: center;">
+                        <h3 class="modal-title" id="chatModalTitle" style="text-align: center;"></h3>
                     </div>
-                    <div class="modal-body">
-                        <div id="chatPart" style="float:left; background-color: #e0ffff; width:50%; height:100%;">
+                    <div class="modal-body" style="background-color: #e0ffff;">
+                        <div id="chatPart" style="float:left;width:50%; height:100%;">
                             Messaggi
                         </div>
-                        <div  id="messagePart" style="float:left; background-color: #ffe4e1; width:50%; height:100%;">
-                            <div>Click to send message</div>
-                            <button id="messageOne" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">St&oacute; andando a fare la spesa, manca qualcosa?</button>
-                            <button id="messageTwo" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Lista modificata. Guarda cosa ho aggiunto</button>
-                            <button id="messageThree" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Spesa fatta. Ti puoi rilassare</button>
-                            <button id="messageFour" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; display: block;">E' ora di fare la spesa. Chi va?</button>
-                            <button id="messageFive" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Vado io a fare la spesa!</button>
+                        <div  id="messagePart" style="float:left; width:50%; height:100%; border-left: double gray;">
+                            <div style="text-align: center; font-style: italic; border-bottom: 1px solid gray;">Click to send message</div>
+                            <button id="messageOne" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">St&oacute; andando a fare la spesa, manca qualcosa?</button>
+                            <button id="messageTwo" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">Lista modificata. Guarda cosa ho aggiunto</button>
+                            <button id="messageThree" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">Spesa fatta. Ti puoi rilassare</button>
+                            <button id="messageFour" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">E' ora di fare la spesa. Chi va?</button>
+                            <button id="messageFive" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">Vado io a fare la spesa!</button>
                         </div>
                     </div>
                     
