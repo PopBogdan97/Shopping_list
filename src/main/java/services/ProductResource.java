@@ -6,6 +6,7 @@
 package services;
 
 import com.google.gson.Gson;
+import dao.ListDao;
 import dao.ProductDao;
 import entities.ElementList;
 import entities.ProductBean;
@@ -203,6 +204,47 @@ public class ProductResource {
             ProductDao.modify(id, description, fileNameLogo, fileNameImage, true, true);
             System.out.println("ok");
         }
+    }
+    
+    @POST
+    @Path("/list/{listId}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void postUserProductJson(@PathParam("listId") Integer listId,
+            @FormDataParam("name") String name, 
+            @FormDataParam("catName") String catName, 
+            @FormDataParam("description") String description, 
+            @FormDataParam("fileImage") InputStream fileImage, 
+            @FormDataParam("fileLogo") InputStream fileLogo) throws IOException {
+
+        String fileNameImage = "";
+        String fileNameLogo= "";
+        
+        Integer id = ProductDao.initialize(name, catName, description, fileNameImage, fileNameLogo);
+        if (fileImage != null && (id>0)) {
+
+            fileNameImage = id + ".png";
+
+            System.out.println(fileNameImage);
+
+            UploadImage.upload(fileImage, fileNameImage, "product");
+        }
+
+        if (fileLogo != null && (id>0)) {
+
+            fileNameLogo = id + ".png";
+
+            System.out.println(fileNameLogo);
+
+            UploadImage.uploadLogo(fileLogo, fileNameLogo, "product");
+        }
+        
+        if (id > 0) {
+            ProductDao.modify(id, description, fileNameLogo, fileNameImage, true, true);
+            ListDao.setProducts(listId, id, 1);
+            System.out.println("ok");
+        }
+        
+        
     }
     
     @DELETE

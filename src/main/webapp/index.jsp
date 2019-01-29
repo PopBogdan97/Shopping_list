@@ -249,7 +249,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button id="closebutton-product" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button id="savebutton-product" type="button" class="btn btn-primary" disabled="disabled">Save changes</button>
+                                    <button id="savebutton-product" type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>

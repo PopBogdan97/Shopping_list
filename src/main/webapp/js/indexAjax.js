@@ -6,6 +6,7 @@
 
 var productName;
 var resultUpdate = 0;
+var addProductListId = null;
 
 //set bedge with product quantity on lists
 $(function () {
@@ -229,15 +230,18 @@ function executeResultEvents() {
             }
         });
 
-
-
     });
+    
+    $('#add-result-product').click(function (){
+            $('#resultModal').modal('hide');
+            $('#productModal').modal('show');
+        });
 }
 
 //open modify modal
 function executeClickButton() {
     $(".my-search-button").click(function () {
-        //productName = $(this).parent().next("select").find(':selected').val();
+        productName = $(this).parent().next("select").find(':selected').text();
         var listId = getNumSearch($(this).attr('id'));
         var selected = $(this).parent().next("select").find(':selected').text();
         $.ajax({
@@ -265,8 +269,10 @@ function executeClickButton() {
                     $('#result-product-modal').append($('<h5>').text('No results'));
                     $('#result-product-modal').append($('<button>').text('Add product').attr({
                         "class": "btn btn-outline-success",
-                        "type": "button"
+                        "type": "button",
+                        "id": "add-result-product"
                     }));
+                    addProductListId = listId;
                 }
                 executeResultEvents();
                 $('#resultModal').modal('show');
@@ -533,7 +539,7 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/ShoppingList/services/product/',
+                url: 'http://localhost:8080/ShoppingList/services/product/list/'+ addProductListId,
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -542,11 +548,15 @@ $(document).ready(function () {
                     console.log("success");
                     clearProductModal();
                     $('#closebutton-product').click();
+                    $('#'+addProductListId).parent().click();
+                    $('#'+addProductListId).parent().click();
+                    addProductListId = null;
                 },
                 error: function () {
                     console.log("error");
                 }
             });
+            
         }
     });
 
@@ -564,11 +574,7 @@ $(document).ready(function () {
         $('#product-logo').attr('src', "");
         $('#remove-product-image').hide();
         $('#remove-product-logo').hide();
-        $('#productModal').modal('hide')
-        $('#product-cat-select').empty();
-        $('#product-cat-select').append("<option></option>").trigger('change');
-        $("#product-cat-select").prop("disabled", false);
-
+        $('#productModal').modal('hide');
     }
 });
 
