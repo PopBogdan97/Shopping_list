@@ -316,7 +316,7 @@
                                     </div>
 
                                 </div>
-                                <div class="modal-footer">
+                                <div id="remember-product-list" class="modal-footer">
                                     <button id="moidfy-list-product-close"type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <button id="moidfy-list-product-update" type="button" class="btn btn-primary">Update product</button>
                                 </div>
