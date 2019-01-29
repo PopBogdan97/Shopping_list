@@ -8,6 +8,8 @@ package dao;
 import entities.Element;
 import entities.ElementList;
 import entities.UserBean;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +17,8 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
+import services.UploadImage;
 import servlets.DbConnect;
 
 /**
@@ -485,5 +489,28 @@ public class UserDao {
             System.out.println(e);
         }
         return valid;
+    }
+    
+    public static String getUserImagePath(String email) throws IOException {
+
+        String filename = UserDao.getImage(email);
+
+        if (!filename.equals("")) {
+
+            InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
+            Properties properties = new Properties();
+            properties.load(is);
+
+            System.out.println(properties.getProperty("location") + "/user/" + filename);
+
+            String path = (properties.getProperty("location") + "/user/" + filename);
+
+            return path;
+
+        } else {
+
+            return null;
+
+        }
     }
 }

@@ -140,7 +140,7 @@
                         <p></p>
 
                         <c:forEach var="shoppingList" items="${shoppingLists}">
-                            <button class="collapsible"><span class="badge badge-primary badge-pill">${shoppingList.counter}</span> ${shoppingList.nome}</button>
+                            <button class="collapsible rounded"><span class="badge badge-primary badge-pill">${shoppingList.counter}</span> ${shoppingList.nome}</button>
                             <ul class="content list-unstyled">
                                 <c:forEach var="product" items="${products}">
                                     <c:if test="${product.cat_prodotto == shoppingList.nome}">

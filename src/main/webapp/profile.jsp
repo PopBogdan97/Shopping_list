@@ -106,7 +106,8 @@
         </nav>     
         <br><br><br><br>
         <c:set var = "email" scope = "session" value = "${user.getEmail()}" />
-        <img src=<c:out value="${UserResource.getImage(email)}"/>  id="myImg" class="rounded-circle mx-auto d-block" width="300" height="300" data-toggle="modal" data-target="#searchModal" style="cursor: pointer;">
+        <p><c:out value="${UserDao.getUserImagePath(email)}"/></p>
+        <img src="<c:out value="${UserDao.getUserImagePath(email)}"/>" id="myImg" class="rounded-circle mx-auto d-block" width="300" height="300" data-toggle="modal" data-target="#searchModal" style="cursor: pointer;">
         <br><br>
         <h1 class="text-center"><c:out value="${user.getFirstName()} ${user.getLastName()}"/></h1>
         <!-- The Modal -->
