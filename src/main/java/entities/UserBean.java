@@ -18,6 +18,7 @@ public class UserBean {
     private String FirstName;
     private String LastName;
     private String Typology;
+    private String imagePath;
     private boolean Valid;
     private String Cod;
     private ArrayList<Element> Lists;
@@ -132,5 +133,13 @@ public class UserBean {
      */
     public void setLists(ArrayList<Element> Lists) {
         this.Lists = Lists;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

@@ -78,6 +78,7 @@ public class UserDao {
                 user.setFirstName(rs.getString("FirstName"));
                 user.setLastName(rs.getString("LastName"));
                 user.setTypology(rs.getString("Typology"));
+                user.setImagePath(getUserImagePath(email));
                 user.setValid(rs.getBoolean("Valid"));
                 user.setCod(rs.getString("Cod"));
             }
