@@ -15,6 +15,7 @@ public class MessageBean {
     private String Email;
     private int Message;
     private String Date;
+    private int List;
 
     /**
      * @return the Email
@@ -70,6 +71,20 @@ public class MessageBean {
      */
     public void setId(int Id) {
         this.Id = Id;
+    }
+
+    /**
+     * @return the List
+     */
+    public int getList() {
+        return List;
+    }
+
+    /**
+     * @param List the List to set
+     */
+    public void setList(int List) {
+        this.List = List;
     }
     
     

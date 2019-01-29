@@ -60,6 +60,7 @@ public class ChatDao {
                 message.setEmail(rs.getString("Email"));
                 message.setMessage(rs.getInt("PrebuildMesId"));
                 message.setDate(new SimpleDateFormat("dd.MM.yyyy").format(rs.getDate("Time"))+" at "+rs.getTime("Time"));
+                message.setList(rs.getInt("ListId"));
 
                 list.add(message);
             }

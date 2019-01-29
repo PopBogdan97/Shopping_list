@@ -15,8 +15,6 @@ var prebuildMessages = ["Stò andando a fare la spesa, manca qualcosa?",
 
 var lastmessage = [];
 
-var lastreadmessage = [];
-
 var message = 0;
 
 var listid;
@@ -64,7 +62,8 @@ function worker() {
 </div>"
                             );
                 }
-                lastcurrentmessage = data[i - 1].Id;
+                lastcurrentmessage = data[data.length - 1].Id;
+                lastmessage[data[0].List] = data[data.length - 1].Id;
                 console.log("Lastmessage: " + lastcurrentmessage);
             }
 
@@ -83,12 +82,13 @@ function slowworker() {
         
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/ShoppingList/services/chat/' + $('.list-span').eq(index).attr('id') + '?last=' + lastmessage[index],
+            url: 'http://localhost:8080/ShoppingList/services/chat/' + $('.list-span').eq(index).attr('id') + '?last=' + lastmessage[$('.list-span').eq(index).attr('id')],
             success: function (data) {
                 console.log("success");
                 if (JSON.stringify(data) !== '[]') {
-                    lastmessage[index] = data[data.length - 1].Id;
-                    console.log("Lastmessage: " + lastmessage[index]+ "New messages");
+                    lastmessage[data[0].List] = data[data.length - 1].Id;
+                    console.log("Lastmessage: " + lastmessage[data[0].List]+ "New messages");
+                    $('#notify-span-'+data[0].List).text("New Messages");
                 }
 
             },
@@ -131,7 +131,8 @@ setTimeout(slowworker, 0);
     });
 
     for (var i = 0; i < $('.list-span').length; i++) {
-        lastmessage[i] = 0;
+        lastmessage[$('.list-span').eq(i).attr('id')] = 0;
+
     }
 
     $('body').on('click', '.chat-button', function () {
@@ -145,6 +146,8 @@ setTimeout(slowworker, 0);
         clearTimeout(timer);
         lastcurrentmessage = 0;
         $('#chatPart').html("");
+        $('#notify-span-'+listid).text("");
+
     });
 
 });

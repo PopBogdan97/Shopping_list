@@ -187,6 +187,8 @@
                                 <span class="list-span" id="${List.getId()}">
                                     ${List.getText()}
                                 </span>
+                                <span id="notify-span-${List.getId()}">
+                                </span>
                             </button>
                             <ul class="content list-unstyled product-list">
                                 <br>
