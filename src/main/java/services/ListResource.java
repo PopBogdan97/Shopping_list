@@ -232,5 +232,13 @@ public class ListResource {
         ListDao.delete(id);
         System.out.println(id);
     }
+    
+    @DELETE
+    @Path("/{id}/product/{productId}")
+    public void deleteProductListJson(@PathParam("id") Integer id, @PathParam("productId") Integer productId) {
+
+        ListDao.deleteProduct(id,productId);
+        System.out.println(id);
+    }
 
 }

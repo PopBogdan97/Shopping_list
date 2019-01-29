@@ -310,6 +310,7 @@
                                             <input id="modify-list-product-quantity" type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
                                             <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
                                         </div>
+                                        <button type="button" id="remove-product-list" class="btn btn-outline-danger" style="display:none;"><img src="img/cestino.png"></button>
                                     </div>
 
                                 </div>
@@ -333,12 +334,16 @@
                         <h3 class="modal-title" id="chatModalTitle" style="text-align: center;"></h3>
                     </div>
                     <div class="modal-body" style="background-color: #e0ffff;">
-                        <div id="chatPart" style="float:left;width:50%; height:100%;">
-                            Messaggi
+                        <div id="chatPart" style="float:left;width:50%; height:100%; border-right: double gray;">
                             
+                            <div style="background-color:#8cf5ff; border-radius:10px; margin:10px; margin-left:0;">
+                                <span style="display: block; padding-left: 10px; font-weight: bold; font-size: 1.1em;">admin@gmail.com</span>
+                                <span style="display: block; text-align: center; font-size: 1em;">Stò andando a fare la spesa, manca qualcosa?</span>
+                                <span style="display: block; text-align: right; padding-right: 10px; font-size: 0.8em; font-style: italic;">2019.01.29 at 01:00:00</span>
+                            </div>
                             
                         </div>
-                        <div  id="messagePart" style="float:left; width:50%; height:100%; border-left: double gray;">
+                        <div  id="messagePart" style="float:left; width:50%; height:100%;">
                             <div style="text-align: center; font-style: italic; border-bottom: 1px solid gray;">Click to send message</div>
                             <button id="messageOne" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">St&oacute; andando a fare la spesa, manca qualcosa?</button>
                             <button id="messageTwo" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; border: 1px solid transparent; padding: .375rem .75rem; display: block; cursor: pointer;">Lista modificata. Guarda cosa ho aggiunto</button>
