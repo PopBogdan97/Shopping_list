@@ -6,7 +6,7 @@
 
 var listid=10;
 
-var email="admin@gmail.com";
+var email="";
 
 var prebuildMessages=["Stò andando a fare la spesa, manca qualcosa?",
     "Lista modificata. Guarda cosa ho aggiunto",
@@ -15,7 +15,7 @@ var prebuildMessages=["Stò andando a fare la spesa, manca qualcosa?",
     "Vado io a fare la spesa!"
     ];
 
-var lastmessage=0;
+var lastmessage=[];
 
 var message=0;
 
@@ -63,9 +63,50 @@ var message=0;
       setTimeout(worker, 1000);
   }
   
+ 
+function slowworker() {
+    
+    for(var index=0; index<$('.list-span').length; index++){
+        console.log("jbh"+$('.list-span').attr('id'));
+        $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/chat/'+$('.list-span')[index].attr('id')+'?last='+lastmessage[index],
+        success: function (data) {
+            console.log("success");
+            if (JSON.stringify(data)!=='[]') {
+                /*var i=0;
+                for (i=0; i<data.length; i++){
+                    $("#chatPart").append("<div>"+data[i].Email+" - "+prebuildMessages[data[i].Message-1]+" - "+data[i].Date+"</div>");
+                }
+                lastmessage[index]=data[i-1].Id;
+                console.log("Lastmessage: "+lastmessage[index]);*/
+            }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+  }
+        setTimeout(slowworker, 15000);
+
+  }
+  
   
 $(function (){
-    setTimeout(worker, 0);
+    //setTimeout(worker, 0);
+    //setTimeout(slowworker, 0);
+    
+    email=$('#useremail').text();
+    console.log(email);
+
+var a=0;
+    for(var i=0; i<$('.list-span').length; i++){
+        lastmessage[i]=0;
+        console.log("hbbiu"+ $('.list-span').attr('id'));
+        a++;
+    }
+    console.log(a);
     
     $("#messageOne").on("click", function(){
         message=1;
