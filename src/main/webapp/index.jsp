@@ -47,6 +47,7 @@
         <script src="js/indexAjax.js"></script>
         <script type="text/javascript" src="js/login_registration.js"></script>
         <script src="js/all_products.js"></script>
+        <script src="js/chat.js"></script>
 
     </head>
 
@@ -334,6 +335,8 @@
                     <div class="modal-body" style="background-color: #e0ffff;">
                         <div id="chatPart" style="float:left;width:50%; height:100%;">
                             Messaggi
+                            
+                            
                         </div>
                         <div  id="messagePart" style="float:left; width:50%; height:100%; border-left: double gray;">
                             <div style="text-align: center; font-style: italic; border-bottom: 1px solid gray;">Click to send message</div>
