@@ -308,7 +308,7 @@
                             <button id="messageOne" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">St&oacute; andando a fare la spesa, manca qualcosa?</button>
                             <button id="messageTwo" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Lista modificata. Guarda cosa ho aggiunto</button>
                             <button id="messageThree" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Spesa fatta. Ti puoi rilassare</button>
-                            <button id="messageFour" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">E' ora di fare la spesa. Chi va?</button>
+                            <button id="messageFour" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px; display: block;">E' ora di fare la spesa. Chi va?</button>
                             <button id="messageFive" type="button" class="btn-primary" style="margin: 10px; border-radius: 5px;">Vado io a fare la spesa!</button>
                         </div>
                     </div>
