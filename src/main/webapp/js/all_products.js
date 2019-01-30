@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-$(function (){
+$(document).ready(function (){
 $('.all-products').select2({
     placeholder: 'Search for a product',
     allowClear: true,
@@ -71,8 +71,9 @@ clearModal();
                 for(var j=0; j<catlists.length; j++){
                     console.log("Categoria della lista: "+data["CatName"]);
                     if(data["CatName"]===catlists[j]){
-                        $('#search-product-select').append("<option value='"+data["Id"]+"'>"+data["Name"]+"</option>");
-                        
+                        if($('.list-button #'+data["Id"]).eq(0).parent().find('.permission-add-product').eq(0).attr("id")!=="false"){
+                            $('#search-product-select').append("<option value='"+data["Id"]+"'>"+data["Name"]+"</option>");
+                    }
                     }
                 }
 
@@ -171,7 +172,7 @@ $('.products').click(function(){
             $('#search-product-add').prop("disabled", true);
 
             for (var i = 0; i < $('.list-span').length; i++) {
-                      
+                
             $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/ShoppingList/services/list/'+$('.list-span').eq(i).attr('id'),
@@ -183,8 +184,9 @@ $('.products').click(function(){
                 for(var j=0; j<catlists.length; j++){
                     console.log("Categoria della lista: "+data["CatName"]);
                     if(data["CatName"]===catlists[j]){
-                        $('#search-product-select').append("<option value='"+data["Id"]+"'>"+data["Name"]+"</option>");
-                        
+                        if($('.list-button #'+data["Id"]).eq(0).parent().find('.permission-add-product').eq(0).attr("id")!=="false"){
+                            $('#search-product-select').append("<option value='"+data["Id"]+"'>"+data["Name"]+"</option>");
+                    }
                     }
                 }
 
