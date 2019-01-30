@@ -106,7 +106,7 @@ $(function () {
 
 setTimeout(slowworker, 0);
 
-    email = $('#useremail').text();
+    email = $('#user-email').text();
     console.log(email);
 
     $("#messageOne").on("click", function () {

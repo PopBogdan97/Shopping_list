@@ -19,7 +19,9 @@ $('.all-products').select2({
 });
 
 $('#search-product-button').click(function(){
-    
+
+clearModal();
+
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/ShoppingList/services/product/'+$('.all-products option:selected').attr("value"),
@@ -35,6 +37,8 @@ $('#search-product-button').click(function(){
             $('#search-product-description').text("Description: none");
         }
         
+            $('#search-product-category').text("Categoria di prodotto: "+data['CatName']);
+
         console.log("Categoria di prodotto: "+data['CatName']);
         
         product=data["Id"];
@@ -126,6 +130,118 @@ $('#search-product-button').click(function(){
 });
 
 
+$('.products').click(function(){
+
+        clearModal();
+        
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/product/'+(this.id).split('-')[1],
+        datatype: 'json',
+        cache: false,
+        success: function (data) {
+            console.log("success");
+            $('#search-product-title').text(data['Name']);
+           if(data['Description']!==""){ 
+            $('#search-product-description').text("Description: "+data['Description']);
+        }
+        else{
+            $('#search-product-description').text("Description: none");
+        }
+        
+        $('#search-product-category').text("Categoria di prodotto: "+data['CatName']);
+        
+        console.log("Categoria di prodotto: "+data['CatName']);
+        
+        product=data["Id"];
+        
+            $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/productCat/'+data['CatName'],
+        datatype: 'json',
+        cache: false,
+        success: function (data) {
+            console.log("success");
+            
+            var catlists=data['CatLists'];
+            
+            console.log("Categorie di lista: "+catlists);
+            
+            $('#search-product-select option').remove();
+            $('#search-product-add').prop("disabled", true);
+
+            for (var i = 0; i < $('.list-span').length; i++) {
+                      
+            $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/list/'+$('.list-span').eq(i).attr('id'),
+        datatype: 'json',
+        cache: false,
+        success: function (data) {
+            console.log("success");
+                
+                for(var j=0; j<catlists.length; j++){
+                    console.log("Categoria della lista: "+data["CatName"]);
+                    if(data["CatName"]===catlists[j]){
+                        $('#search-product-select').append("<option value='"+data["Id"]+"'>"+data["Name"]+"</option>");
+                        
+                    }
+                }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+            }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/product/image/'+(this.id).split('-')[1],
+        success: function (data) {
+            console.log("success");
+            if (data !== "{}") {
+
+                $('#search-product-image').attr('src', 'data:image/png;base64,' + data);
+            }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+
+   $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/product/logo/'+(this.id).split('-')[1],
+        success: function (data) {
+            console.log("success");
+            if (data !== "{}") {
+
+                $('#search-product-logo').attr('src', 'data:image/png;base64,' + data);
+            }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+    
+});
+
+
 $("#search-product-add").click(function (){
     console.log("click");
     var lists=$('#search-product-select').val();
@@ -150,7 +266,6 @@ $("#search-product-add").click(function (){
             console.log("success");
             $(".list-button #"+data).click();
             $(".list-button #"+data).click();
-
         },
         error: function () {
             console.log("error");

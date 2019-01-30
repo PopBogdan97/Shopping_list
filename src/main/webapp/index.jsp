@@ -140,12 +140,12 @@
                         </div>        
                         <p></p>
 
-                        <c:forEach var="shoppingList" items="${shoppingLists}">
-                            <button class="collapsible rounded"><span class="badge badge-primary badge-pill">${shoppingList.counter}</span> ${shoppingList.nome}</button>
+                        <c:forEach var="cat" items="${productCat}">
+                            <button class="collapsible rounded"><span class="badge badge-primary badge-pill">${cat.getCounter()}</span> ${cat.getName()}</button>
                             <ul class="content list-unstyled">
                                 <c:forEach var="product" items="${products}">
-                                    <c:if test="${product.cat_prodotto == shoppingList.nome}">
-                                        <br><li class="portfolio-link" style="cursor:pointer;" data-toggle="modal" href="#${fn:replace(product.nome,' ','')}">${product.nome}</li>
+                                    <c:if test="${product.getCatName() == cat.getName()}">
+                                        <br><li class="portfolio-link products" id="product-${product.getId()}" style="cursor:pointer;" data-toggle="modal" data-target="#search-product-modal" href="#${fn:replace(product.getName(),' ','')}">${product.getName()}</li>
                                         </c:if>
                                     </c:forEach>
                                 <br>
@@ -382,40 +382,6 @@
                 </div>
             </div>
         </div>
-
-        <c:forEach var="product" items="${products}">
-            <div class="modal fade" id="${fn:replace(product.nome,' ','')}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 10000 !important;">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">${product.nome}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <img class="img-fluid rounded mx-auto d-block" src="img/02-full.jpg">
-                            <br><br>
-                            <div>Descrizione: ${product.note}</div>
-                            <br><br>
-
-                            <div class="counter">
-                                <div class='btn-group'>
-                                    <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
-                                    <input type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
-                                    <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                            <button type="button" class="btn btn-primary">Aggiungi prodotto</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
 
         <div class="modal fade" id="search-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">

@@ -7,7 +7,6 @@ package dao;
 
 import entities.Element;
 import entities.ElementList;
-import entities.Product;
 import entities.ProductBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,17 +74,17 @@ public class ProductDao {
     }
     
     public static List getProd() {
-        List products = new ArrayList<>();
+        List<ProductBean> products = new ArrayList<>();
         try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement stm = conn.prepareStatement("SELECT * FROM Product");
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
-                    Product product = new Product();
-                    product.setNome(rs.getString("Name"));
-                    product.setCat_prodotto(rs.getString("CatName"));
-                    product.setNote(rs.getString("Description"));
-                    product.setFotografia(rs.getString("Image"));
+                    ProductBean product = new ProductBean();
+                    product.setId(rs.getInt("Id"));
+                    product.setName(rs.getString("Name"));
+                    product.setCatName(rs.getString("CatName"));
+                    product.setDescription(rs.getString("Description"));
                     products.add(product);
                 }
             }

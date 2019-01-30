@@ -7,8 +7,8 @@ package filters;
 
 import dao.ProdCatDao;
 import dao.ProductDao;
-import entities.Product;
-import entities.ShoppingList;
+import entities.ProductBean;
+import entities.ProductCatBean;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.Filter;
@@ -19,7 +19,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -48,36 +47,20 @@ public class ShoppingListFilter implements Filter {
         if (DEBUG) {
             log("ShoppingListsFilter:DoBeforeProcessing");
         }
-
-        ProdCatDao shoppingListDao = null;
-
-        ProductDao productDao = null;
-
-        try {
-            request.setAttribute("ProductDao", productDao);
-        } catch (Exception ex) {
-            throw new RuntimeException(new ServletException("Impossible to get the dao factory for shopping list storage system", ex));
-        }
-
+        
         try {
             String str = request.getParameter("cat_prodotto");
-            List<Product> products = productDao.getProd();
+            List<ProductBean> products = ProductDao.getProd();
             request.setAttribute("products", products);
         } catch (Exception ex) {
             throw new RuntimeException(new ServletException("Impossible to get products", ex));
         }
 
         try {
-            request.setAttribute("shoppingListDao", shoppingListDao);
+            List<ProductCatBean> productCat = ProdCatDao.getProd();
+            request.setAttribute("productCat", productCat);
         } catch (Exception ex) {
-            throw new RuntimeException(new ServletException("Impossible to get the dao factory for shopping list storage system", ex));
-        }
-
-        try {
-            List<ShoppingList> shoppingLists = shoppingListDao.getProd();
-            request.setAttribute("shoppingLists", shoppingLists);
-        } catch (Exception ex) {
-            throw new RuntimeException(new ServletException("Impossible to get user or shopping lists", ex));
+            throw new RuntimeException(new ServletException("Impossible to get productCat", ex));
         }
 
         HttpServletRequest req = (HttpServletRequest) request;
