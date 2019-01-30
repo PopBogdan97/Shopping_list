@@ -179,9 +179,6 @@
                         <p></p>
 
                         <c:forEach var="List" items="${user.getLists()}">
-                            <c:set var="id" value="${List.getId()}"/> 
-                            <c:set var="name" value="${List.getText()}"/> 
-                            <% System.out.println("id: " + pageContext.findAttribute("id") + " name: " + pageContext.findAttribute("name"));%>
                             <button class="collapsible rounded list-button">
                                 <span class="badge badge-primary badge-pill" id="product-number-span"></span>
                                 <span class="list-span" id="${List.getId()}">
@@ -193,20 +190,28 @@
                             </ul>
                         </c:forEach>
                         <hr id="collaboratr-lists"/>
+                        <c:forEach var="collabList" items="${user.getCollaboratorLists()}">
+                            <c:set var="id" value="${collabList.getId()}"/> 
+                            <c:set var="name" value="${collabList.getText()}"/> 
+                            <% System.out.println("id: " + pageContext.findAttribute("id") + " name: " + pageContext.findAttribute("name"));%>
+                            <button class="collapsible rounded list-button">
+                                <span class="badge badge-primary badge-pill" id="product-number-span"></span>
+                                <span class="list-span" id="${collabList.getId()}">
+                                    ${collabList.getText()}
+                                </span>
+                            </button>
+                            <ul class="content list-unstyled product-list">
+                                <br>
+                            </ul>
+                        </c:forEach>
                         <p></p>
                         <p></p>
                         <p></p>
                         <p></p>
-                        <nav class="menu" id="menu"> <!--style="visibility:hidden"-->
-                            <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-                            <label class="menu-open-button" for="menu-open">
-                                <span class="lines line-1"></span>
-                                <span class="lines line-2"></span>
-                                <span class="lines line-3"></span>
+                        <nav class="menu" id="menu" href="manageList.jsp"> <!--style="visibility:hidden"-->
+                            <label id="edit-lists" class="menu-open-button" for="menu-open">
+                                <a href="manageList.jsp" class="fa fa-edit"></a> 
                             </label>
-                            <a id="menu-trash" href="#" class="menu-item lightblue"> <i class="fa fa-trash-alt"></i> </a>
-                            <a id="menu-add" href="#" class="menu-item lightblue"> <i class="fa fa-plus"></i> </a>
-                            <a id="menu-share" href="#" class="menu-item lightblue"> <i class="fa fa-share-alt"></i> </a>
                         </nav>
                         <!--<input type="image" class="mr-3" onclick="showHamburgerMenu()" src="img/more.png" alt="Ok" width="35" height="35"/>-->
                     </div>
