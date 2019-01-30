@@ -279,7 +279,7 @@
                                     <div id="result-product-modal" class="list-group" >
                                         <!-- elements-->
                                     </div>
-                                    <div id="result-product-modal-category" style="display: none">
+                                    <div id="result-product-modal-category" class="list-group" style="display: none">
                                         <!-- elements-->
                                     </div>
                                 </div>
