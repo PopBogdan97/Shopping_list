@@ -102,7 +102,7 @@ function slowworker() {
 }
 
 
-$(function () {
+$(document).ready(function () {
 
 setTimeout(slowworker, 0);
 
