@@ -237,6 +237,7 @@ function executeSelect2() {
 }
 ;
 
+//after result handle events
 function executeResultEvents() {
     //get data for adding new product in the list
     $('#result-product-modal').children("a").click(function () {
@@ -376,6 +377,15 @@ function executeResultEvents() {
 
     });
 
+    $('#add-result-product').click(function () {
+        $('#resultModal').modal('hide');
+        $('#productModal').modal('show');
+    });
+    
+    $('#add-result-product-category').click(function () {
+        $('#resultModal').modal('hide');
+        $('#productModal').modal('show');
+    });
 }
 
 //open modify modal
@@ -453,7 +463,7 @@ function executeClickButton() {
                     $('#result-product-modal-category').append($('<button>').text('Add product').attr({
                         "class": "btn btn-outline-success",
                         "type": "button",
-                        "id": "add-result-product"
+                        "id": "add-result-product-category"
                     }));
                     addProductListId = listId;
                 }
@@ -490,7 +500,7 @@ function executeClickButton() {
 
 
 
-//create dinamically the modal for updating the products in the list
+//create dinamically the modal for updating the products in the list (Product button)
     $('.modify-list-product').click(function () {
         var productId = getIdProd($(this).attr('id'));
         var listId = getIdList($(this).attr('id'));
@@ -570,12 +580,10 @@ function executeClickButton() {
 }
 
 
+
+
 //product update modal management
 $(document).ready(function () {
-    $('#add-result-product').click(function () {
-        $('#resultModal').modal('hide');
-        $('#productModal').modal('show');
-    });
 
     $('#moidfy-list-product-close').click(function () {
         $(this).parent().attr('id', 'remember-product-list');
