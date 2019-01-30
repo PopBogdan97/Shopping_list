@@ -412,36 +412,41 @@
         <div class="modal fade" id="search-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header align-items-center">
                         <img id="search-product-logo" src="#" width="50px" alt="Logo">
-                        <h5 class="modal-title" id="search-product-title"></h5>
+                        <h5 class="modal-title" id="search-product-title" style="margin-left: 10px"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img src="#" width="250px" alt="Image" id="search-product-image">
+                        <img id="search-product-image" class="img-fluid rounded mx-auto d-block" style="width: 350px" src="#" alt="Image not set">
                         <br><br>
+                        <div id="search-product-category"></div>
+                        <br>
                         <div id="search-product-description"></div>
                         <br><br>
 
                         <div class="counter">
                             <div class='btn-group'>
                                 <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
-                                <input type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
+                                <input id="search-product-quantity" type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
                                 <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
                             </div>
+                            <br><br>
+
+                            <select class="custom-select" id="search-product-select" multiple="multiple"></select>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary">Aggiungi prodotto</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Chiudi</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="search-product-add" disabled="disabled">Aggiungi prodotto</button>
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <script>
             var coll = document.getElementsByClassName("collapsible");
             var i;

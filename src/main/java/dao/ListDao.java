@@ -299,7 +299,7 @@ public class ListDao {
         }
         return status;
     }
-
+    
     public static ElementList getCatProducts(Integer id, String str, String limit) {
         ElementList el = new ElementList();
         try {

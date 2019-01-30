@@ -92,13 +92,13 @@ public class ListResource {
         el.setResults(list.getProducts());
         return new Gson().toJson(el);
     }
-    
+
     @GET
     @Path("/{id}/product/{productId}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getProductsByListJson(@PathParam("id") Integer id, @PathParam("productId") Integer productId) {
         ProductBean product = ListDao.getProductByList(id, productId);
-        
+
         return new Gson().toJson(product);
     }
 
@@ -169,8 +169,7 @@ public class ListResource {
             System.out.println("ok");
         }
     }
-    
-    
+
     @PUT
     @Path("/{id}/product")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -181,6 +180,32 @@ public class ListResource {
         if (ListDao.updateProducts(id, product, quantity)) {
             System.out.println("ok");
         }
+    }
+
+    @PUT
+    @Path("/{id}/product/add")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String putListProductsAddJson(@PathParam("id") Integer id,
+            @FormDataParam("product") Integer product,
+            @FormDataParam("quantity") Integer quantity) throws IOException {
+        
+        String str = ListDao.getProductByList(id, product).getQuantity();
+       
+        
+        int q=str==null ? 0 : Integer.parseInt(str);
+
+        if (q == 0) {
+            if (ListDao.setProducts(id, product, quantity)) {
+                System.out.println("ok");
+            }
+        } else {
+            if (ListDao.updateProducts(id, product, quantity + q)) {
+                System.out.println("ok");
+            }
+        }
+        
+        return new Gson().toJson(id);
     }
 
     //add a single element per HTTP req, products is: 
@@ -232,12 +257,12 @@ public class ListResource {
         ListDao.delete(id);
         System.out.println(id);
     }
-    
+
     @DELETE
     @Path("/{id}/product/{productId}")
     public void deleteProductListJson(@PathParam("id") Integer id, @PathParam("productId") Integer productId) {
 
-        ListDao.deleteProduct(id,productId);
+        ListDao.deleteProduct(id, productId);
         System.out.println(id);
     }
 

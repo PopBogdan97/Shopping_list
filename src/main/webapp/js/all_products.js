@@ -28,7 +28,62 @@ $('#search-product-button').click(function(){
         success: function (data) {
             console.log("success");
             $('#search-product-title').text(($('.all-products option:selected').text()).split("-")[0]);
-            $('#search-product-description').text(data['Description']);
+           if(data['Description']!==""){ 
+            $('#search-product-description').text("Description: "+data['Description']);
+        }
+        else{
+            $('#search-product-description').text("Description: none");
+        }
+        
+        console.log("Categoria di prodotto: "+data['CatName']);
+        
+        product=data["Id"];
+        
+            $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/productCat/'+data['CatName'],
+        datatype: 'json',
+        cache: false,
+        success: function (data) {
+            console.log("success");
+            
+            var catlists=data['CatLists'];
+            
+            console.log("Categorie di lista: "+catlists);
+            
+            $('#search-product-select option').remove();
+            $('#search-product-add').prop("disabled", true);
+
+            for (var i = 0; i < $('.list-span').length; i++) {
+                      
+            $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/ShoppingList/services/list/'+$('.list-span').eq(i).attr('id'),
+        datatype: 'json',
+        cache: false,
+        success: function (data) {
+            console.log("success");
+                
+                for(var j=0; j<catlists.length; j++){
+                    console.log("Categoria della lista: "+data["CatName"]);
+                    if(data["CatName"]===catlists[j]){
+                        $('#search-product-select').append("<option value='"+data["Id"]+"'>"+data["Name"]+"</option>");
+                        
+                    }
+                }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+            }
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
 
         },
         error: function () {
@@ -70,6 +125,42 @@ $('#search-product-button').click(function(){
     
 });
 
+
+$("#search-product-add").click(function (){
+    console.log("click");
+    var lists=$('#search-product-select').val();
+    
+    for(var i=0; i<lists.length; i++){
+        
+                    var formData = new FormData();
+                    
+        formData.append('product', product);
+        formData.append('quantity', $('#search-product-quantity').val());
+        
+        console.log(lists[i]);
+        
+        $.ajax({
+        type: 'PUT',
+        url: 'http://localhost:8080/ShoppingList/services/list/'+lists[i]+'/product/add',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+            console.log("success");
+            $(".list-button #"+data).click();
+            $(".list-button #"+data).click();
+
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+    }
+    
+    clearModal();
+});
+
 $(".all-products").change(function () {
     if (($('.all-products option:selected').val())) {
     $('#search-product-button').attr("disabled", false);
@@ -79,4 +170,25 @@ $(".all-products").change(function () {
 
 });
 
+$("#search-product-select").change(function () {
+    if (($('#search-product-select option:selected').val())) {
+        $('#search-product-add').prop("disabled", false);
+    } else {
+        $('#search-product-add').prop("disabled", true);
+    }
+
 });
+
+});
+
+var product="";
+
+function clearModal() {
+    $('#search-product-title').val('');
+    $('#search-product-image').attr('src', "");
+    $('#search-product-logo').attr('src', "");
+    $('#search-product-select option').remove();
+    $('#search-product-quantity').val('1');
+    $('#search-product-description').val('');
+
+}
