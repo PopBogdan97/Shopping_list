@@ -161,7 +161,7 @@ $(function () {
                         "style": "height:22px; width:22px;"
                     });
                     //check if can add products
-                    if ($(this).children('.permission-add-product').attr("id") == 'true') {
+                    if ($(this).children('.permission-add-product').attr("id") != 'true') {
                         $(this).next(".product-list").children("div").children("select").attr({
                             "class": "custom-select my-select2",
                             "id": "list-" + listId

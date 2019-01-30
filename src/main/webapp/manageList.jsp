@@ -68,7 +68,7 @@
                                 + " <ul class=\"navbar-nav ml-auto\">"
                                 + "     <li class=\"nav-item\">"
                                 + "         <a href=\"profile.jsp\"><img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
-                                + "         <b>" + session.getAttribute("email") + "</b></a>"
+                                + "         <b id=\"user-email\">" + session.getAttribute("email") + "</b></a>"
                                 + "     </li>"
                                 + "     <li class=\"nav-item\">"
                                 + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left;\" width=\"30\" height=\"30\">"

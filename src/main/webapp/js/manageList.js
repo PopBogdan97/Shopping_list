@@ -24,7 +24,7 @@ function loadList() {
             if (data.length !== 0) {
                 $('#list-start').html("");
                 $('#list-start').append("<p></p>");
-                $('#list-start').append('<button type="button" class="btn btn-outline-primary back-home">Return</button><p></p>');
+                $('#list-start').append('<a type="button" class="btn btn-outline-primary back-home" href="index.jsp">Return</a><p></p>');
                 if (data.Typology === 'anonymous'){
                     $.each(data.Lists, (i, obj) => {
                     
@@ -32,12 +32,12 @@ function loadList() {
                             '<div class="list-group col-lg-8">' +
                             '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
                             '</div>' +
-                            '<button type="button" class="col-lg btn btn-outline-info share-list disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
+                            '<button type="button" class="col-lg btn btn-outline-info disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
                             '<button type="button" class="col-lg btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
                             '</div>' +
                             '<p></p>';
                     $('#list-start').append(html);
-
+                    
                 });
                 }else{
                     
@@ -125,9 +125,9 @@ function loadScripts() {
         $('#add-list-modal').modal('show');
     });
     
-    $('.back-home').click(function () {
-        window.location.href = "http://localhost:8080/ShoppingList/index.jsp";
-    });
+//    $('.back-home').click(function () {
+//        window.location.href = "http://localhost:8080/ShoppingList/index.jsp";
+//    });
     
     $('.share-list').click(function (){
        $('#add-collab-modal').modal('show');
