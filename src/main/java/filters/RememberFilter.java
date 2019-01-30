@@ -130,6 +130,7 @@ public class RememberFilter implements Filter {
                         System.out.println("RememberFilter: found cookie for user: " + user.getEmail()+" | "+user.getTypology());
                         
                         session = request.getSession();
+                        session.setAttribute("user", user);
                         session.setAttribute("email", user.getEmail());
                         session.setAttribute("tipo", user.getTypology());
                     }
