@@ -122,8 +122,8 @@ public class ListDao {
                     "DELETE FROM List WHERE Id=?");
             ps.setInt(1, id);
 
-            status = status && (ps2.executeUpdate() > 0);
-            status = status && (ps1.executeUpdate() > 0);
+            status = (ps2.executeUpdate() > 0) && status;
+            status = (ps1.executeUpdate() > 0) && status;
             status = (ps.executeUpdate() > 0) && status;
 
             conn.close();
