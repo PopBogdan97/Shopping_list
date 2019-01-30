@@ -261,6 +261,11 @@ function executeResultEvents() {
 
                             $('#modify-list-product-image').attr('src', 'data:image/png;base64,' + data);
                         }
+                                                else{
+                            $('#modify-list-product-image').attr('src', 'img/sample.jpg');
+
+                        }
+                        
                     },
                     error: function () {
                         console.log("error");
@@ -274,6 +279,10 @@ function executeResultEvents() {
                         if (data !== "{}") {
 
                             $('#modify-list-product-logo').attr('src', 'data:image/png;base64,' + data);
+                        }
+                                                else{
+                            $('#modify-list-product-logo').attr('src', 'img/logo.png');
+
                         }
                     },
                     error: function () {
@@ -323,6 +332,10 @@ function executeResultEvents() {
 
                             $('#modify-list-product-image').attr('src', 'data:image/png;base64,' + data);
                         }
+                                                else{
+                            $('#modify-list-product-image').attr('src', 'img/sample.jpg');
+
+                        }
                     },
                     error: function () {
                         console.log("error");
@@ -336,6 +349,10 @@ function executeResultEvents() {
                         if (data !== "{}") {
 
                             $('#modify-list-product-logo').attr('src', 'data:image/png;base64,' + data);
+                        }
+                                                else{
+                            $('#modify-list-product-logo').attr('src', 'img/logo.png');
+
                         }
                     },
                     error: function () {
@@ -500,6 +517,10 @@ function executeClickButton() {
 
                             $('#modify-list-product-image').attr('src', 'data:image/png;base64,' + data);
                         }
+                        else{
+                            $('#modify-list-product-image').attr('src', 'img/sample.jpg');
+
+                        }
                     },
                     error: function () {
                         console.log("error");
@@ -513,6 +534,10 @@ function executeClickButton() {
                         if (data !== "{}") {
 
                             $('#modify-list-product-logo').attr('src', 'data:image/png;base64,' + data);
+                        }
+                        else{
+                            $('#modify-list-product-logo').attr('src', 'img/logo.png');
+
                         }
                     },
                     error: function () {

@@ -102,7 +102,7 @@ public class ProductResource {
     
     @GET
     @Path("/logo/{id}")
-    @Produces("logo/png")
+    @Produces("image/png")
     public String getLogo(@PathParam("id") Integer id) throws IOException {
 
         String filename = ProductDao.getLogo(id);

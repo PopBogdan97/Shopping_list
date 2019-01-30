@@ -230,7 +230,7 @@ public class ProdCatDao {
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                file = rs.getString("Logo");
+                file = (rs.getString("Logo") == null) ? "" : rs.getString("Logo");
             }
             conn.close();
             System.out.println(file);

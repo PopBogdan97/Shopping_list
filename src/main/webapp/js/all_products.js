@@ -102,8 +102,12 @@ clearModal();
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
-
+                
                 $('#search-product-image').attr('src', 'data:image/png;base64,' + data);
+            }
+                        else{
+                            
+                $('#search-product-image').attr('src', 'img/sample.jpg');
             }
 
         },
@@ -118,8 +122,11 @@ clearModal();
         success: function (data) {
             console.log("success");
             if (data !== "{}") {
-
                 $('#search-product-logo').attr('src', 'data:image/png;base64,' + data);
+            }
+                        else{
+                            
+                $('#search-product-logo').attr('src', 'img/logo.png');
             }
 
         },
@@ -218,6 +225,10 @@ $('.products').click(function(){
 
                 $('#search-product-image').attr('src', 'data:image/png;base64,' + data);
             }
+                        else{
+                            
+                $('#search-product-image').attr('src', 'img/sample.jpg');
+            }
 
         },
         error: function () {
@@ -233,6 +244,10 @@ $('.products').click(function(){
             if (data !== "{}") {
 
                 $('#search-product-logo').attr('src', 'data:image/png;base64,' + data);
+            }
+                        else{
+
+                $('#search-product-logo').attr('src', 'img/logo.png');
             }
 
         },

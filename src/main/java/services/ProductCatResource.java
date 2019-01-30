@@ -83,7 +83,7 @@ public class ProductCatResource {
     
     @GET
     @Path("/logo/{name}")
-    @Produces("logo/png")
+    @Produces("image/png")
     public String getImage(@PathParam("name") String name) throws IOException {
 
         String filename = ProdCatDao.getLogo(name);
