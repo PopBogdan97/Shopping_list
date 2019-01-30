@@ -107,11 +107,11 @@
                         </div>
                         <div class="modal-body">
                             <form>
-                                <input type="email" name="emailrecover" id="emailrecover" tabindex="1" <!--class="form-control"--> placeholder="Email Address" value="" onChange="changeWrongText(this)">
-                                <input type="button" class="btn btn-primary" id="reset_btn" value="Send Email">
+                                <input type="email" name="emailrecover" id="emailrecover" tabindex="1" class="form-control" placeholder="Email Address" value="" onChange="changeWrongText(this)">
+                                <input type="button" class="btn btn-primary" id="reset_btn" style="margin-top: 10px;" value="Send Email">
                             </form>
                             <div>
-                                <div id="result"></div>
+                                <div id="result" style="margin-top: 10px;"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
