@@ -25,37 +25,37 @@ function loadList() {
                 $('#list-start').html("");
                 $('#list-start').append("<p></p>");
                 $('#list-start').append('<a type="button" class="btn btn-outline-primary back-home" href="index.jsp">Return</a><p></p>');
-                if (data.Typology === 'anonymous'){
+                if (data.Typology === 'anonymous') {
                     $.each(data.Lists, (i, obj) => {
-                    
-                    var html = '<div id="' + obj.id + '"style="display: flex">' +
-                            '<div class="list-group col-lg-8">' +
-                            '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
-                            '</div>' +
-                            '<button type="button" class="col-lg btn btn-outline-info disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
-                            '<button type="button" class="col-lg btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
-                            '</div>' +
-                            '<p></p>';
-                    $('#list-start').append(html);
-                    
-                });
-                }else{
-                    
-                
-                $.each(data.Lists, (i, obj) => {
-                    
-                    var html = '<div id="' + obj.id + '"style="display: flex">' +
-                            '<div class="list-group col-lg-8">' +
-                            '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
-                            '</div>' +
-                            '<button type="button" class="col-lg btn btn-outline-info share-list" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
-                            '<button type="button" class="col-lg btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
-                            '</div>' +
-                            '<p></p>';
-                    $('#list-start').append(html);
 
-                });
-            }
+                        var html = '<div id="' + obj.id + '"style="display: flex">' +
+                                '<div class="list-group col-lg-8">' +
+                                '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
+                                '</div>' +
+                                '<button type="button" class="col-lg btn btn-outline-info disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
+                                '<button type="button" class="col-lg btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
+                                '</div>' +
+                                '<p></p>';
+                        $('#list-start').append(html);
+
+                    });
+                } else {
+
+
+                    $.each(data.Lists, (i, obj) => {
+
+                        var html = '<div id="' + obj.id + '"style="display: flex">' +
+                                '<div class="list-group col-lg-8">' +
+                                '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
+                                '</div>' +
+                                '<button type="button" class="col-lg btn btn-outline-info share-list" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
+                                '<button type="button" class="col-lg btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
+                                '</div>' +
+                                '<p></p>';
+                        $('#list-start').append(html);
+
+                    });
+                }
             }
 
             $.ajax({
@@ -65,7 +65,7 @@ function loadList() {
                     console.log("success");
                     console.log(data);
                     if (data.length !== 0) {
-                        
+
                         $.each(data, (i, obj) => {
                             if (obj.DeleteList) {
                                 var html = '<div id="' + obj.ListId + '"style="display: flex">' +
@@ -124,14 +124,14 @@ function loadScripts() {
     $('.add-list').click(function () {
         $('#add-list-modal').modal('show');
     });
-    
+
 //    $('.back-home').click(function () {
 //        window.location.href = "http://localhost:8080/ShoppingList/index.jsp";
 //    });
-    
-    $('.share-list').click(function (){
-       $('#add-collab-modal').modal('show');
-       shareListId = $(this).parent().attr('id');
+
+    $('.share-list').click(function () {
+        $('#add-collab-modal').modal('show');
+        shareListId = $(this).parent().attr('id');
     });
 }
 
@@ -236,7 +236,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    
+
 
     $('#select-collab').select2({
         placeholder: 'Search users...',
@@ -255,9 +255,12 @@ $(document).ready(function () {
 
     $("#select-collab").change(function () {
         if (($('#select-collab option:selected').val())) {
-            
+            if (($('#select-collab option:selected').text()) != email) {
                 $('#save-collab-button').prop("disabled", false);
-            
+            } else {
+                $('#save-collab-button').prop("disabled", true);
+            }
+
         } else {
             $('#save-collab-button').prop("disabled", true);
         }
@@ -269,11 +272,11 @@ $(document).ready(function () {
 
     $('#save-collab-button').click(function () {
         var formData = new FormData();
-       
+
 
         formData.append('email', $('#select-collab option:selected').text());
         formData.append('listId', shareListId);
-        formData.append('listName', $('#'+shareListId).children('div').children('a').text());
+        formData.append('listName', $('#' + shareListId).children('div').children('a').text());
         formData.append('addProduct', $('#add-product').prop('checked'));
         formData.append('removeProduct', $('#remove-product').prop('checked'));
         formData.append('editList', $('#edit-list').prop('checked'));
@@ -304,14 +307,14 @@ $(document).ready(function () {
     });
 
     function clearCollabModal() {
-       
+
         $('#add-collab-modal').modal('hide');
         $('#select-collab').empty();
         $('#select-collab').append("<option></option>").trigger('change');
-        $('#add-product').prop('checked',true);
-        $('#remove-product').prop('checked',true);
-        $('#edit-list').prop('checked',true);
-        $('#delete-list').prop('checked',true);
+        $('#add-product').prop('checked', true);
+        $('#remove-product').prop('checked', true);
+        $('#edit-list').prop('checked', true);
+        $('#delete-list').prop('checked', true);
     }
 
 });
