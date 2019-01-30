@@ -273,7 +273,7 @@ $(document).ready(function () {
 
         formData.append('email', $('#select-collab option:selected').text());
         formData.append('listId', shareListId);
-        formData.append('listName', $('#'+shareListId).children('a').text());
+        formData.append('listName', $('#'+shareListId).children('div').children('a').text());
         formData.append('addProduct', $('#add-product').prop('checked'));
         formData.append('removeProduct', $('#remove-product').prop('checked'));
         formData.append('editList', $('#edit-list').prop('checked'));
