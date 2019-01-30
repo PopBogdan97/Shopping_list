@@ -8,11 +8,9 @@ package dao;
 import entities.Element;
 import entities.ElementList;
 import entities.ProductCatBean;
-import entities.ShoppingList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.JSONArray;
@@ -49,32 +47,32 @@ public class ProdCatDao {
     }
 
     public static List getProd() {
-        List shoppingLists = new ArrayList<>();
+        List<ProductCatBean> categories = new ArrayList<>();
         try {
             Connection conn = DbConnect.getConnection();
             PreparedStatement stm = conn.prepareStatement("SELECT * FROM ProductCategory");
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
-                    ShoppingList shoppingList = new ShoppingList();
-                    shoppingList.setNome(rs.getString("Name"));
-                    shoppingList.setDescrizione(rs.getString("Description"));
+                    ProductCatBean cat = new ProductCatBean();
+                    cat.setName(rs.getString("Name"));
+                    cat.setDescription(rs.getString("Description"));
 
                     PreparedStatement stm1 = conn.prepareStatement("SELECT count(*) as cnt FROM Product where CatName=?");
                     stm1.setString(1, rs.getString("Name"));
                     try (ResultSet rs1 = stm1.executeQuery()) {
                         rs1.next();
-                        shoppingList.setCounter(rs1.getString("cnt"));
+                        cat.setCounter(rs1.getInt("cnt"));
                     } catch (Exception ex) {
                         System.out.println(ex);
                     }
-                    shoppingLists.add(shoppingList);
+                    categories.add(cat);
                 }
             }
             conn.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        return shoppingLists;
+        return categories;
     }
 
     public static JSONObject getData(String nome) {

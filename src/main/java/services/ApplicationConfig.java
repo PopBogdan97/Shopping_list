@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(services.ChatResource.class);
+        resources.add(services.CollaboratorResource.class);
         resources.add(services.ListCatResource.class);
         resources.add(services.ListResource.class);
         resources.add(services.ProductCatResource.class);

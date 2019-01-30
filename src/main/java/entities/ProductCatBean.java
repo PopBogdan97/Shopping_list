@@ -17,6 +17,7 @@ public class ProductCatBean {
     private String Description;
     private ArrayList<Element> Products;
     private ArrayList<String> CatLists;
+    private int Counter;
 
     public ArrayList<String> getCatLists() {
         return CatLists;
@@ -73,5 +74,19 @@ public class ProductCatBean {
      */
     public void setProducts(ArrayList<Element> Products) {
         this.Products = Products;
+    }
+
+    /**
+     * @return the Counter
+     */
+    public int getCounter() {
+        return Counter;
+    }
+
+    /**
+     * @param Counter the Counter to set
+     */
+    public void setCounter(int Counter) {
+        this.Counter = Counter;
     }
 }
