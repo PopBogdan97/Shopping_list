@@ -212,3 +212,7 @@ li.nav-item {
     padding: 5px;
     margin-left: 20px;
 }
+
+.bg-success {
+    background-color: #1b99ba !important;
+}

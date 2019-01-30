@@ -34,15 +34,15 @@
             </div>
         </nav>
         
-        <div class="container" style="margin-top: 150px;">
-            <h3 style="margin-bottom: 10px;">Inserisci la tua nuova Password</h3>
+        <div class="container" style="margin-top: 100px; text-align: center;">
+            <h3 style="margin-bottom: 40px;">Inserisci la tua nuova Password</h3>
             <form action="SetPasswordServlet" method="POST">
                 <input type="hidden" name="email" value=<%=request.getParameter("email")%>>
                 <input type="hidden" name="cod" value=<%=request.getParameter("cod")%>>
-                <input type="password" name="password" id="Password" placeholder="Password" class="form-control" style="max-width: 400px; margin-bottom:5px;" required>
-                        <div class="progress" style="max-width: 500px;">
-                            <div id="StrengthProgressBar" class="progress-bar"></div>
-                        </div>
+                <input type="password" name="password" id="Password" placeholder="Password" class="form-control" style="margin: 0 auto; max-width: 500px; margin-bottom:5px;" required>
+                    <div class="progress" style="max-width: 500px; margin: 0 auto; margin-bottom: 30px;">
+                        <div id="StrengthProgressBar" class="progress-bar"></div>
+                    </div>
                 <input type="submit" class="btn btn-outline-primary buttonInvia">
             </form>
             <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

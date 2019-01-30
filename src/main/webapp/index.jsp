@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 18-ott-2018, 14.43.31
-    Author     : Marco & Luca
+    Author     : Luca & Bogdan & Emiliano
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
