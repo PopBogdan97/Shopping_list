@@ -141,6 +141,7 @@
                         <p></p>
 
                         <c:forEach var="cat" items="${productCat}">
+                            <c:if test="${cat.getName() != 'User Products'}">
                             <button class="collapsible rounded"><span class="badge badge-primary badge-pill">${cat.getCounter()}</span> ${cat.getName()}</button>
                             <ul class="content list-unstyled">
                                 <c:forEach var="product" items="${products}">
@@ -150,6 +151,7 @@
                                     </c:forEach>
                                 <br>
                             </ul>
+                        </c:if>
                         </c:forEach>
                         <p></p>
                         <p></p>
