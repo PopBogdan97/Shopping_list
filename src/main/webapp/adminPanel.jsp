@@ -31,7 +31,53 @@
         
     </head>
     <body>
-        <h1>Admin Panel</h1> 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">Admin Panel</a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <%
+                    
+                        out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
+                                + " <ul class=\"navbar-nav ml-auto\">"
+                                + "     <li class=\"nav-item\">"
+                                + "         <a href=\"profile.jsp\"><img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
+                                + "         <b id=\"user-email\">" + session.getAttribute("email") + "</b></a>"
+                                + "     </li>"
+                                + "     <li class=\"nav-item\">"
+                                + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left; margin-left: 10px;\" width=\"30\" height=\"30\">"
+                                + "         <a class=\"btn btn-outline-primary\" href=\"index.jsp\" style=\"float: left; margin-left: 10px; margin-right: 10px\">Return</a>"
+                                + "     </li>"
+                                + "     <li class=\"nav-item\">"
+                                + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
+                                + "     </li>"
+                                + " </ul>"
+                                + "</div>");
+                   
+                %>
+                <!--
+                    <div class="navbar-collapse collapse" id="navbarResponsive" style="">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <img src="img/impostazioni.png" alt="" style="visibility: <%=(session.getAttribute("Tipologia") == "admin") ? "block" : "hidden"%>" width="30" height="30">
+                                <a class="btn" href="adminPanel.jsp" style="visibility: <%=(session.getAttribute("Tipologia") == "admin") ? "block" : "hidden"%>" >Gestisci categorie</a>
+                            </li>
+                            <li class="nav-item">
+                                <img src="img/user.png" alt="" width="40" height="40">
+                                <a class="btn btn-outline-primary" href="login_registration.jsp">Accedi</a>
+                            </li>
+                        </ul>
+                    </div>
+                -->
+
+            </div>
+        </nav>
+        <br><br><br><br>
+        
+        
+        
+        
         <div class="container">
             <div class="row">
                 <div class="col portfolio-item ft-text">
