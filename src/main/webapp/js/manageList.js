@@ -36,6 +36,10 @@ function loadList() {
 
                                     $('#' + obj.id).children('img').attr('src', 'data:image/png;base64,' + data);
                                 }
+                                else{
+                                    $('#' + obj.id).children('img').attr('src', 'img/list.png');
+
+                                }
                             },
                             error: function () {
                                 console.log("error");
@@ -66,6 +70,10 @@ function loadList() {
 
                                     $('#' + obj.id).children('img').attr('src', 'data:image/png;base64,' + data);
                                 }
+                                else{
+                                    $('#' + obj.id).children('img').attr('src', 'img/list.png');
+
+                                }                                
                             },
                             error: function () {
                                 console.log("error");
@@ -105,6 +113,10 @@ function loadList() {
 
                                             $('#' + obj.ListId).children('img').attr('src', 'data:image/png;base64,' + data);
                                         }
+                                else{
+                                    $('#' + obj.ListId).children('img').attr('src', 'img/list.png');
+
+                                }                                        
                                     },
                                     error: function () {
                                         console.log("error");
