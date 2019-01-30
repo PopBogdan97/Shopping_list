@@ -107,8 +107,10 @@
                         </div>
                         <div class="modal-body">
                             <form>
-                                <input type="email" name="emailrecover" id="emailrecover" tabindex="1" <!--class="form-control"--> placeholder="Email Address" value="" onChange="changeWrongText(this)">
+                                <input type="email" name="emailrecover" id="emailrecover" tabindex="1" class="form-control" placeholder="Email Address" value="" onChange="changeWrongText(this)">
+                                <br>
                                 <input type="button" class="btn btn-primary" id="reset_btn" value="Send Email">
+                                <br><br>
                             </form>
                             <div>
                                 <div id="result"></div>
