@@ -40,12 +40,8 @@ public class ResetServlet extends HttpServlet {
             String email=request.getParameter("email");  
             String cod=request.getParameter("cod");  
 
-            if(UserDao.reset(email, cod)){  
-                request.setAttribute("email", email);
-                request.setAttribute("cod", cod);
-                
-                
-                response.sendRedirect("ResetPassword.jsp");
+            if(UserDao.reset(email, cod)){
+                response.sendRedirect("ResetPassword.jsp?email="+email+"&cod="+cod);
             }  
             else{ 
                 response.sendRedirect("linkNotValid.jsp");
