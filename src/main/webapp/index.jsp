@@ -342,8 +342,6 @@
                     </div>
                     <div class="modal-body" style="background-color: #e0ffff;">
                         <div id="chatPart" style="float:left;width:50%; height:100%;">
-                            Messaggi
-                            
                             
                         </div>
                         <div  id="messagePart" style="float:left; width:50%; height:100%;">

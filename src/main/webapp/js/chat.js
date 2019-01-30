@@ -88,7 +88,7 @@ function slowworker() {
                 if (JSON.stringify(data) !== '[]') {
                     lastmessage[data[0].List] = data[data.length - 1].Id;
                     console.log("Lastmessage: " + lastmessage[data[0].List]+ "New messages");
-                    $('#notify-span-'+data[0].List).text("New Messages");
+                    $('#notify-span-'+data[0].List).text("*New Messages*");
                 }
 
             },

@@ -353,7 +353,7 @@ function executeClickButton() {
 
     $(".chat-button").click(function () {
         var listId = getChatListId($(this).attr('id'));
-        $("#chatModalTitle").text("Chat List: " + listId);
+        $("#chatModalTitle").text("Chat List: " + $('#'+listId+'.list-span').eq(0).text());
         $("#chatModal").modal("show");
     });
 
