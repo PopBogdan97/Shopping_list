@@ -96,7 +96,7 @@ function getImage(){
                 $('#removeimage-profile').show();
             }
             else{
-                $('#img').attr('src', 'img/user.png');
+                $('#img').attr('src', 'img/utente.jpg');
             }
 
         },

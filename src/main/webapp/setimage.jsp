@@ -53,8 +53,8 @@
                         <form action="ImageUploadServlet" method="post" enctype="multipart/form-data">
                             <label>Image</label>
                             <input type="hidden" name="email" value=<%=request.getAttribute("email")%>>
-                            <input type="file" name="file" />
-                            <input type="submit" class="btn btn-primary" />
+                            <input type="file" name="file" id="file"/>
+                            <input type="submit" class="btn btn-primary" disabled="disabled" id="submit-image"/>
                         </form>
                         <span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span>
                     </div>
@@ -73,5 +73,15 @@
         <span style="color:red"><%=(request.getAttribute("error") == null) ? "" : request.getAttribute("error")%></span>-->
         
         <p class="text-center" style="margin-top: 20px;">Clicca sull'immagine per poterla cambiare oppure <a href="login_registration.jsp" style="text-decoration: underline;">clicca qui</a> per continuare senza un'immagine profilo</p>
+        
+        <script>
+$(document).ready(function(){
+            $("#file").change(function () {
+
+$('#submit-image').prop("disabled", false);
+
+});
+});
+</script>
     </body>
 </html>

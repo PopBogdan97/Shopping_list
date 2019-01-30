@@ -122,8 +122,8 @@ public class ListDao {
                     "DELETE FROM List WHERE Id=?");
             ps.setInt(1, id);
 
-            status = status && (ps2.executeUpdate() > 0);
-            status = status && (ps1.executeUpdate() > 0);
+            status = (ps2.executeUpdate() > 0) && status;
+            status = (ps1.executeUpdate() > 0) && status;
             status = (ps.executeUpdate() > 0) && status;
 
             conn.close();
@@ -176,7 +176,7 @@ public class ListDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                file = rs.getString("Image");
+                file = (rs.getString("Image") == null) ? "" : rs.getString("Image");
             }
 
             conn.close();

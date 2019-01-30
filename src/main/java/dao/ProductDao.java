@@ -299,7 +299,7 @@ public class ProductDao {
             ps.setString(2, catName);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                file = rs.getString("Image");
+                file = (rs.getString("Image") == null) ? "" : rs.getString("Image");
             }
             conn.close();
             System.out.println(file);
@@ -317,7 +317,7 @@ public class ProductDao {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                file = rs.getString("Image");
+                file = (rs.getString("Image") == null) ? "" : rs.getString("Image");
             }
             conn.close();
             System.out.println(file);

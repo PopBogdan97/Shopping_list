@@ -27,13 +27,27 @@ function loadList() {
                 $('#list-start').append('<a type="button" class="btn btn-outline-primary back-home" href="index.jsp">Return</a><p></p>');
                 if (data.Typology === 'anonymous') {
                     $.each(data.Lists, (i, obj) => {
+                        $.ajax({
+                            type: 'GET',
+                            url: 'http://localhost:8080/ShoppingList/services/list/image/' + obj.id,
+                            success: function (data) {
+                                console.log("success");
+                                if (data !== "{}") {
 
-                        var html = '<div id="' + obj.id + '"style="display: flex">' +
-                                '<div class="list-group col-lg-8">' +
+                                    $('#' + obj.id).children('img').attr('src', 'data:image/png;base64,' + data);
+                                }
+                            },
+                            error: function () {
+                                console.log("error");
+                            }
+                        });
+                        var html = '<div id="' + obj.id + '"style="display: flex" class="add-stop">' +
+                                '<img alt="" class="rounded float-left col-lg-1" style="background-color: darkgray;margin-right: 15px;padding: 5px;padding-bottom: 2px;padding-top: 2px;" src="#">' +
+                                '<div class="list-group col-lg">' +
                                 '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
                                 '</div>' +
-                                '<button type="button" class="col-lg btn btn-outline-info disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
-                                '<button type="button" class="col-lg btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
+                                '<button type="button" class="col-lg-1 btn btn-outline-info disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
+                                '<button type="button" class="col-lg-1 btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
                                 '</div>' +
                                 '<p></p>';
                         $('#list-start').append(html);
@@ -43,8 +57,22 @@ function loadList() {
 
 
                     $.each(data.Lists, (i, obj) => {
+                        $.ajax({
+                            type: 'GET',
+                            url: 'http://localhost:8080/ShoppingList/services/list/image/' + obj.id,
+                            success: function (data) {
+                                console.log("success");
+                                if (data !== "{}") {
 
+                                    $('#' + obj.id).children('img').attr('src', 'data:image/png;base64,' + data);
+                                }
+                            },
+                            error: function () {
+                                console.log("error");
+                            }
+                        });
                         var html = '<div id="' + obj.id + '"style="display: flex">' +
+                                '<img alt="" class="rounded float-left col-lg-1" style="background-color: darkgray;margin-right: 15px;padding: 5px;padding-bottom: 2px;padding-top: 2px;" src="#">' +
                                 '<div class="list-group col-lg-8">' +
                                 '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
                                 '</div>' +
@@ -68,7 +96,22 @@ function loadList() {
 
                         $.each(data, (i, obj) => {
                             if (obj.DeleteList) {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: 'http://localhost:8080/ShoppingList/services/list/image/' + obj.ListId,
+                                    success: function (data) {
+                                        console.log("success");
+                                        if (data !== "{}") {
+
+                                            $('#' + obj.ListId).children('img').attr('src', 'data:image/png;base64,' + data);
+                                        }
+                                    },
+                                    error: function () {
+                                        console.log("error");
+                                    }
+                                });
                                 var html = '<div id="' + obj.ListId + '"style="display: flex">' +
+                                        '<img alt="" class="rounded float-left col-lg-1" style="background-color: darkgray;margin-right: 15px;padding: 5px;padding-bottom: 2px;padding-top: 2px;" src="#">' +
                                         '<div class="list-group col-lg-8">' +
                                         '<a class="list-group-item list-group-item-dark">' + obj.ListName + '</a>' +
                                         '</div>' +
@@ -98,7 +141,10 @@ function loadList() {
             console.log("error");
         }
     });
-
+    
+    console.log('wooooooooooooooooooo');
+    
+    
 }
 
 //make work the buttons
@@ -124,6 +170,10 @@ function loadScripts() {
     $('.add-list').click(function () {
         $('#add-list-modal').modal('show');
     });
+    
+    if($('.add-list').prev().prev().prev().attr('class') == "add-stop"){
+        $('.add-list').prop("disabled",true);
+    }
 
 //    $('.back-home').click(function () {
 //        window.location.href = "http://localhost:8080/ShoppingList/index.jsp";

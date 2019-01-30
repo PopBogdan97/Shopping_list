@@ -5,7 +5,6 @@
  */
 package servlets;
 
-import dao.LoginDao;
 import dao.UserDao;
 import entities.UserBean;
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("passwordLogin");
         String remember = (request.getParameterMap().containsKey("remember")) ? request.getParameter("remember") : "";
 
-        String result = LoginDao.authenticate(email, password);
+        String result = UserDao.authenticate(email, password);
 
         System.out.println("Result dao: "+result);
         
@@ -81,7 +80,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(rememberCookie);
                 
                 //aggiungo l'ID all'utente corrispondente nel DB
-                LoginDao.setLoginCookie(email, uniqueID);
+                UserDao.setLoginCookie(email, uniqueID);
             }
             
             response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -109,7 +108,7 @@ public class LoginServlet extends HttpServlet {
                 Cookie rememberCookie = new Cookie("rememberUser", uniqueID);
                 rememberCookie.setMaxAge(4320000);  //432000 sec = 5 giorni
                 response.addCookie(rememberCookie);
-                LoginDao.setLoginCookie(email, uniqueID);
+                UserDao.setLoginCookie(email, uniqueID);
             }
 
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
