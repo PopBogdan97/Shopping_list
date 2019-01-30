@@ -24,7 +24,7 @@ function loadList() {
             if (data.length !== 0) {
                 $('#list-start').html("");
                 $('#list-start').append("<p></p>");
-                $('#list-start').append('<button type="button" class="btn btn-outline-primary back-home">Back</button><p></p>');
+                $('#list-start').append('<button type="button" class="btn btn-outline-primary back-home">Return</button><p></p>');
                 if (data.Typology === 'anonymous'){
                     $.each(data.Lists, (i, obj) => {
                     

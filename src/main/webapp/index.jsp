@@ -165,7 +165,7 @@
                     <!-- SHOW USER LISTS-->
                     <div class="card p-1" id="show-user-list" >
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
-                            <input type="image" class="mr-3" src="img/annulla.png" onclick="returnBack()" alt="Ok" width="27" height="27"/>
+                            
                             <h6 class="mb-0 mx-auto text-dark lh-100">Liste di 
                                 <c:if test="${user.getTypology() == 'anonymous'}">
                                     <c:out value="${user.getTypology()}"/>
@@ -174,7 +174,7 @@
                                     <c:out value="${user.getFirstName()} ${user.getLastName()}"/>
                                 </c:if>
                             </h6>
-                            <input type="image" class="mr-3" src="img/campana.png" alt="Ok" width="27" height="27"/>
+                            
                         </div>
                         <p></p>
 
