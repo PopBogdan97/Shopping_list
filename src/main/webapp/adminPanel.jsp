@@ -12,7 +12,7 @@
         <title>JSP Page</title>
 
        
-                <link rel="stylesheet" href="css/panel.css">
+        <link rel="stylesheet" href="css/panel.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -43,14 +43,13 @@
                                 + " <ul class=\"navbar-nav ml-auto\">"
                                 + "     <li class=\"nav-item\">"
                                 + "         <a href=\"profile.jsp\"><img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
-                                + "         <b id=\"user-email\">" + session.getAttribute("email") + "</b></a>"
+                                + "         <b id=\"user-email\" style=\"color: black;\">" + session.getAttribute("email") + "</b></a>"
                                 + "     </li>"
                                 + "     <li class=\"nav-item\">"
-                                + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left; margin-left: 10px;\" width=\"30\" height=\"30\">"
-                                + "         <a class=\"btn btn-outline-primary\" href=\"index.jsp\" style=\"float: left; margin-left: 10px; margin-right: 10px\">Return</a>"
+                                + "         <a class=\"btn btn-outline-primary\" href=\"index.jsp\" style=\"float: left; margin-top: 10px; margin-left: 10px; margin-right: 10px\">Return to home</a>"
                                 + "     </li>"
                                 + "     <li class=\"nav-item\">"
-                                + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\">Logout</a>"
+                                + "         <a class=\"btn btn-outline-danger\" href=\"LogoutServlet\" style=\"margin-top: 10px;\">Logout</a>"
                                 + "     </li>"
                                 + " </ul>"
                                 + "</div>");
