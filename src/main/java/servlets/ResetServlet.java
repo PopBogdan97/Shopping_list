@@ -44,32 +44,14 @@ public class ResetServlet extends HttpServlet {
                 request.setAttribute("email", email);
                 request.setAttribute("cod", cod);
                 
-                RequestDispatcher rd=request.getRequestDispatcher("ResetPassword.jsp");
-                rd.forward(request,response);
+                
+                response.sendRedirect("ResetPassword.jsp");
             }  
             else{ 
-                out.println("<html>"
-                    + " <head>"
-                    + "     <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\">"
-                    + "     <link rel=\"stylesheet\" href=\"css/style.css\">"
-                    + "  </head>"
-                    + " <body>"
-                    + "     <nav class=\"navbar navbar-expand-lg navbar-light bg-light fixed-top\">"
-                    + "         <div style=\"width: 1150px; margin: 0 auto;\">"
-                    + "             <a class=\"navbar-brand\" href=\"index.jsp\">Shopping List</a>"
-                    + "         </div>"
-                    + "     </nav>"
-                    + "     <div class=\"container\" style=\"margin-top: 150px;\">"
-                    + "         <center><div>"
-                    + "             <h3>Link not valid!</h3>"
-                    + "         </div></center>"
-                    + "         <center><a href='login_registration.jsp' class=\"btn btn-outline-primary\" style=\"margin-top: 30px;\">Return to Login</a></center>"
-                    + "     </div>"
-                    + " </body>"
-                    + "</html>");
+                response.sendRedirect("linkNotValid.jsp");
             }  
 
-            out.close();  
+            out.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

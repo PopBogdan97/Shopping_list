@@ -40,7 +40,7 @@ public class SetPasswordServlet extends HttpServlet {
             String password=request.getParameter("password");  
 
             if(UserDao.set(email, cod, password)){
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("login_registration.jsp");
             }  
             else{ 
                 out.append("Error!");
