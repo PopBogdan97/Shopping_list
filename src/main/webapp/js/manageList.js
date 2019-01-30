@@ -24,7 +24,7 @@ function loadList() {
             if (data.length !== 0) {
                 $('#list-start').html("");
                 $('#list-start').append("<p></p>");
-                $('#list-start').append('<button type="button" class="btn btn-outline-primary back-home">Return</button><p></p>');
+                $('#list-start').append('<a type="button" class="btn btn-outline-primary back-home" href="index.jsp">Return</a><p></p>');
                 if (data.Typology === 'anonymous'){
                     $.each(data.Lists, (i, obj) => {
                     
@@ -125,9 +125,9 @@ function loadScripts() {
         $('#add-list-modal').modal('show');
     });
     
-    $('.back-home').click(function () {
-        window.location.href = "http://localhost:8080/ShoppingList/index.jsp";
-    });
+//    $('.back-home').click(function () {
+//        window.location.href = "http://localhost:8080/ShoppingList/index.jsp";
+//    });
     
     $('.share-list').click(function (){
        $('#add-collab-modal').modal('show');
