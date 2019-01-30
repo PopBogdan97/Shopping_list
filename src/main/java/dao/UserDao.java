@@ -36,7 +36,7 @@ public class UserDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM User WHERE Email LIKE '%" + str + "%' AND Typology='normal'" + limit);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM User WHERE Email LIKE '%" + str + "%' AND (Typology='normal' OR Typology='admin') " + limit);
 
             ResultSet rs = ps.executeQuery();
 
