@@ -133,11 +133,23 @@ $(function () {
                         "class": "my-chat-button",
                         "style": "margin-left: 5px"
                     });
+                    
+                    if($('#user-name-typo').text().indexOf("anonymous") > 0){
+                        $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
+                        "type": "button",
+                        "class": "btn btn-outline-primary chat-button disabled",
+                        "style": "display: none",
+                        "id": "chat-list" + listId
+                    });
+                    } else{
+                        
+                    
                     $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
                         "type": "button",
                         "class": "btn btn-outline-primary chat-button",
                         "id": "chat-list" + listId
                     });
+                }
                     $(this).next(".product-list").children("div").children(".my-chat-button").children("button").children("img").attr({
                         "src": "img/chat.png",
                         "style": "height:22px; width:22px;"

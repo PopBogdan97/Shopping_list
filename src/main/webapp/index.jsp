@@ -64,7 +64,7 @@
                         out.println("<div class=\"navbar-collapse collapse\" id=\"navbarResponsive\" style=\"\">"
                                 + " <ul class=\"navbar-nav ml-auto\">"
                                 + "     <li class=\"nav-item\">"
-                                + "         <a class=\"btn btn-outline-primary\" href=\"login_registration.jsp\">Accedi</a>"
+                                + "         <a class=\"btn btn-outline-primary\" href=\"login_registration.jsp\">Login</a>"
                                 + "     </li>"
                                 + " </ul>"
                                 + "</div>");
@@ -122,7 +122,7 @@
                 <div class="col-lg-6 portfolio-item ft-text">
                     <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
-                            <h6 class="mb-0 mx-auto text-dark lh-100">Prodotti</h6>
+                            <h6 class="mb-0 mx-auto text-dark lh-100">Products</h6>
                         </div>
 
                         <p></p>
@@ -166,7 +166,7 @@
                     <div class="card p-1" id="show-user-list" >
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             
-                            <h6 class="mb-0 mx-auto text-dark lh-100">Liste di 
+                            <h6 id="user-name-typo" class="mb-0 mx-auto text-dark lh-100">Lists of 
                                 <c:if test="${user.getTypology() == 'anonymous'}">
                                     <c:out value="${user.getTypology()}"/>
                                 </c:if>
