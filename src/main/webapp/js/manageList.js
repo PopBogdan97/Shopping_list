@@ -41,7 +41,7 @@ function loadList() {
                                 console.log("error");
                             }
                         });
-                        var html = '<div id="' + obj.id + '"style="display: flex">' +
+                        var html = '<div id="' + obj.id + '"style="display: flex" class="add-stop">' +
                                 '<img alt="" class="rounded float-left col-lg-1" style="background-color: darkgray;margin-right: 15px;padding: 5px;padding-bottom: 2px;padding-top: 2px;" src="#">' +
                                 '<div class="list-group col-lg">' +
                                 '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
@@ -141,7 +141,10 @@ function loadList() {
             console.log("error");
         }
     });
-
+    
+    console.log('wooooooooooooooooooo');
+    
+    
 }
 
 //make work the buttons
@@ -167,6 +170,10 @@ function loadScripts() {
     $('.add-list').click(function () {
         $('#add-list-modal').modal('show');
     });
+    
+    if($('.add-list').prev().prev().prev().attr('class') == "add-stop"){
+        $('.add-list').prop("disabled",true);
+    }
 
 //    $('.back-home').click(function () {
 //        window.location.href = "http://localhost:8080/ShoppingList/index.jsp";
