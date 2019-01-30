@@ -117,7 +117,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modify profile</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin-bottom: 40px;">Modify profile</h5>
                     </div>
                     <div class="modal-body">
                         <div class="custom-file">
