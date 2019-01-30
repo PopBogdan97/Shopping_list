@@ -110,6 +110,14 @@ public class ListResource {
         ElementList catProducts = ListDao.getCatProducts(id, q == null ? "" : q, limit == 0 ? "" : "LIMIT " + limit);
         return new Gson().toJson(catProducts);
     }
+    
+    @GET
+    @Path("/{id}/catProducts/cat")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSingleListCatProductsOrderedJson(@PathParam("id") Integer id, @QueryParam("q") String q) {
+        ElementList catProducts = ListDao.getCatProductsOrdered(id, q == null ? "" : q);
+        return new Gson().toJson(catProducts);
+    }
 
     @GET
     @Path("/image/{id}")

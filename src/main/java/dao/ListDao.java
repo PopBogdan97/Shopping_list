@@ -337,6 +337,39 @@ public class ListDao {
         }
         return el;
     }
+    
+    public static ElementList getCatProductsOrdered(Integer id, String str) {
+        ElementList el = new ElementList();
+        try {
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT Product.Id, Product.Name, Product.CatName FROM Product WHERE Product.CatName IN (SELECT ProductCat_ListCat.ProductCatName FROM ProductCat_ListCat WHERE ProductCat_ListCat.ListCatName IN (SELECT List.CatName FROM List WHERE List.Id =?)) AND Product.Name LIKE '%" + str + "%' ORDER BY Product.CatName");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+
+            ArrayList<Element> products = new ArrayList<>();
+
+            while (rs.next()) {
+                Element tmpEl = new Element();
+                System.out.println("name by cat: " + rs.getString("Name"));
+                tmpEl.setId(rs.getInt("Id") + "");
+                tmpEl.setText(rs.getString("CatName")+" - "+rs.getString("Name"));
+                products.add(tmpEl);
+            }
+
+            for (Element e : products) {
+                System.out.println("name by cat: " + e.getText());
+            }
+
+            el.setResults(products);
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e + " qua");
+        }
+        return el;
+    }
 
     public static ProductBean getProductByList(Integer id, Integer productId) {
         ProductBean product = new ProductBean();
