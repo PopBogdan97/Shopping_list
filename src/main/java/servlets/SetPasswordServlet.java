@@ -34,7 +34,8 @@ public class SetPasswordServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();  
-          
+            
+            
             String email=request.getParameter("email");  
             String cod=request.getParameter("cod");  
             String password=request.getParameter("password");  
@@ -43,7 +44,7 @@ public class SetPasswordServlet extends HttpServlet {
                 response.sendRedirect("login_registration.jsp");
             }  
             else{ 
-                out.append("Error!");
+                response.sendRedirect("errorReset.jsp");
             }  
 
             out.close();  

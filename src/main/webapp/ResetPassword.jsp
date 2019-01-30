@@ -37,8 +37,8 @@
         <div class="container" style="margin-top: 150px;">
             <h3 style="margin-bottom: 10px;">Inserisci la tua nuova Password</h3>
             <form action="SetPasswordServlet" method="POST">
-                <!--type="hidden"--><input name="email" value=<%=request.getAttribute("email")%>>
-                <!--type="hidden"--><input name="cod" value=<%=request.getAttribute("cod")%>>
+                <input type="hidden" name="email" value=<%=request.getParameter("email")%>>
+                <input type="hidden" name="cod" value=<%=request.getParameter("cod")%>>
                 <input type="password" name="password" id="Password" placeholder="Password" class="form-control" style="max-width: 400px; margin-bottom:5px;" required>
                         <div class="progress" style="max-width: 500px;">
                             <div id="StrengthProgressBar" class="progress-bar"></div>
