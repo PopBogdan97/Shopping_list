@@ -300,6 +300,39 @@ public class UserDao {
         return status;
 
     }
+    
+        public static boolean modifyProfile(String email, String firstName, String lastName, String image, boolean mod) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            if (mod) {
+
+                PreparedStatement ps = conn.prepareStatement("UPDATE User SET FirstName=?, LastName=?, Image=? WHERE Email=?");
+                ps.setString(1, firstName);
+                ps.setString(2, lastName);
+                ps.setString(3, image);
+                ps.setString(4, email);
+
+                status = ps.executeUpdate() > 0;
+            } else {
+                PreparedStatement ps = conn.prepareStatement("UPDATE User SET FirstName=?, LastName=? WHERE Email=?");
+                ps.setString(1, firstName);
+                ps.setString(2, lastName);
+                ps.setString(3, email);
+
+                status = ps.executeUpdate() > 0;
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+
+    }
 
     public static boolean initialize(String email, String firstName, String lastName, String typology, String cod, String image, boolean mod) {
         boolean status = false;
@@ -335,7 +368,7 @@ public class UserDao {
         }
         return status;
     }
-
+    
     public static boolean initialize(String email, String firstName, String lastName, String typology, String cod, String image, String cookie, boolean mod) {
         boolean status = false;
         try {

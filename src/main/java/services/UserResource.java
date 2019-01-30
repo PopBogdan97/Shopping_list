@@ -130,6 +130,31 @@ public class UserResource {
             System.out.println("ok");
         }
     }
+    
+        @PUT
+    @Path("/{email}/profile")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public void putUserProfileJson(@PathParam("email") String email,
+            @FormDataParam("firstName") String firstName,
+            @FormDataParam("lastName") String lastName,
+            @FormDataParam("file") InputStream file,
+            @FormDataParam("mod") boolean mod) throws IOException {
+        
+        String fileName = "";
+
+        if (file != null) {
+
+            fileName = email + ".png";
+
+            System.out.println(fileName);
+
+            UploadImage.upload(file, fileName, "user");
+        }
+
+        if (UserDao.modifyProfile(email, firstName, lastName, fileName, (mod || file != null))) {
+            System.out.println("ok");
+        }
+    }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
