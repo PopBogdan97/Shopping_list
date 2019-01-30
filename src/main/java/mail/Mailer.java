@@ -5,14 +5,11 @@
  */
 package mail;
 
-import dao.MailDao;
-import dao.MailExistsDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -49,13 +46,13 @@ return builder.toString();
         
         boolean status=false;
         
-        if(MailExistsDao.exits(email)){
+        if(UserDao.exits(email)){
             
             status=true;
             
     String cod=randomAlphaNumeric(8);
     
-    if(MailDao.setcod(email, cod)){
+    if(UserDao.setcod(email, cod)){
     
         final String host = "smtp.gmail.com";
         final String port = "465";

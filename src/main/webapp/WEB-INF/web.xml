@@ -17,21 +17,19 @@
     
     <servlet>
         <servlet-name>DbConnect</servlet-name>
-        <servlet-class>servlets.DbConnect</servlet-class>
+        <servlet-class>utilities.DbConnect</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DbConnect</servlet-name>
         <url-pattern>/DbConnect</url-pattern>
     </servlet-mapping>
     
-    <servlet>
-        <servlet-name>ImageUploadServlet</servlet-name>
-        <servlet-class>servlets.ImageUploadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ImageUploadServlet</servlet-name>
-        <url-pattern>/ImageUploadServlet</url-pattern>
-    </servlet-mapping>
+    
+    
+    
+    
+    
+    
     
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -97,14 +95,9 @@
         <url-pattern>/SetPasswordServlet</url-pattern>
     </servlet-mapping>
     
-    <servlet>
-        <servlet-name>Upload</servlet-name>
-        <servlet-class>servlets.Upload</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Upload</servlet-name>
-        <url-pattern>/Upload</url-pattern>
-    </servlet-mapping>
+    
+    
+    
     
     
     /************* Filters **************/

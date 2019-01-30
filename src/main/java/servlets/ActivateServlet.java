@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import dao.ActivateDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -40,7 +40,7 @@ public class ActivateServlet extends HttpServlet {
             String email=request.getParameter("email");  
             String cod=request.getParameter("cod");  
 
-            if(ActivateDao.validate(email, cod)){  
+            if(UserDao.validate(email, cod)){  
                 request.setAttribute("email", email);
                 RequestDispatcher rd=request.getRequestDispatcher("setimage.jsp");  
                 rd.forward(request,response);

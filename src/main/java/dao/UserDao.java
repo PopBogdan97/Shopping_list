@@ -18,8 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
-import services.UploadImage;
-import servlets.DbConnect;
+import utilities.UploadImage;
+import utilities.DbConnect;
 
 /**
  *
@@ -80,10 +80,6 @@ public class UserDao {
                 user.setValid(rs.getBoolean("Valid"));
                 user.setCod(rs.getString("Cod"));
             }
-
-            String imagepath = getUserImagePath(email);
-           
-            user.setImagePath(imagepath);            
 
             PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM List WHERE OwnerEmail=?");
             ps1.setString(1, email);
@@ -300,8 +296,8 @@ public class UserDao {
         return status;
 
     }
-    
-        public static boolean modifyProfile(String email, String firstName, String lastName, String image, boolean mod) {
+
+    public static boolean modifyProfile(String email, String firstName, String lastName, String image, boolean mod) {
         boolean status = false;
         try {
 
@@ -368,7 +364,7 @@ public class UserDao {
         }
         return status;
     }
-    
+
     public static boolean initialize(String email, String firstName, String lastName, String typology, String cod, String image, String cookie, boolean mod) {
         boolean status = false;
         try {
@@ -526,26 +522,150 @@ public class UserDao {
         return valid;
     }
 
-    public static String getUserImagePath(String email) throws IOException {
+    public static boolean setcod(String email, String cod) {
+        boolean status = false;
+        try {
 
-        String filename = UserDao.getImage(email);
+            Connection conn = DbConnect.getConnection();
 
-        if (!filename.equals("")) {
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE User SET Cod=? WHERE Email=?");
+            ps.setString(1, cod);
+            ps.setString(2, email);
 
-            InputStream is = UploadImage.class.getClassLoader().getResourceAsStream("../../WEB-INF/resources/path.properties");
-            Properties properties = new Properties();
-            properties.load(is);
+            status = (ps.executeUpdate() > 0);
 
-            System.out.println(properties.getProperty("location") + "/user/" + filename);
+            conn.close();
 
-            String path = (properties.getProperty("location") + "/user/" + filename);
-
-            return path;
-
-        } else {
-
-            return null;
-
+        } catch (Exception e) {
+            System.out.println(e);
         }
+        return status;
+    }
+
+    public static boolean exits(String email) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT * FROM User WHERE Email=?");
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+
+            status = rs.next();
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean validate(String email, String cod) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE User SET Valid=1 WHERE Email=? AND Cod=?");
+            ps.setString(1, email);
+            ps.setString(2, cod);
+
+            status = (ps.executeUpdate() > 0);
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean setimage(String email, String path) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE User SET Image=? WHERE Email=?");
+            ps.setString(1, path);
+            ps.setString(2, email);
+
+            status = (ps.executeUpdate() > 0);
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean register(String email, String password, String name, String surname) {
+        boolean status = false;
+        try {
+            Connection conn = DbConnect.getConnection();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO User (Email, Password, FirstName, LastName, Typology, Valid) VALUES (?, PASSWORD(?), ?, ?, 'normal', 0)");
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setString(3, name);
+            ps.setString(4, surname);
+            status = ps.executeUpdate() > 0;
+            conn.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean reset(String email, String cod) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT * FROM User WHERE Email=? AND Cod=?");
+            ps.setString(1, email);
+            ps.setString(2, cod);
+
+            ResultSet rs = ps.executeQuery();
+
+            status = rs.next();
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean set(String email, String cod, String password) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE User SET Password=PASSWORD(?) WHERE Email=? AND Cod=?");
+            ps.setString(1, password);
+            ps.setString(2, email);
+            ps.setString(3, cod);
+
+            status = (ps.executeUpdate() > 0);
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
     }
 }

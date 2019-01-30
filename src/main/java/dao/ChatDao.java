@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import servlets.DbConnect;
+import utilities.DbConnect;
 
 /**
  *

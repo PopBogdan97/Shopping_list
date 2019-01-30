@@ -5,10 +5,9 @@
  */
 package servlets;
 
-import dao.SetPasswordDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +39,7 @@ public class SetPasswordServlet extends HttpServlet {
             String cod=request.getParameter("cod");  
             String password=request.getParameter("password");  
 
-            if(SetPasswordDao.set(email, cod, password)){
+            if(UserDao.set(email, cod, password)){
                 response.sendRedirect("index.jsp");
             }  
             else{ 

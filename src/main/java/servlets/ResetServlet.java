@@ -5,8 +5,7 @@
  */
 package servlets;
 
-import dao.ActivateDao;
-import dao.ResetDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -41,7 +40,7 @@ public class ResetServlet extends HttpServlet {
             String email=request.getParameter("email");  
             String cod=request.getParameter("cod");  
 
-            if(ResetDao.reset(email, cod)){  
+            if(UserDao.reset(email, cod)){  
                 request.setAttribute("email", email);
                 request.setAttribute("cod", cod);
                 

@@ -5,6 +5,7 @@
  */
 package services;
 
+import utilities.UploadImage;
 import com.google.gson.Gson;
 import dao.UserDao;
 import entities.ElementList;
