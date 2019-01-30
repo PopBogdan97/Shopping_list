@@ -44,28 +44,8 @@ public class RegistrationServlet extends HttpServlet {
           
     if(UserDao.register(email, password, name, surname)){  
         Mailer.sendMail(email);
+        response.sendRedirect("checkMail.jsp?email="+email);  
         
-        out.println("<html>"
-                    + " <head>"
-                    + "     <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\">"
-                    + "     <link rel=\"stylesheet\" href=\"css/style.css\">"
-                    + "  </head>"
-                    + " <body>"
-                    + "     <nav class=\"navbar navbar-expand-lg navbar-light bg-light fixed-top\">"
-                    + "         <div style=\"width: 1150px; margin: 0 auto;\">"
-                    + "             <a class=\"navbar-brand\" href=\"index.jsp\">Shopping List</a>"
-                    + "         </div>"
-                    + "     </nav>"
-                    + "     <div class=\"container\" style=\"margin-top: 150px;\">"
-                    + "         <center><div>"
-                    + "             <h3>Check your email:    "+email+"</h3>"
-                    + "         </div></center>"
-                    + "         <center><a href='login_registration.jsp' class=\"btn btn-outline-primary\" style=\"margin-top: 30px;\">Return to Login</a></center>"
-                    + "     </div>"
-                    + " </body>"
-                    + "</html>");
-        
-
     }  
     else{  
         response.sendRedirect("login_registration.jsp?error=regError");  
