@@ -182,6 +182,7 @@ $(function () {
                         "class": "my-chat-button",
                         "style": "margin-left: 5px"
                     });
+                    $(this).next(".product-list").children("div").children(".my-chat-button").children("button").prop("disabled",false);
 
                     if ($('#user-name-typo').text().indexOf("anonymous") > 0) {
                         $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
