@@ -236,7 +236,7 @@ public class ListResource {
 
         if (file != null && (id > 0)) {
 
-            fileName = name + ".png";
+            fileName = id + ".png";
 
             System.out.println(fileName);
 
@@ -244,7 +244,7 @@ public class ListResource {
         }
 
         if (id > 0) {
-
+            ListDao.modify(id, name, catName, description, fileName, (mod || file != null));
             System.out.println("ok");
 
         }
