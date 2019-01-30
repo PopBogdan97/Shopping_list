@@ -154,12 +154,6 @@
                         </c:if>
                         </c:forEach>
                         <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
                     </div>
                 </div>
                 <div class="col-lg-6 portfolio-item ft-text" style="height: 400px;">
