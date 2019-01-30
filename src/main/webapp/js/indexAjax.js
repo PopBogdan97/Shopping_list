@@ -27,6 +27,35 @@ $(function () {
             }
         });
 
+
+    });
+
+    $.ajax({
+
+        url: 'http://localhost:8080/ShoppingList/services/collaborator/' + $('#user-email').text(),
+        type: 'GET',
+        dataType: 'json',
+        error: function (that, e) {
+
+            console.log(e);
+        },
+        success: function (data) {
+            $.each(data, (i, obj) => {
+                $(".collab-permission").each(function () {
+
+                    if ($(this).children('.list-span').attr('id') == obj.ListId) {
+                        $(this).children('.permission-add-product').attr({"id": obj.AddProduct});
+                        $(this).children('.permission-remove-product').attr({"id": obj.DeleteProduct});
+                    }
+
+                });
+
+            });
+
+
+            console.log(data);
+
+        }
     });
 });
 
@@ -101,10 +130,18 @@ $(function () {
 
                         //this.classList.toggle("active");
                         $(this).next(".product-list").append('<br>').append($('<li>').text(obj.text).attr("id", "product-" + obj.id + "-list-" + listId));
-                        $(this).next(".product-list").children("li").attr({
-                            "class": "portfolio-link modify-list-product",
-                            "style": "cursor:pointer;"
-                        });
+                        if ($(this).hasClass("collab-permission")) {
+                            $(this).next(".product-list").children("li").attr({
+                                "class": "portfolio-link modify-list-product collab-perm",
+                                "style": "cursor:pointer;"
+                            });
+                        } else {
+
+                            $(this).next(".product-list").children("li").attr({
+                                "class": "portfolio-link modify-list-product",
+                                "style": "cursor:pointer;"
+                            });
+                        }
                     });
                     $(this).next(".product-list").append('<br>');
                     $(this).next(".product-list").append('<div><div><button><img></button></div><select><option></option></select><div><button><img></button></div></div>');
@@ -123,33 +160,45 @@ $(function () {
                         "src": "img/search.png",
                         "style": "height:22px; width:22px;"
                     });
+                    //check if can add products
+                    if ($(this).children('.permission-add-product').attr("id") == 'true') {
+                        $(this).next(".product-list").children("div").children("select").attr({
+                            "class": "custom-select my-select2",
+                            "id": "list-" + listId
+                        });
+                    } else {
+                        $(this).next(".product-list").children("div").children("select").attr({
+                            "class": "custom-select my-select2",
+                            "id": "list-" + listId
+                        });
+                        $(this).next(".product-list").children("div").children("select").prop("disabled",true);
+                        $(this).next(".product-list").children("div").children(".my-search-button-div").children("button").prop("disabled",true);
+                        
+                    }
 
-                    $(this).next(".product-list").children("div").children("select").attr({
-                        "class": "custom-select my-select2",
-                        "id": "list-" + listId
-                    });
+
                     //second button
                     $(this).next(".product-list").children("div").children("select").next("div").attr({
                         "class": "my-chat-button",
                         "style": "margin-left: 5px"
                     });
-                    
-                    if($('#user-name-typo').text().indexOf("anonymous") > 0){
+
+                    if ($('#user-name-typo').text().indexOf("anonymous") > 0) {
                         $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
-                        "type": "button",
-                        "class": "btn btn-outline-primary chat-button disabled",
-                        "style": "display: none",
-                        "id": "chat-list" + listId
-                    });
-                    } else{
-                        
-                    
-                    $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
-                        "type": "button",
-                        "class": "btn btn-outline-primary chat-button",
-                        "id": "chat-list" + listId
-                    });
-                }
+                            "type": "button",
+                            "class": "btn btn-outline-primary chat-button disabled",
+                            "style": "display: none",
+                            "id": "chat-list" + listId
+                        });
+                    } else {
+
+
+                        $(this).next(".product-list").children("div").children(".my-chat-button").children("button").attr({
+                            "type": "button",
+                            "class": "btn btn-outline-primary chat-button",
+                            "id": "chat-list" + listId
+                        });
+                    }
                     $(this).next(".product-list").children("div").children(".my-chat-button").children("button").children("img").attr({
                         "src": "img/chat.png",
                         "style": "height:22px; width:22px;"
@@ -303,7 +352,7 @@ function executeClickButton() {
     });
 
     $(".chat-button").click(function () {
-        var listId = getChatListId($(this).attr('id'))
+        var listId = getChatListId($(this).attr('id'));
         $("#chatModalTitle").text("Chat List: " + listId);
         $("#chatModal").modal("show");
     });
@@ -314,7 +363,8 @@ function executeClickButton() {
     $('.modify-list-product').click(function () {
         var productId = getIdProd($(this).attr('id'));
         var listId = getIdList($(this).attr('id'));
-        console.log(productId);
+        var addPerm =
+                console.log(productId);
         console.log(listId);
         $.ajax({
             type: 'GET',
@@ -360,7 +410,15 @@ function executeClickButton() {
                     $('#modify-list-product-description').text('Description: ' + data.Description);
                 }
                 $('#modify-list-product-quantity').val(data.Quantity);
-                $('#remove-product-list').show();
+                if($(this).parent().prev().children('.permission-add-product').attr('id') == 'false'){
+                    $('#plus').hide();
+                }
+                if($(this).parent().prev().children('.permission-remove-product').attr('id') == 'false'){
+                    $('#minus').hide();
+                } else {
+                    $('#remove-product-list').show();
+                }
+                
                 $('#remember-product-list').attr("id", "remember-product-" + productId + "-list-" + listId);
 
                 $('#modify-list-product-modal').modal('show');
@@ -381,7 +439,7 @@ $(document).ready(function () {
         $('#resultModal').modal('hide');
         $('#productModal').modal('show');
     });
-    
+
     $('#moidfy-list-product-close').click(function () {
         $(this).parent().attr('id', 'remember-product-list');
 
@@ -454,38 +512,39 @@ function clearProductUpdateModal() {
     $('#modify-list-product-modal').modal('hide');
     $('#modify-list-product-category').val('');
     $('#modify-list-product-description').val('');
-
+    $('#plus').show();
+    $('#minus').show();
 }
 
 
 //Product modal management
 $(document).ready(function () {
     $('#remove-product-list').click(function () {
-    var idPar = $('#moidfy-list-product-update').parent().attr('id');
-    var listId = getIdListRemember(idPar);
-    var productId = getIdProductRemember(idPar);
+        var idPar = $('#moidfy-list-product-update').parent().attr('id');
+        var listId = getIdListRemember(idPar);
+        var productId = getIdProductRemember(idPar);
 
 
-    $.ajax({
-        type: 'DELETE',
-        url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product/' + productId,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function () {
-            console.log("success");
-            clearProductUpdateModal();
-            $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
-            $('#moidfy-list-product-close').click();
-            $('#' + listId).parent().click();
-            $('#' + listId).parent().click();
-        },
-        error: function () {
-            console.log("error");
-        }
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/product/' + productId,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function () {
+                console.log("success");
+                clearProductUpdateModal();
+                $('#moidfy-list-product-close').parent().attr('id', 'remember-product-list');
+                $('#moidfy-list-product-close').click();
+                $('#' + listId).parent().click();
+                $('#' + listId).parent().click();
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
     });
-});
-    
+
     $("#customImage").change(function () {
         if (this.files && this.files[0]) {
             var reader = new FileReader();

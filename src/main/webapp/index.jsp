@@ -73,7 +73,7 @@
                                 + " <ul class=\"navbar-nav ml-auto\">"
                                 + "     <li class=\"nav-item\">"
                                 + "         <a href=\"profile.jsp\"><img src=\"img/user.png\" alt=\"\" width=\"40\" height=\"40\">"
-                                + "         <b id='useremail'>" + session.getAttribute("email") + "</b></a>"
+                                + "         <b id='user-email'>" + session.getAttribute("email") + "</b></a>"
                                 + "     </li>"
                                 + "     <li class=\"nav-item\">"
                                 + "         <img src=\"img/impostazioni.png\" alt=\"\" style=\"float: left;\" width=\"30\" height=\"30\">"
@@ -196,7 +196,10 @@
                             <c:set var="id" value="${collabList.getId()}"/> 
                             <c:set var="name" value="${collabList.getText()}"/> 
                             <% System.out.println("id: " + pageContext.findAttribute("id") + " name: " + pageContext.findAttribute("name"));%>
-                            <button class="collapsible rounded list-button">
+                            <button class="collapsible rounded list-button collab-permission">
+                                <span class="permission-add-product"></span>
+                                <span class="permission-remove-product"></span>
+                         
                                 <span class="badge badge-primary badge-pill" id="product-number-span"></span>
                                 <span class="list-span" id="${collabList.getId()}">
                                     ${collabList.getText()}
@@ -310,9 +313,9 @@
 
                                     <div class="counter">
                                         <div class='btn-group'>
-                                            <input type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
+                                            <input id="minus" type="image" class="dec mx-2" src="img/meno.png" alt="Ok" width="30" height="30"/>
                                             <input id="modify-list-product-quantity" type="text" class="field px-2" style="width: 70px;" value="1" data-min="1" data-max="1000">
-                                            <input type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
+                                            <input id="plus" type="image" class="inc mx-2" src="img/piu.png" alt="Ok" width="30" height="30"/>
                                         </div>
                                         <button type="button" id="remove-product-list" class="btn btn-outline-danger" style="display:none;"><img src="img/cestino.png"></button>
                                     </div>
