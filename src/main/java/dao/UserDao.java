@@ -197,7 +197,7 @@ public class UserDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                file = rs.getString("Image");
+                file = (rs.getString("Image") == null) ? "" : rs.getString("Image");
             }
 
             conn.close();
@@ -660,6 +660,62 @@ public class UserDao {
             ps.setString(3, cod);
 
             status = (ps.executeUpdate() > 0);
+
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+    
+        public static String authenticate(String email, String password) {
+        
+        String status = "notexist";
+
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM User WHERE Email=? AND Password=PASSWORD(?)");
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+/////
+                if (rs.getString("Valid").equals("1")) {
+                    status = rs.getString("Typology");
+                } else {
+                    status = "notvalid";
+                }
+            }
+
+            conn.close();
+
+            System.out.println(status);
+            
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return status;
+    }
+
+    public static boolean setLoginCookie(String email, String id) {
+        boolean status = false;
+        try {
+
+            Connection conn = DbConnect.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE User SET Cookie=? WHERE Email=?");
+            ps.setString(1, id);
+            ps.setString(2, email);
+
+            status = ps.executeUpdate() > 0;
 
             conn.close();
 

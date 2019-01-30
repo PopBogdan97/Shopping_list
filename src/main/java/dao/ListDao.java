@@ -176,7 +176,7 @@ public class ListDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                file = rs.getString("Image");
+                file = (rs.getString("Image") == null) ? "" : rs.getString("Image");
             }
 
             conn.close();
