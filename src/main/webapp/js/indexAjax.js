@@ -300,6 +300,68 @@ function executeResultEvents() {
         });
 
     });
+    
+    $('#result-product-modal-category').children("a").click(function () {
+        resultUpdate = 1;
+        var productId = getIdProd($(this).attr('id'));
+        var listId = getIdList($(this).attr('id'));
+        console.log(productId);
+        console.log(listId);
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/ShoppingList/services/product/' + productId,
+            dataType: 'json',
+
+            success: (data) => {
+                console.log(data);
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/image/' + productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-image').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/ShoppingList/services/product/logo/' + productId,
+                    success: function (data) {
+                        console.log("success");
+                        if (data !== "{}") {
+
+                            $('#modify-list-product-logo').attr('src', 'data:image/png;base64,' + data);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+
+                $('#product-title-name').text(data.Name);
+                $('#modify-list-product-category').text('Product category: ' + data.CatName);
+                if (data.Description === '') {
+                    $('#modify-list-product-description').text('Description: none');
+                } else {
+                    $('#modify-list-product-description').text('Description: ' + data.Description);
+                }
+                $('#remember-product-list').attr("id", "remember-product-" + productId + "-list-" + listId);
+                $('#modify-list-product-quantity').val(1);
+                $('#remove-product-list').hide();
+                $('#resultModal').modal('hide');
+                $('#modify-list-product-modal').modal('show');
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+
+    });
 
 }
 
@@ -311,7 +373,7 @@ function executeClickButton() {
         var selected = $(this).parent().next("select").find(':selected').text();
         $.ajax({
             url: 'http://localhost:8080/ShoppingList/services/list/' + listId
-                    + '/catProducts?limit=5&q=' + selected,
+                    + '/catProducts?&q=' + selected,
             type: 'get',
             dataType: 'json',
             delay: 250,
@@ -324,6 +386,8 @@ function executeClickButton() {
                     $('#result-product-modal').html("");
                     $.each(data.results, (i, obj) => {
                         $('#result-product-modal').append($('<a>').text(obj.text).attr('id', 'resultproduct-' + obj.id + '-list-' + listId));
+                        
+                        
                     });
                     $('#result-product-modal').children("a").attr({
                         "class": "list-group-item list-group-item-action",
@@ -347,6 +411,50 @@ function executeClickButton() {
             }
 
         });
+        
+        $.ajax({
+            url: 'http://localhost:8080/ShoppingList/services/list/' + listId
+                    + '/catProducts/cat?&q=' + selected,
+            type: 'get',
+            dataType: 'json',
+            delay: 250,
+            cache: true,
+            success: function (data) {
+                console.log("success");
+                console.log(data);
+                
+                if (data.results.length !== 0) {
+                    $('#result-product-modal-category').html("");
+                    $.each(data.results, (i, obj) => {
+                        $('#result-product-modal-category').append($('<a>').text(obj.text).attr('id', 'resultproduct-' + obj.id + '-list-' + listId));
+                        
+                        
+                    });
+                    $('#result-product-modal-category').children("a").attr({
+                        "class": "list-group-item list-group-item-action",
+                        "style": "cursor:pointer"
+                    });
+                } else {
+                    $('#result-product-modal-category').html("");
+                    $('#result-product-modal-category').append($('<h5>').text('No results'));
+                    $('#result-product-modal-category').append($('<button>').text('Add product').attr({
+                        "class": "btn btn-outline-success",
+                        "type": "button",
+                        "id": "add-result-product"
+                    }));
+                    addProductListId = listId;
+                }
+                executeResultEvents();
+                $('#resultModal').modal('show');
+            },
+            error: function () {
+                console.log("error");
+            }
+
+        });
+        
+        
+        
         $('#productModalLabel').text('Edit product: ' + productName);
         $("#resultModal").modal("show");
     });
@@ -355,6 +463,16 @@ function executeClickButton() {
         var listId = getChatListId($(this).attr('id'));
         $("#chatModalTitle").text("Chat List: " + $('#'+listId+'.list-span').eq(0).text());
         $("#chatModal").modal("show");
+    });
+    
+    $('#name-order').parent().click(function () {
+        $('#result-product-modal').show();
+        $('#result-product-modal-category').hide();
+    });
+    
+    $('#cat-order').parent().click(function () {
+        $('#result-product-modal').hide();
+        $('#result-product-modal-category').show();
     });
 
 

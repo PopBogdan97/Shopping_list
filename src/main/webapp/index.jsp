@@ -283,6 +283,9 @@
                                     <div id="result-product-modal" class="list-group" >
                                         <!-- elements-->
                                     </div>
+                                    <div id="result-product-modal-category" style="display: none">
+                                        <!-- elements-->
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button id="close-result" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
