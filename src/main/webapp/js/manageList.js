@@ -32,12 +32,12 @@ function loadList() {
                             '<div class="list-group col-lg-8">' +
                             '<a class="list-group-item list-group-item-dark">' + obj.text + '</a>' +
                             '</div>' +
-                            '<button type="button" class="col-lg btn btn-outline-info share-list disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
+                            '<button type="button" class="col-lg btn btn-outline-info disabled" style="margin-right: 15px"><img src="img/condividi.png" style="width:35px" /></button>' +
                             '<button type="button" class="col-lg btn btn-danger delete-list"><img src="img/cestino.png"/></button>' +
                             '</div>' +
                             '<p></p>';
                     $('#list-start').append(html);
-
+                    
                 });
                 }else{
                     
