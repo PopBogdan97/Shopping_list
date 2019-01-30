@@ -22,6 +22,15 @@ public class UserBean {
     private boolean Valid;
     private String Cod;
     private ArrayList<Element> Lists;
+    private ArrayList<Element> CollaboratorLists;
+
+    public ArrayList<Element> getCollaboratorLists() {
+        return CollaboratorLists;
+    }
+
+    public void setCollaboratorLists(ArrayList<Element> CollaboratorLists) {
+        this.CollaboratorLists = CollaboratorLists;
+    }
 
     /**
      *

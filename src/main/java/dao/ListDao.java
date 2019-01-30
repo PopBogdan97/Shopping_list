@@ -109,6 +109,10 @@ public class ListDao {
         try {
 
             Connection conn = DbConnect.getConnection();
+            
+            PreparedStatement ps2 = conn.prepareStatement(
+                    "DELETE FROM Collaborator WHERE ListId=?");
+            ps2.setInt(1, id);
 
             PreparedStatement ps1 = conn.prepareStatement(
                     "DELETE FROM List_Product WHERE ListId=?");
@@ -118,6 +122,7 @@ public class ListDao {
                     "DELETE FROM List WHERE Id=?");
             ps.setInt(1, id);
 
+            status = status && (ps2.executeUpdate() > 0);
             status = status && (ps1.executeUpdate() > 0);
             status = (ps.executeUpdate() > 0) && status;
 

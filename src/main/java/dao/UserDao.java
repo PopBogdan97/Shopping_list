@@ -36,7 +36,7 @@ public class UserDao {
         try {
             Connection conn = DbConnect.getConnection();
 
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM User WHERE Email LIKE '%" + str + "%' " + limit);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM User WHERE Email LIKE '%" + str + "%' AND Typology='normal'" + limit);
 
             ResultSet rs = ps.executeQuery();
 
@@ -104,6 +104,8 @@ public class UserDao {
 //            for(Element e : lists){
 //                System.out.println("name: " + e.getText());
 //            }
+            ArrayList<Element> collaboratorLists = new ArrayList<>();
+
             PreparedStatement ps2 = conn.prepareStatement("SELECT * FROM Collaborator WHERE Email=?");
             ps2.setString(1, email);
 
@@ -111,12 +113,13 @@ public class UserDao {
 
             while (rs2.next()) {
                 Element tmpEl = new Element();
-                tmpEl.setId(rs1.getInt("ListId") + "");
-                tmpEl.setText(rs1.getString("ListName"));
-                lists.add(tmpEl);
+                tmpEl.setId(rs2.getInt("ListId") + "");
+                tmpEl.setText(rs2.getString("ListName"));
+                collaboratorLists.add(tmpEl);
             }
 
             user.setLists(lists);
+            user.setCollaboratorLists(collaboratorLists);
             conn.close();
 
             user.setEmail(email);
