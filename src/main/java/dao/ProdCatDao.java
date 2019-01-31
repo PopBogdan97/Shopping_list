@@ -109,12 +109,14 @@ public class ProdCatDao {
 
             int i = 0;
             while (rs.next()) {
-                Element e = new Element();
-                String name = rs.getString("Name");
-                e.setId(i + "");
-                e.setText(name);
-                listlist.add(e);
-                i++;
+                if (!rs.getString("Name").equals("User Products")) {
+                    Element e = new Element();
+                    String name = rs.getString("Name");
+                    e.setId(i + "");
+                    e.setText(name);
+                    listlist.add(e);
+                    i++;
+                }
             }
             conn.close();
 
@@ -166,9 +168,9 @@ public class ProdCatDao {
 
             while (rs2.next()) {
                 Element tmpEl = new Element();
-                String tmp = rs2.getInt("Id")+"";
+                String tmp = rs2.getInt("Id") + "";
                 tmpEl.setId(tmp);
-                tmp =rs2.getString("Name");
+                tmp = rs2.getString("Name");
                 tmpEl.setText(tmp);
                 products.add(tmpEl);
             }

@@ -128,13 +128,15 @@ public class ProductDao {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Element e = new Element();
-                String name = rs.getString("Name");
-                String catName = rs.getString("CatName");
-                String id = rs.getString("Id");
-                e.setId(id);
-                e.setText(name+"-"+catName);
-                listlist.add(e);
+                if(!rs.getString("CatName").equals("User Products")){
+                    Element e = new Element();
+                    String name = rs.getString("Name");
+                    String catName = rs.getString("CatName");
+                    String id = rs.getString("Id");
+                    e.setId(id);
+                    e.setText(name+"-"+catName);
+                    listlist.add(e);
+                }
             }
             conn.close();
             
