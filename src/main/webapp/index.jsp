@@ -122,7 +122,7 @@
                 <div class="col-lg-6 portfolio-item ft-text">
                     <div class="card p-1">
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
-                            <h6 class="mb-0 mx-auto text-dark lh-100" style="font-size: x-large; font-weight: bold;">Products</h6>
+                            <h6 class="mb-0 mx-auto text-dark lh-100">Products</h6>
                         </div>
 
                         <p></p>
@@ -144,20 +144,12 @@
                             <c:if test="${cat.getName() != 'User Products'}">
                             <button class="collapsible rounded"><span class="badge badge-primary badge-pill">${cat.getCounter()}</span> ${cat.getName()}</button>
                             <ul class="content list-unstyled">
-                                <c:set var="source" value="${'img/logo.png'}"/>
-                                
-                                    <c:if test="${(cat.getLogo() != '') && (cat.getLogo() != null)}">
-                                        <c:set var="source" value="${cat.getLogo()}"/>
-                                    </c:if>
-                                    <br><li class="portfolio-link" id="image-description" style="display: flex"><img src="<c:out  value="${source}"/>" style="align-self: center; width: 50px; height:50px; margin-right: 20px"/><span>Description: ${cat.getDescription()}</span></li>
-                                <hr/>
                                 <c:forEach var="product" items="${products}">
                                     <c:if test="${product.getCatName() == cat.getName()}">
-                                        <li class="portfolio-link products" id="product-${product.getId()}" style="cursor:pointer;" data-toggle="modal" data-target="#search-product-modal" href="#${fn:replace(product.getName(),' ','')}">${product.getName()}</li>
-                                    <br>    
-                                    </c:if>
+                                        <br><li class="portfolio-link products" id="product-${product.getId()}" style="cursor:pointer;" data-toggle="modal" data-target="#search-product-modal" href="#${fn:replace(product.getName(),' ','')}">${product.getName()}</li>
+                                        </c:if>
                                     </c:forEach>
-                                
+                                <br>
                             </ul>
                         </c:if>
                         </c:forEach>
@@ -170,7 +162,7 @@
                     <div class="card p-1" id="show-user-list" >
                         <div class="d-flex align-items-center p-2 text-dark-50 border-bottom">
                             
-                            <h6 id="user-name-typo" class="mb-0 mx-auto text-dark lh-100" style="font-size: x-large; font-weight: bold;">Lists of 
+                            <h6 id="user-name-typo" class="mb-0 mx-auto text-dark lh-100">Lists of 
                                 <c:if test="${user.getTypology() == 'anonymous'}">
                                     <c:out value="${user.getTypology()}"/>
                                 </c:if>

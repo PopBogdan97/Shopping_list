@@ -15,7 +15,6 @@ public class ProductCatBean {
     
     private String Name;
     private String Description;
-    private String Logo;
     private ArrayList<Element> Products;
     private ArrayList<String> CatLists;
     private int Counter;
@@ -26,14 +25,6 @@ public class ProductCatBean {
 
     public void setCatLists(ArrayList<String> CatLists) {
         this.CatLists = CatLists;
-    }
-    
-    public String getLogo() {
-        return Logo;
-    }
-
-    public void setLogo(String Logo) {
-        this.Logo = Logo;
     }
     
     

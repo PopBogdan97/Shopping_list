@@ -56,7 +56,6 @@ public class ProdCatDao {
                     ProductCatBean cat = new ProductCatBean();
                     cat.setName(rs.getString("Name"));
                     cat.setDescription(rs.getString("Description"));
-                    cat.setLogo(rs.getString("Logo"));
 
                     PreparedStatement stm1 = conn.prepareStatement("SELECT count(*) as cnt FROM Product where CatName=?");
                     stm1.setString(1, rs.getString("Name"));
@@ -145,7 +144,6 @@ public class ProdCatDao {
 
             if (rs.next()) {
                 prodcat.setDescription(rs.getString("Description"));
-                prodcat.setLogo(rs.getString("Logo"));
             }
 
             PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM ProductCat_ListCat WHERE ProductCatName=?");
