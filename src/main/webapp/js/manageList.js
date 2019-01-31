@@ -223,7 +223,7 @@ $(document).ready(function () {
         allowClear: true,
         theme: "bootstrap",
         ajax: {
-            url: 'http://localhost:8080/ShoppingList/services/listcat?limit=5',
+            url: 'http://localhost:8080/ShoppingList/services/listcat',
             type: 'get',
             dataType: 'json',
             delay: 250,
@@ -305,7 +305,7 @@ $(document).ready(function () {
         allowClear: true,
         theme: "bootstrap",
         ajax: {
-            url: 'http://localhost:8080/ShoppingList/services/user?limit=5',
+            url: 'http://localhost:8080/ShoppingList/services/user',
             type: 'get',
             dataType: 'json',
             delay: 250,
