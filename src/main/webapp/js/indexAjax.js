@@ -226,7 +226,7 @@ function executeSelect2() {
             theme: "bootstrap",
             tags: true,
             ajax: {
-                url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/catProducts?limit=5',
+                url: 'http://localhost:8080/ShoppingList/services/list/' + listId + '/catProducts',
                 type: 'get',
                 dataType: 'json',
                 delay: 250,
@@ -738,7 +738,7 @@ $(document).ready(function () {
         allowClear: true,
         theme: "bootstrap",
         ajax: {
-            url: 'http://localhost:8080/ShoppingList/services/productCat?limit=5',
+            url: 'http://localhost:8080/ShoppingList/services/productCat',
             type: 'get',
             dataType: 'json',
             delay: 250,
