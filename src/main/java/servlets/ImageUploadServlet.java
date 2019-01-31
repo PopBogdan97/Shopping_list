@@ -69,7 +69,7 @@ public class ImageUploadServlet extends HttpServlet {
 
         String fileName = email + ".png";
 
-        UploadImage.upload(part.getInputStream(), fileName, "users");
+        UploadImage.upload(part.getInputStream(), fileName, "user");
 
         if (UserDao.setimage(email, fileName)) {
             request.setAttribute("email", email);
