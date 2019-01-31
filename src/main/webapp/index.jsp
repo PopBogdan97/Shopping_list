@@ -303,7 +303,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <img id="modify-list-product-image" class="img-fluid rounded mx-auto d-block" style="width: 350px" src="#" alt="Image not set">
+                                    <img id="modify-list-product-image" class="img-fluid rounded mx-auto d-block" style="max-width: 350px; max-height: 350px;" src="#" alt="Image not set">
                                     <br><br>
                                     <div id="modify-list-product-category"></div>
                                     <br>
@@ -391,7 +391,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img id="search-product-image" class="img-fluid rounded mx-auto d-block" style="width: 350px" src="#" alt="Image not set">
+                        <img id="search-product-image" class="img-fluid rounded mx-auto d-block" style="max-width: 350px; max-height: 350px;" src="#" alt="Image not set">
                         <br><br>
                         <div id="search-product-category"></div>
                         <br>
