@@ -44,6 +44,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.full.js"></script>
         <script src="js/manageList.js"></script>
 
+        <style type="text/css">
+            .buttonReturn{
+                border-color: #007bff;
+                color: #007bff;
+                background-color: transparent;
+            }
+            .buttonReturn:hover{
+                color: white;
+                background-color: #007bff;
+            }
+        </style>
+        
     </head>
 
     <body class="bg-success">
