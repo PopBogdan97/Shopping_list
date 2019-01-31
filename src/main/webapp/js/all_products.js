@@ -10,7 +10,7 @@ $(document).ready(function () {
         allowClear: true,
         theme: 'bootstrap',
         ajax: {
-            url: 'http://localhost:8080/ShoppingList/services/product?limit=5',
+            url: 'http://localhost:8080/ShoppingList/services/product',
             type: 'get',
             dataType: 'json',
             delay: 250,
