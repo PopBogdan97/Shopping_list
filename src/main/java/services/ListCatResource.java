@@ -68,7 +68,7 @@ public class ListCatResource {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void postListJson(@FormDataParam("name") String name, @FormDataParam("description") String description, @FormDataParam("arr") List<String> prodcat, @FormDataParam("file") InputStream file) throws IOException {
-        
+
         String fileName = "";
 
         if (file != null) {
@@ -146,10 +146,16 @@ public class ListCatResource {
 
             File file = new File(properties.getProperty("location") + "/listcat/", filename);
 
-            byte[] fileContent = FileUtils.readFileToByteArray(file);
-            String encodedString = Base64.getEncoder().encodeToString(fileContent);
+            if (file.exists()) {
 
-            return encodedString;
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                String encodedString = Base64.getEncoder().encodeToString(fileContent);
+
+                return encodedString;
+            } else {
+                return "{}";
+
+            }
 
         } else {
 

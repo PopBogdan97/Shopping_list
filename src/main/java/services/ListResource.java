@@ -136,10 +136,16 @@ public class ListResource {
 
             File file = new File(properties.getProperty("location") + "/list/", filename);
 
-            byte[] fileContent = FileUtils.readFileToByteArray(file);
-            String encodedString = Base64.getEncoder().encodeToString(fileContent);
+            if (file.exists()) {
 
-            return encodedString;
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                String encodedString = Base64.getEncoder().encodeToString(fileContent);
+
+                return encodedString;
+            } else {
+                return "{}";
+
+            }
 
         } else {
 

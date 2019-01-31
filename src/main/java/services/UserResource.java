@@ -88,10 +88,16 @@ public class UserResource {
 
             File file = new File(properties.getProperty("location") + "/user/", filename);
 
-            byte[] fileContent = FileUtils.readFileToByteArray(file);
-            String encodedString = Base64.getEncoder().encodeToString(fileContent);
+            if (file.exists()) {
 
-            return encodedString;
+                byte[] fileContent = FileUtils.readFileToByteArray(file);
+                String encodedString = Base64.getEncoder().encodeToString(fileContent);
+
+                return encodedString;
+            } else {
+                return "{}";
+
+            }
 
         } else {
 
